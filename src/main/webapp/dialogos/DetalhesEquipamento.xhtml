@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+	<p:dialog header="#{bundle.equipamentDetail}" widgetVar="equipamentoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+    	<p:outputPanel id="equipamentoDetail" style="text-align:center;">
+       		<p:panelGrid  columns="2" rendered="#{not empty equipamentoBean.equipamentoSelecionado}" columnClasses="label,value">
+                
+           		<h:outputText value="#{bundle.category}:" />
+           		<h:outputText value="#{equipamentoBean.equipamentoSelecionado.produto.categoria}" />
+ 
+           		<h:outputText value="#{bundle.model}" />
+           		<h:outputText value="#{equipamentoBean.equipamentoSelecionado.produto.modelo}" />
+                
+           		<h:outputText value="#{bundle.manufacturer}:" />
+           		<h:outputText value="#{equipamentoBean.equipamentoSelecionado.produto.fabricante}" />
+                		
+           		<h:outputText value="#{bundle.partNumber}:" />
+           		<h:outputText value="#{equipamentoBean.equipamentoSelecionado.numeroSerie}" />
+                		
+           		<h:outputText value="#{bundle.location}:" />
+           		<h:outputText value="#{equipamentoBean.equipamentoSelecionado.localInstalacao}" />
+                		
+           		<h:outputText value="#{bundle.tag}:" />
+           		<h:outputText value="#{equipamentoBean.equipamentoSelecionado.tag}" />
+                		
+				<h:outputText value="#{bundle.rack}:" />
+                <h:outputText value="#{equipamentoBean.equipamentoSelecionado.rack}" />
+                		
+                <h:outputText value="#{bundle.date}:" />
+                <h:outputText value="#{equipamentoBean.equipamentoSelecionado.dataGarantia}">
+                	<f:convertDateTime locale="pt_BR" dateStyle="long" timeZone="GMT-3" pattern="dd/MM/yyyy" />
+                </h:outputText>
+                		
+                <h:outputText value="#{bundle.statusGarantia}:" />
+                <h:outputText value="#{equipamentoBean.equipamentoSelecionado.statusGarantia}" />
+ 
+                <h:outputText value="#{bundle.detailedDescription}:" />
+                <h:outputText value="#{equipamentoBean.equipamentoSelecionado.produto.descricaoDetalhada}" />
+          </p:panelGrid>
+          
+          <p:commandButton value="#{bundle.close}" icon="ui-icon-close"
+				onclick="PF('updateDialogId').hide()" immediate="true" />
+        </p:outputPanel>
+   	</p:dialog>
+</h:body>
+</html>

@@ -1,0 +1,122 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="titulo"></ui:define>
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<o:viewParam name="local" value="#{usuarioBean.usuario}" />
+			<f:event listener="#{usuarioBean.inicializar}" type="preRenderView" />
+		</f:metadata>
+
+		<h:form id="form">
+			<p:focus context="form" />
+			
+			<p:outputPanel deferred="true">
+				<h3>#{usuarioBean.editando ? 'Edição de usuário' : 'Cadastro de usuário'}</h3>
+			</p:outputPanel>
+			
+			<p:messages autoUpdate="true" closable="true" id="msgs" />
+			
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton value="Salvar" id="botaoSalvar"
+						action="#{usuarioBean.salvar}" update="@form" validateClient="false" />
+					<p:button value="Cancelar" outcome="/usuarios/CadastroUsuario" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Pesquisa" outcome="/produtos/PesquisaProdutos" />
+				</p:toolbarGroup>
+			</p:toolbar>
+			
+			<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px; margin-bottom: 20px;" columnClasses="rotulo, campo">
+				
+				<p:outputLabel value="#{bundle.registration}" for="matricula" />
+				<p:inputText id="matricula" size="6" maxlength="6" required="true" value="#{usuarioBean.usuario.matricula}" style="width: 100px" />
+				
+				<p:outputLabel value="#{bundle.name}" for="nome" />
+				<p:inputText id="nome" size="60" maxlength="80" required="true" value="#{usuarioBean.usuario.nome}" style="width: 400px" />
+				
+				<p:outputLabel value="#{bundle.email}" for="email" />
+				<p:inputText id="email" size="60" maxlength="80" required="true" value="#{usuarioBean.usuario.email}" style="width: 400px" />
+				
+				<p:outputLabel value="#{bundle.password}" for="senha" />
+				<p:password id="senha" size="60" maxlength="80" required="true" value="#{usuarioBean.usuario.senha}" style="width: 200px" />
+				
+				<p:outputLabel value="#{bundle.confirmPassword}" for="confirmarSenha" />
+				<p:password id="confirmarSenha" size="60" maxlength="80" required="true" value="#{usuarioBean.confirmarSenha}" style="width: 200px" />				
+				
+				<p:outputLabel value="#{bundle.perfil}" for="perfil" />
+				<p:selectManyMenu id="perfil" value="#{usuarioBean.usuario.grupos}" style="width: 200px" required="true"
+					converter="entityConverter">
+					<f:selectItems value="#{usuarioBean.selectGrupos}" />
+    			</p:selectManyMenu>
+			</p:panelGrid>
+
+			<p:dataTable id="dataTableId" value="#{usuarioBean.usuariosLista}" var="usuario"
+				emptyMessage="#{bundle.noRecords}" paginator="true" rows="10"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" selection="#{usuarioBean.usuariosSelecionados}" rowKey="#{usuario.id}">
+				<f:facet name="header">
+            		#{bundle.usuarios}
+        		</f:facet>
+        		
+        		<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+				<p:column headerText="#{bundle.name}"
+					style="text-align: center; width: 200px">
+					<h:outputText value="#{usuario.nome}" />
+				</p:column>
+				<p:column headerText="#{bundle.registration}" style="text-align: center; width: 50px">
+					<h:outputText value="#{usuario.matricula}" />
+				</p:column>
+				
+				<p:column headerText="#{bundle.email}"
+					style="text-align: center; width: 200px">
+					<h:outputText value="#{usuario.email}" />
+				</p:column>
+				<p:column headerText="#{bundle.register}" style="text-align: center; width: 100px">
+					<h:outputText value="#{usuario.cadastro}">
+						<f:convertDateTime locale="pt_BR" dateStyle="long" timeZone="GMT-3" pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="#{bundle.status}"
+					style="text-align: center; width: 50px">
+					<h:outputText value="#{usuario.ativo}" />
+				</p:column>
+				<p:column style="width: 100px; text-align: center">
+					<p:button outcome="/usuarios/CadastroUsuario" icon="ui-icon-pencil" title="Editar usuário">
+	    				<f:param name="usuario" value="#{usuario.id}" />
+	    			</p:button>
+					<p:commandButton icon="ui-icon-cancel" title="Desabilitar usuário" process="@this" update="@form" onclick="PF('disableDialog').show();"
+						immediate="true">
+						<f:setPropertyActionListener value="#{usuario}" target="#{usuarioBean.usuarioSelecionado}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-trash" title="Excluir" process="@this" update="@form" onclick="PF('deleteDialog').show();"
+						immediate="true">
+	    				<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{usuario}" />
+	    			</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		
+		<p:confirmDialog header="Excluir Usuário" message="Tem certeza que deseja excluir o registro selecionado?"
+			widgetVar="deleteDialog">
+			<p:commandButton value="Confirmar" icon="ui-icon-check" action="#{usuarioBean.excluir}"
+				update=":form:dataTableId :form:msgs" oncomplete="PF('deleteDialog').hide();" />
+			<p:commandButton value="Cancelar" icon="ui-icon-cancel" onclick="PF('deleteDialog').hide();" />
+		</p:confirmDialog>
+
+		<p:confirmDialog header="Desabilitar usuário" message="Tem certeza que deseja desabilitar o usuário selecionado?"
+			widgetVar="disableDialog">
+			<p:commandButton value="Confirmar" icon="ui-icon-check" action="#{usuarioBean.desabilitar}"
+				update=":form:dataTableId :form:msgs" oncomplete="PF('disableDialog').hide();" />
+			<p:commandButton value="Cancelar" icon="ui-icon-cancel" onclick="PF('disableDialog').hide();" />
+		</p:confirmDialog>
+		
+	</ui:define>
+</ui:composition>
