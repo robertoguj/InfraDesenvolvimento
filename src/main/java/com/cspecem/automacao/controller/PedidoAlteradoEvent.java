@@ -1,16 +1,16 @@
 package com.cspecem.automacao.controller;
 
-import com.cspecem.automacao.model.Pedido;
+import com.cspecem.automacao.model.PedidoCompra;
 
 public class PedidoAlteradoEvent {
 
-	private Pedido pedido;
+	private PedidoCompra pedido;
 	
-	public PedidoAlteradoEvent(Pedido pedido) {
+	public PedidoAlteradoEvent(PedidoCompra pedido) {
 		this.pedido = pedido;
 	}
 
-	public Pedido getPedido() {
+	public PedidoCompra getPedido() {
 		return pedido;
 	}
 	

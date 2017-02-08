@@ -12,17 +12,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-//@Entity
+@Entity
 @Table(name = "item_pedido")
 public class ItemPedido implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 	private Long id;
 	private Integer quantidade = 1;
 	private BigDecimal valorUnitario = BigDecimal.ZERO;
 	private Produto produto;
-	private Pedido pedido;
+	private PedidoCompra pedido;
 
 	@Id
 	@GeneratedValue
@@ -64,11 +63,11 @@ public class ItemPedido implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name = "pedido_id", nullable = false)
-	public Pedido getPedido() {
+	public PedidoCompra getPedido() {
 		return pedido;
 	}
 
-	public void setPedido(Pedido pedido) {
+	public void setPedido(PedidoCompra pedido) {
 		this.pedido = pedido;
 	}
 
@@ -106,7 +105,7 @@ public class ItemPedido implements Serializable {
 	public boolean isProdutoAssociado() {
 		return this.getProduto() != null && this.getProduto().getId() != null;
 	}
-	/*
+
 	@Transient
 	public boolean isEstoqueSuficiente() {
 		return this.getPedido().isEmitido() || this.getProduto().getId() == null 
@@ -117,5 +116,5 @@ public class ItemPedido implements Serializable {
 	public boolean isEstoqueInsuficiente() {
 		return !this.isEstoqueSuficiente();
 	}
-*/
+
 }

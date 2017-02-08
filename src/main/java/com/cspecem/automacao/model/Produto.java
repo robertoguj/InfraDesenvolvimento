@@ -12,6 +12,10 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import com.cspecem.automacao.service.NegocioException;
+
 //import com.cspecem.automacao.validation.SKU;
 //import org.hibernate.validator.constraints.NotBlank;
 //import com.cspecem.automacao.service.NegocioException;
@@ -25,13 +29,12 @@ public class Produto implements Serializable {
 	private Long id;
 	private String categoria;
 	private String sku;
-	private String codigoSAP;
-	private BigDecimal valorEstimado;
-	private Integer quantidadeEstoque;
 	private String fabricante;
 	private String modelo;
 	private String descricao;
-	private String statusCadastroSAP;
+	private BigDecimal valorEstimado;
+	private String codigoSAP;
+	private Integer quantidadeEstoque;
 
 	@Id
 	@GeneratedValue
@@ -44,7 +47,8 @@ public class Produto implements Serializable {
 		this.id = id;
 	}
 
-	@Column(nullable = false)
+	@Column(nullable=false, length=50)
+	@NotNull(message="Categoria deve ser informada.")
 	public String getCategoria() {
 		return categoria;
 	}
@@ -53,9 +57,9 @@ public class Produto implements Serializable {
 		this.categoria = categoria;
 	}
 
-	//@NotBlank(message = "Por favor, informe o SKU")
 	//@SKU(message = "Por favor, informe um SKU no formato XX9999")
-	@Column(nullable = false, length = 20)
+	@NotBlank(message = "Por favor, informe o código do produto.")
+	@Column(nullable = false, length=20)
 	public String getSku() {
 		return sku;
 	}
@@ -64,8 +68,7 @@ public class Produto implements Serializable {
 		this.sku = sku == null ? null : sku.toUpperCase();
 	}
 
-	@NotNull(message = "Valor unitário é obrigatório")
-	@Column(name="valor_estimado", nullable = false, precision = 10, scale = 2)
+	@Column(name="valor_estimado", precision=10, scale=2)
 	public BigDecimal getValorEstimado() {
 		return valorEstimado;
 	}
@@ -74,34 +77,8 @@ public class Produto implements Serializable {
 		this.valorEstimado = valorEstimado;
 	}
 
-	@NotNull @Min(0) @Max(value = 9999, message = "tem um valor muito alto")
-	@Column(name="qtd_estoque", nullable = false, length = 5)
-	public Integer getQuantidadeEstoque() {
-		return quantidadeEstoque;
-	}
-	
-	@Column(length=20, name="codigo_sap")
-	public String getCodigoSAP() {
-		return codigoSAP;
-	}
-
-	public void setCodigoSAP(String codigoSAP) {
-		this.codigoSAP = codigoSAP;
-	}
-
-	@Column(name="status_sap")
-	public String getStatusCadastroSAP() {
-		return statusCadastroSAP;
-	}
-
-	public void setStatusCadastroSAP(String statusCadastroSAP) {
-		this.statusCadastroSAP = statusCadastroSAP;
-	}
-
-	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
-		this.quantidadeEstoque = quantidadeEstoque;
-	}
-
+	@NotNull(message="Fabricante deve ser informado.")
+	@Column(nullable=false, length=30)
 	public String getFabricante() {
 		return fabricante;
 	}
@@ -110,6 +87,8 @@ public class Produto implements Serializable {
 		this.fabricante = fabricante;
 	}
 
+	@NotNull(message = "Modelo deve ser informado.")
+	@Column(nullable = false, length=60)
 	public String getModelo() {
 		return modelo;
 	}
@@ -118,13 +97,33 @@ public class Produto implements Serializable {
 		this.modelo = modelo;
 	}
 
-	@Column(name="descricao")
+	@Column(nullable=false)
+	@NotNull(message="Descrição deve ser informada.")
 	public String getDescricao() {
 		return descricao;
 	}
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	
+	@Column(name="codigo_sap", length=10)
+	public String getCodigoSAP() {
+		return codigoSAP;
+	}
+
+	public void setCodigoSAP(String codigoSAP) {
+		this.codigoSAP = codigoSAP;
+	}
+	
+	@Min(0) @Max(value=9999, message="tem um valor muito alto")
+	@Column(name="qtd_estoque", length=5)
+	public Integer getQuantidadeEstoque() {
+		return quantidadeEstoque;
+	}
+	
+	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
+		this.quantidadeEstoque = quantidadeEstoque;
 	}
 
 	@Override
@@ -139,7 +138,6 @@ public class Produto implements Serializable {
 		result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
 		result = prime * result + ((quantidadeEstoque == null) ? 0 : quantidadeEstoque.hashCode());
 		result = prime * result + ((sku == null) ? 0 : sku.hashCode());
-		result = prime * result + ((statusCadastroSAP == null) ? 0 : statusCadastroSAP.hashCode());
 		result = prime * result + ((valorEstimado == null) ? 0 : valorEstimado.hashCode());
 		return result;
 	}
@@ -193,8 +191,6 @@ public class Produto implements Serializable {
 				return false;
 		} else if (!sku.equals(other.sku))
 			return false;
-		if (statusCadastroSAP != other.statusCadastroSAP)
-			return false;
 		if (valorEstimado == null) {
 			if (other.valorEstimado != null)
 				return false;
@@ -202,9 +198,7 @@ public class Produto implements Serializable {
 			return false;
 		return true;
 	}
-
-	/*
-
+	
 	public void baixarEstoque(Integer quantidade) throws NegocioException {
 		int novaQuantidade = this.getQuantidadeEstoque() - quantidade;
 		
@@ -219,7 +213,5 @@ public class Produto implements Serializable {
 	public void adicionarEstoque(Integer quantidade) {
 		this.setQuantidadeEstoque(getQuantidadeEstoque() + quantidade);
 	}
-	
-	*/
 
 }

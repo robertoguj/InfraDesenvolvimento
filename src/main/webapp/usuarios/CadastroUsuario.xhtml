@@ -27,37 +27,42 @@
 				<p:toolbarGroup>
 					<p:commandButton value="Salvar" id="botaoSalvar"
 						action="#{usuarioBean.salvar}" update="@form" validateClient="false" />
-					<p:button value="Cancelar" outcome="/usuarios/CadastroUsuario" />
+					<p:button value="Cancelar" outcome="/Home" />
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
 					<p:button value="Pesquisa" outcome="/produtos/PesquisaProdutos" />
 				</p:toolbarGroup>
 			</p:toolbar>
 			
-			<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px; margin-bottom: 20px;" columnClasses="rotulo, campo">
-				
+			<p:panelGrid columns="2" style="width: 100%; margin-top:10px;" columnClasses="rotulo, campo">
 				<p:outputLabel value="#{bundle.registration}" for="matricula" />
 				<p:inputText id="matricula" size="6" maxlength="6" required="true" value="#{usuarioBean.usuario.matricula}" style="width: 100px" />
+			</p:panelGrid>
+			
+			<p:panelGrid columns="4" id="painel" style="width: 100%; margin-top:10px;" columnClasses="labelColumn, imputColumn, labelColumn, imputColumn">
 				
 				<p:outputLabel value="#{bundle.name}" for="nome" />
-				<p:inputText id="nome" size="60" maxlength="80" required="true" value="#{usuarioBean.usuario.nome}" style="width: 400px" />
-				
-				<p:outputLabel value="#{bundle.email}" for="email" />
-				<p:inputText id="email" size="60" maxlength="80" required="true" value="#{usuarioBean.usuario.email}" style="width: 400px" />
+				<p:inputText id="nome" size="80" maxlength="80" required="true" value="#{usuarioBean.usuario.nome}" style="width: 400px" />
 				
 				<p:outputLabel value="#{bundle.password}" for="senha" />
-				<p:password id="senha" size="60" maxlength="80" required="true" value="#{usuarioBean.usuario.senha}" style="width: 200px" />
+				<p:password id="senha" size="20" maxlength="20" required="true" value="#{usuarioBean.usuario.senha}" style="width: 200px" />
+				
+				<p:outputLabel value="#{bundle.email}" for="email" />
+				<p:inputText id="email" size="60" maxlength="60" required="true" value="#{usuarioBean.usuario.email}" style="width: 400px" />
 				
 				<p:outputLabel value="#{bundle.confirmPassword}" for="confirmarSenha" />
-				<p:password id="confirmarSenha" size="60" maxlength="80" required="true" value="#{usuarioBean.confirmarSenha}" style="width: 200px" />				
-				
+				<p:password id="confirmarSenha" size="20" maxlength="20" required="true" value="#{usuarioBean.confirmarSenha}" style="width: 200px" />
+
+			</p:panelGrid>
+			
+			<p:panelGrid columns="2" style="width: 100%; margin-top:10px; margin-bottom:10px;" columnClasses="rotulo, campo">
 				<p:outputLabel value="#{bundle.perfil}" for="perfil" />
 				<p:selectManyMenu id="perfil" value="#{usuarioBean.usuario.grupos}" style="width: 200px" required="true"
 					converter="entityConverter">
 					<f:selectItems value="#{usuarioBean.selectGrupos}" />
     			</p:selectManyMenu>
 			</p:panelGrid>
-
+			
 			<p:dataTable id="dataTableId" value="#{usuarioBean.usuariosLista}" var="usuario"
 				emptyMessage="#{bundle.noRecords}" paginator="true" rows="10"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"

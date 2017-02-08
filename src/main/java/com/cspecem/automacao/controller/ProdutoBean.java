@@ -32,7 +32,8 @@ public class ProdutoBean implements Serializable {
 	private List<Produto> produtosLista;
 	private String selecionaItem;
 	private List<SelectItem> categorias;
-	private List<SelectItem> statusCadastroSAP;
+	private List<SelectItem> fabricantes;
+	
 	private Produto produtoSelecionado;
 	private List<Produto> produtosSelecionados;
 	
@@ -81,16 +82,6 @@ public class ProdutoBean implements Serializable {
 		}
 	}
 	
-	public List<SelectItem> getStatusCadastroSAP() {
-		if (this.statusCadastroSAP == null) {
-			this.statusCadastroSAP = new ArrayList<SelectItem>();
-			this.statusCadastroSAP.add(new SelectItem("Pendente","Pendente"));
-			this.statusCadastroSAP.add(new SelectItem("Cadastrado","Cadastrado"));
-			this.statusCadastroSAP.add(new SelectItem("Não cadastrado","Não cadastrado"));
-		}
-		return statusCadastroSAP;
-	}
-
 	public Produto getProduto() {
 		return produto;
 	}
@@ -123,6 +114,30 @@ public class ProdutoBean implements Serializable {
 			this.categorias.add(new SelectItem("Workstation", "Workstation"));
 		}
 		return categorias;
+	}
+	
+	public List<SelectItem> getFabricantes() {
+		if (this.fabricantes == null) {
+			this.fabricantes = new ArrayList<SelectItem>();
+			this.fabricantes.add(new SelectItem("ABB", "ABB"));
+			this.fabricantes.add(new SelectItem("Advantech", "Advantech"));
+			this.fabricantes.add(new SelectItem("Allied Telesis", "Allied Telesis"));
+			this.fabricantes.add(new SelectItem("Cisco", "Cisco"));
+			this.fabricantes.add(new SelectItem("Dell", "Dell"));
+			this.fabricantes.add(new SelectItem("Hirschmann", "Hirschmann"));
+			this.fabricantes.add(new SelectItem("HP", "HP"));
+			this.fabricantes.add(new SelectItem("Yokogawa", "Yokogawa"));
+			this.fabricantes.add(new SelectItem("iEi", "iEi"));
+			this.fabricantes.add(new SelectItem("Ibyte", "Ibyte"));
+			this.fabricantes.add(new SelectItem("Microsoft", "Microsoft"));
+			this.fabricantes.add(new SelectItem("Oracle", "Oracle"));
+			this.fabricantes.add(new SelectItem("Ruggedcom", "Ruggedcom"));
+			this.fabricantes.add(new SelectItem("Samsung", "Samsung"));
+			this.fabricantes.add(new SelectItem("Siemens", "Siemens"));
+			this.fabricantes.add(new SelectItem("Seagate", "Seagate"));
+
+		}
+		return fabricantes;
 	}
 	
 	public List<Produto> getProdutosLista() {

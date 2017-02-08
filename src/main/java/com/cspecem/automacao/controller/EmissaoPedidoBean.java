@@ -7,7 +7,7 @@ import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.cspecem.automacao.model.Pedido;
+import com.cspecem.automacao.model.PedidoCompra;
 import com.cspecem.automacao.service.EmissaoPedidoService;
 import com.cspecem.automacao.service.NegocioException;
 import com.cspecem.automacao.util.jsf.FacesUtil;
@@ -23,7 +23,7 @@ public class EmissaoPedidoBean implements Serializable {
 	
 	@Inject
 	@PedidoEdicao
-	private Pedido pedido;
+	private PedidoCompra pedido;
 	
 	@Inject
 	private Event<PedidoAlteradoEvent> pedidoAlteradoEvent;

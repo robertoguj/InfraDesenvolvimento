@@ -21,14 +21,14 @@
     		<h1>Login</h1>
     		
     		<h:form id="frm" prependId="false">
-    			
-    			<p:growl id="msgs" />
     		
+    		<p:messages autoUpdate="true" closable="true" id="msgs" />
+    			
     			<h:panelGrid columns="2" styleClass="grid-login">
     				<p:outputLabel value="Email" />
     				<p:inputText size="30" id="j_username" value="#{loginBean.email}" required="true" requiredMessage="Email deve ser informado." />
     				
-    				<p:outputLabel value="Senha" />
+    				<p:outputLabel value="Senha" required="true" requiredMessage="Senha deve ser informada." />
     				<p:password size="30" id="j_password" />
     				
     				<h:panelGroup/>

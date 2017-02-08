@@ -23,7 +23,7 @@ import org.hibernate.transform.Transformers;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
 
-import com.cspecem.automacao.model.Pedido;
+import com.cspecem.automacao.model.PedidoCompra;
 import com.cspecem.automacao.model.Usuario;
 import com.cspecem.automacao.model.vo.DataValor;
 import com.cspecem.automacao.repository.filter.PedidoFilter;
@@ -47,7 +47,7 @@ public class Pedidos implements Serializable {
 		
 		Map<Date, BigDecimal> resultado = criarMapaVazio(numeroDeDias, dataInicial);
 		
-		Criteria criteria = session.createCriteria(Pedido.class);
+		Criteria criteria = session.createCriteria(PedidoCompra.class);
 		
 		// select date(data_criacao) as data, sum(valor_total) as valor 
 		// from pedido where data_criacao >= :dataInicial and vendedor_id = :criadoPor 
@@ -91,7 +91,7 @@ public class Pedidos implements Serializable {
 	private Criteria criarCriteriaParaFiltro(PedidoFilter filtro) {
 		Session session = this.manager.unwrap(Session.class);
 		
-		Criteria criteria = session.createCriteria(Pedido.class)
+		Criteria criteria = session.createCriteria(PedidoCompra.class)
 				.createAlias("cliente", "cliente")
 				.createAlias("vendedor", "v");
 		
@@ -132,7 +132,7 @@ public class Pedidos implements Serializable {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Pedido> filtrados(PedidoFilter filtro) {
+	public List<PedidoCompra> filtrados(PedidoFilter filtro) {
 		Criteria criteria = criarCriteriaParaFiltro(filtro);
 		
 		criteria.setFirstResult(filtro.getPrimeiroRegistro());
@@ -155,12 +155,12 @@ public class Pedidos implements Serializable {
 		return ((Number) criteria.uniqueResult()).intValue();
 	}
 
-	public Pedido guardar(Pedido pedido) {
+	public PedidoCompra guardar(PedidoCompra pedido) {
 		return this.manager.merge(pedido);
 	}
 
-	public Pedido porId(Long id) {
-		return this.manager.find(Pedido.class, id);
+	public PedidoCompra porId(Long id) {
+		return this.manager.find(PedidoCompra.class, id);
 	}
 	
 }

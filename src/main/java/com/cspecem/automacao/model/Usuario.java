@@ -41,7 +41,7 @@ public class Usuario implements Serializable {
 		this.id = id;
 	}
 	
-	@Column(nullable = false, length = 80)
+	@Column(nullable = false, length=80)
 	public String getNome() {
 		return nome;
 	}
@@ -49,7 +49,7 @@ public class Usuario implements Serializable {
 		this.nome = nome;
 	}
 	
-	@Column(nullable = false, length = 6)
+	@Column(nullable = false, length=6)
 	public Integer getMatricula() {
 		return matricula;
 	}
@@ -57,7 +57,7 @@ public class Usuario implements Serializable {
 	public void setMatricula(Integer matricula) {
 		this.matricula = matricula;
 	}
-	@Column(nullable = false, unique = true, length = 255)
+	@Column(nullable = false, unique=true, length=60)
 	public String getEmail() {
 		return email;
 	}
@@ -65,7 +65,7 @@ public class Usuario implements Serializable {
 		this.email = email;
 	}
 	
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, length=20)
 	public String getSenha() {
 		return senha;
 	}

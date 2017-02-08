@@ -36,9 +36,10 @@
 		<intercept-url pattern="/AcessoNegado.xhtml" access="isAuthenticated()" />
 		<intercept-url pattern="/dialogos/**" access="isAuthenticated()" />
 		<intercept-url pattern="/pedidos/**" access="hasAnyRole('ADMINISTRADOR')" />
-		<intercept-url pattern="/categorias/**" access="hasAnyRole('ANALISTA','TECNICO','ADMINISTRADOR')" />
-		<intercept-url pattern="/produtos/**" access="hasAnyRole('ADMINISTRADOR')" />
+		<intercept-url pattern="/locais/**" access="hasAnyRole('TECNICO','ADMINISTRADOR')" />
+		<intercept-url pattern="/produtos/**" access="hasAnyRole('TECNICO','ADMINISTRADOR')" />
 		<intercept-url pattern="/equipamentos/**" access="hasAnyRole('ANALISTA','TECNICO','ADMINISTRADOR')" />
+		<intercept-url pattern="/materiais/**" access="hasAnyRole('ANALISTA','TECNICO','ADMINISTRADOR')" />
 		<intercept-url pattern="/relatorios/**" access="hasAnyRole('ADMINISTRADOR')" />
 		<intercept-url pattern="/usuarios/**" access="hasAnyRole('ADMINISTRADOR')" />
 		<intercept-url pattern="/**" access="denyAll" />

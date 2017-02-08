@@ -27,7 +27,7 @@
 	<header>
 		<div style="float: left">
 			<h:link outcome="/Home">
-				
+
 			</h:link>
 		</div>
 
@@ -35,62 +35,47 @@
 
 			<p:menubar>
 				<p:submenu label="Cadastro" icon="ui-icon-pencil">
-					<p:menuitem value="Produtos"
-						outcome="/produtos/CadastroProduto" />
+					<p:menuitem value="Produtos" outcome="/produtos/CadastroProduto" />
+					<p:menuitem value="Materiais"
+						outcome="/materiais/CadastroMaterial" />
 					<p:menuitem value="Equipamentos"
 						outcome="/equipamentos/CadastroEquipamento" />
-					<p:menuitem value="Usuários"
-						outcome="/usuarios/CadastroUsuario" />
+					<p:menuitem value="Usuários" outcome="/usuarios/CadastroUsuario" />
 					<p:menuitem value="Locais de instalação"
-						outcome="/categorias/CadastroLocalInstalacao" />
-				</p:submenu>
-				
-				<p:submenu label="Movimentação" icon="ui-icon-document">
-						<p:menuitem value="Novo pedido" outcome="/pedidos/CadastroPedido" />
-						<p:menuitem value="Pesquisa" outcome="/pedidos/PesquisaPedidos" />
-				</p:submenu>
-				
-				<p:submenu label="Relatórios" icon="ui-icon-document">
-						<p:menuitem value="Pedidos emitidos"
-							outcome="/relatorios/RelatorioPedidosEmitidos" />
+						outcome="/locais/CadastroLocalInstalacao" />
 				</p:submenu>
 
-				<p:submenu label="Configurações" icon="ui-icon-gear">
-					<p:submenu label="Ajax" icon="ui-icon-refresh">
-						<p:menuitem value="Save" actionListener="#{menuView.save}"
-							icon="ui-icon-disk" />
-						<p:menuitem value="Update" actionListener="#{menuView.update}"
-							icon="ui-icon-arrowrefresh-1-w" />
-					</p:submenu>
-					<p:submenu label="Non-Ajax" icon="ui-icon-newwin">
-						<p:menuitem value="Delete" actionListener="#{menuView.delete}"
-							icon="ui-icon-close" />
-					</p:submenu>
+				<p:submenu label="Consulta" icon="ui-icon-document">
+					<p:menuitem value="Pedido de compra"
+						outcome="/pedidos/CadastroPedido" />
+					<p:menuitem value="Lista de produtos"
+						outcome="/produtos/ListaProdutos" />
+					<p:menuitem value="Lista de materiais" 
+						outcome="/materiais/ListaMateriais" />
+					<p:menuitem value="Lista de equipamentos"
+						outcome="/equipamentos/ListaEquipamentos" />
 				</p:submenu>
-				
-				<p:submenu label="Ajuda" icon="ui-icon-help">
-					<p:menuitem value="Contents" url="#" />
-					<p:submenu label="Pesquisar" icon="ui-icon-search">
-						<p:submenu label="Text">
-							<p:menuitem value="Workspace" url="#" />
-						</p:submenu>
-						<p:menuitem value="File" url="#" />
-					</p:submenu>
+
+				<p:submenu label="Relatórios" icon="ui-icon-document">
+					<p:menuitem value="Pedidos emitidos"
+						outcome="/relatorios/RelatorioPedidosEmitidos" />
 				</p:submenu>
+
 				<p:menuitem value="Sair" url="/j_spring_security_logout" />
-				
+
 				<f:facet name="options">
 					<p:inputText style="margin-right:10px" placeholder="Search" />
 					<p:commandButton value="Pesquisar" />
 				</f:facet>
 			</p:menubar>
-			
-			
-		</h:form>
-		
-<h1 style="color: black;">Usuário logado: #{seguranca.nomeUsuario}</h1>
 
-<!-- <p:separator /> -->
+
+		</h:form>
+
+		<h1 style="color: black;">Usuário logado:
+			#{seguranca.nomeUsuario}</h1>
+
+		<!-- <p:separator /> -->
 
 		<div style="clear: both"></div>
 	</header>

@@ -17,7 +17,7 @@ import com.cspecem.automacao.model.Cliente;
 import com.cspecem.automacao.model.EnderecoEntrega;
 import com.cspecem.automacao.model.FormaPagamento;
 import com.cspecem.automacao.model.ItemPedido;
-import com.cspecem.automacao.model.Pedido;
+import com.cspecem.automacao.model.PedidoCompra;
 import com.cspecem.automacao.model.Produto;
 import com.cspecem.automacao.model.Usuario;
 import com.cspecem.automacao.repository.Clientes;
@@ -50,7 +50,7 @@ public class CadastroPedidoBean implements Serializable {
 	
 	@Produces
 	@PedidoEdicao
-	private Pedido pedido;
+	private PedidoCompra pedido;
 	
 	private List<Usuario> vendedores;
 	
@@ -70,11 +70,11 @@ public class CadastroPedidoBean implements Serializable {
 	}
 	
 	public void clienteSelecionado(SelectEvent event) {
-		pedido.setCliente((Cliente) event.getObject());
+		//pedido.setCliente((Cliente) event.getObject());
 	}
 	
 	private void limpar() {
-		pedido = new Pedido();
+		pedido = new PedidoCompra();
 		pedido.setEnderecoEntrega(new EnderecoEntrega());
 	}
 	
@@ -165,11 +165,11 @@ public class CadastroPedidoBean implements Serializable {
 		return this.clientes.porNome(nome);
 	}
 
-	public Pedido getPedido() {
+	public PedidoCompra getPedido() {
 		return pedido;
 	}
 	
-	public void setPedido(Pedido pedido) {
+	public void setPedido(PedidoCompra pedido) {
 		this.pedido = pedido;
 	}
 
@@ -200,7 +200,8 @@ public class CadastroPedidoBean implements Serializable {
 	
 	@NotBlank
 	public String getNomeCliente() {
-		return pedido.getCliente() == null ? null : pedido.getCliente().getNome();
+		//return pedido.getCliente() == null ? null : pedido.getCliente().getNome();
+		return null;
 	}
 	
 	public void setNomeCliente(String nome) {

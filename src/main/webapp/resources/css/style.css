@@ -51,7 +51,15 @@ h1 {
 }
 
 .rotulo {
-	width: 150px
+	width: 150px;
+}
+
+.labelColumn {
+	width: 100px; text-align:right;
+}
+
+.imputColumn {
+	width: 200px;
 }
 
 .ui-panelgrid td {

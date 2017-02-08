@@ -5,11 +5,11 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import com.cspecem.automacao.model.Pedido;
+import com.cspecem.automacao.model.PedidoCompra;
 import com.cspecem.automacao.repository.Pedidos;
 import com.cspecem.automacao.util.cdi.CDIServiceLocator;
 
-@FacesConverter(forClass = Pedido.class)
+@FacesConverter(forClass = PedidoCompra.class)
 public class PedidoConverter implements Converter {
 
 	//@Inject
@@ -21,7 +21,7 @@ public class PedidoConverter implements Converter {
 	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		Pedido retorno = null;
+		PedidoCompra retorno = null;
 		
 		if (value != null) {
 			Long id = new Long(value);
@@ -34,7 +34,7 @@ public class PedidoConverter implements Converter {
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		if (value != null) {
-			Pedido pedido = (Pedido) value;
+			PedidoCompra pedido = (PedidoCompra) value;
 			return pedido.getId() == null ? null : pedido.getId().toString();
 		}
 		
