@@ -1,0 +1,91 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="titulo">#{equipamentoBean.editando ? 'Edição de equipamento' : 'Novo equipamento'}</ui:define>
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<o:viewParam name="equipamento" value="#{equipamentoBean.equipamento}" />
+			<f:event listener="#{equipamentoBean.inicializar}" type="preRenderView" />
+		</f:metadata>
+
+		<h:form id="form">
+			<p:focus context="form" />
+			
+			<p:messages autoUpdate="true" closable="true" id="msgs" />
+
+	    	<p:dataTable id="dataTableId" value="#{equipamentoBean.equipamentosLista}" var="equipamento"
+				emptyMessage="#{bundle.noRecords}" paginator="true" rows="10"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" selection="#{equipamentoBean.equipamentosSelecionados}" rowKey="#{equipamento.id}">
+				<f:facet name="header">
+            		#{bundle.equipamentos}
+        		</f:facet>
+        		
+				<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+	    		<p:column headerText="Categoria" style="width: 100px">
+	    			<h:outputText value="#{equipamento.produto.categoria}" />
+	    		</p:column>
+	    		<p:column headerText="#{bundle.model}">
+	    			<h:outputText value="#{equipamento.produto.modelo}" />
+	    		</p:column>
+	    		<p:column headerText="#{bundle.partNumber}" style="width: 150px">
+	    			<h:outputText value="#{equipamento.numeroSerie}" />
+	    		</p:column>
+	    		<p:column headerText="#{bundle.location}" style="text-align: center; width: 200px">
+	    			<h:outputText value="#{equipamento.localInstalacao.nome}" />
+	    		</p:column>
+	    		<p:column headerText="#{bundle.tag}" style="text-align: center; width: 100px">
+	    			<h:outputText value="#{equipamento.tag}"/>
+	    		</p:column>
+	    		<p:column headerText="#{bundle.rack}" style="text-align: center; width: 100px">
+	    			<h:outputText value="#{equipamento.rack}"/>
+	    		</p:column>
+	    		<p:column headerText="#{bundle.date}" style="text-align: center; width: 95px">
+	    			<h:outputText value="#{equipamento.dataGarantia}">
+	    				<f:convertDateTime locale="pt_BR" dateStyle="long" timeZone="GMT-3" pattern="dd/MM/yyyy" />
+	    			</h:outputText>
+	    		</p:column>
+	    		<p:column headerText="#{bundle.statusGarantia}" style="text-align: center; width: 120px">
+	    			<h:outputText value="#{equipamento.statusGarantia}"/>
+	    		</p:column>
+	    		<p:column style="width: 100px; text-align: center">
+	    			<p:button outcome="/equipamentos/CadastroEquipamento" icon="ui-icon-pencil" title="Editar" >
+	    				<f:param name="equipamento" value="#{equipamento.id}" />
+	    			</p:button>
+
+	    			<p:commandButton icon="ui-icon-trash" process="@this" update="@form" onclick="PF('deleteDialog').show();" immediate="true">
+						<f:setPropertyActionListener target="#{equipamentoBean.equipamentoSelecionado}" value="#{equipamento}" />
+					</p:commandButton>
+					
+					<p:commandButton update=":form:equipamentoDetail" oncomplete="PF('equipamentoDialog').show()" icon="ui-icon-search" title="Detalhes" immediate="true">
+                		<f:setPropertyActionListener value="#{equipamento}" target="#{equipamentoBean.equipamentoSelecionado}" />
+            		</p:commandButton>
+	    		</p:column>
+	    	</p:dataTable>
+			
+			<ui:include src="/dialogos/DetalhesEquipamento.xhtml" />		
+ 
+   			<p:dialog header="Equipamento selecionado" widgetVar="multiEquipamentoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="200">
+        		<p:outputPanel id="multiEquipamentoDetail" style="text-align:center;">
+            		<ui:repeat value="#{equipamentoBean.equipamentosSelecionados}" var="equipamento">
+                		<h:outputText value="#{equipamento.id} - #{equipamento.nome}" style="display:block"/>
+            		</ui:repeat>
+        		</p:outputPanel>
+    		</p:dialog>
+		
+		</h:form>
+		
+		<p:confirmDialog header="Excluir Área" message="Tem certeza que deseja excluir o registro selecionado?"
+			widgetVar="deleteDialog">
+			<p:commandButton value="Confirmar" icon="ui-icon-check" action="#{equipamentoBean.excluir}"
+				update=":form:dataTableId :form:msgs" oncomplete="PF('deleteDialog').hide();" />
+			<p:commandButton value="Cancelar" icon="ui-icon-cancel" onclick="PF('deleteDialog').hide();" />
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>

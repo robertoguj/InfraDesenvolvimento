@@ -1,0 +1,165 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="titulo">#{materialBean.editando ? 'Editar material' : 'Incluir material'}</ui:define>
+
+	<ui:define name="corpo">
+		<f:metadata>
+			<o:viewParam name="material" value="#{materialBean.material}" />
+			<f:event listener="#{materialBean.inicializar}" type="preRenderView" />
+		</f:metadata>
+
+		<h:form id="form">
+			<p:focus context="form" />
+
+			<p:outputPanel deferred="true">
+				<h3>#{materialBean.editando ? 'Editar material' : 'Incluir material no estoque'}</h3>
+			</p:outputPanel>
+
+			<p:messages autoUpdate="true" closable="true" id="msgs" />
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<c:if test="#{!empty materialBean.material.criticidade}">
+						<p:commandButton value="Atualizar" id="botaoAtualizar"
+							action="#{materialBean.atualizar}" update="@form" validateClient="false" />
+						<p:button value="Cancelar" outcome="/materiais/CadastroMaterial" />
+					</c:if>
+					<c:if test="#{empty materialBean.material.criticidade}">
+						<p:commandButton value="Salvar" id="botaoSalvar"
+							action="#{materialBean.salvar}" update="@form" validateClient="false" />
+						<p:button value="Cancelar" outcome="/Home" />
+					</c:if>
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Pesquisa" outcome="/produtos/PesquisaProdutos" />
+				</p:toolbarGroup>
+			</p:toolbar>
+			
+			<p:panelGrid columns="2" id="painel" style="width:100%; margin-top: 20px" columnClasses="rotulo, campo">
+				
+				<p:outputLabel value="#{bundle.product}" for="produto" />
+				<p:selectOneMenu id="produto" value="#{materialBean.material.produto}" style="width:600px;" required="true">
+					<f:selectItem itemValue="#{null}" itemLabel="Selecione o produto" />
+					<f:selectItems value="#{materialBean.produtosLista}" var="produto"
+						itemLabel="#{produto.descricao}" itemValue="#{produto}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="#{bundle.criticidade}" for="criticidade" />
+				<p:selectOneRadio id="criticidade" value="#{materialBean.material.criticidade}" style="width:210px;">
+					<f:selectItem itemValue="Crítico" itemLabel="Crítico" />
+					<f:selectItem itemValue="Indiferente" itemLabel="Indiferente" />
+					<f:selectItem itemValue="Prioritário" itemLabel="Prioritário" />
+				</p:selectOneRadio>
+				
+				<p:outputLabel value="#{bundle.statusSAP}" for="statusSAP" />
+				<p:selectOneRadio id="statusSAP" value="#{materialBean.material.statusSAP}">
+					<f:selectItems value="#{materialBean.statusCadastroSAP}" />
+				</p:selectOneRadio>
+				
+			</p:panelGrid>
+			
+			<p:panelGrid columns="4" style="width:100%; margin-top: 20px" columnClasses="labelColumn, imputColumn, labelColumn, imputColumn">
+			
+				<p:outputLabel value="#{bundle.qtdDesejavel}" for="qtdDesejavel" />
+				<p:inputText id="qtdDesejavel" size="5" maxlength="5" style="width:100px;"
+					value="#{materialBean.material.quantidadeDesejavel}" />
+					
+				<p:outputLabel value="#{bundle.numeroRC}" for="numeroRC" />
+				<p:inputText id="numeroRC" style="width:180px;" size="8" maxlength="8"
+					value="#{materialBean.material.numeroRC}" />
+					
+				<p:outputLabel value="#{bundle.qtdRecebida}" for="qtdRecebida" />
+				<p:inputText id="qtdRecebida" size="5" maxlength="5" style="width:100px;"
+					value="#{materialBean.material.quantidadeRecebida}" />
+				
+				<p:outputLabel value="#{bundle.comprador}" for="comprador" />
+				<p:selectOneMenu id="comprador" value="#{materialBean.material.comprador}" style="width:190px;">
+					<f:selectItem itemValue="#{null}" itemLabel="Selecione o comprador" />
+					<f:selectItem itemValue="João" itemLabel="João" />
+					<f:selectItem itemValue="Patrícia" itemLabel="Patrícia" />
+				</p:selectOneMenu>
+			</p:panelGrid>
+			
+			<br />
+			
+	    	<p:dataTable id="dataTableId" value="#{materialBean.materiaisLista}" var="material"
+				emptyMessage="#{bundle.noRecords}" paginator="true" rows="10" widgetVar="materiaisTable"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" selection="#{materialBean.materiaisSelecionados}" rowKey="#{material.id}">
+				
+				<f:facet name="header">
+            	<p:outputPanel>
+                	<h:outputText value="Pesquisar todos os campos: " />
+                		<p:inputText id="globalFilter" onkeyup="PF('materiaisTable').filter()" style="width:150px" placeholder="Inserir palavra-chave" />
+            		</p:outputPanel>
+        		</f:facet>
+        		
+				<p:column headerText="#{bundle.product}" filterBy="#{material.produto.descricao}"
+					sortBy="#{material.produto.descricao}" filterMatchMode="contains">
+	    			<h:outputText value="#{material.produto.descricao}" />
+	    		</p:column>
+	    		<p:column headerText="#{bundle.statusSAP}" filterBy="#{material.statusSAP}"
+	    			sortBy="#{material.statusSAP}" filterMatchMode="contains" style="width:200px">
+	    			<h:outputText value="#{material.statusSAP}" />
+	    		</p:column>
+	    		<p:column headerText="#{bundle.criticidade}" filterBy="#{material.criticidade}"
+	    			sortBy="#{material.criticidade}" filterMatchMode="contains" style="width:150px">
+	    			<h:outputText value="#{material.criticidade}" />
+	    		</p:column>
+	    		<p:column headerText="#{bundle.qtdDesejavel}" style="text-align:left; width:70px">
+	    			<h:outputText value="#{material.quantidadeDesejavel}"/>
+	    		</p:column>
+	    		<p:column headerText="#{bundle.qtdRecebida}" style="text-align:left; width:70px">
+	    			<h:outputText value="#{material.quantidadeRecebida}" />
+	    		</p:column>
+	    		<p:column headerText="#{bundle.qtdNecessariaRC}" style="text-align:left; width:95px">
+	    			<h:outputText value="#{material.quantidadeNecessariaRC}" />
+	    		</p:column>
+	    		<p:column headerText="#{bundle.statusConsolidado}" filterBy="#{material.statusConsolidado}"
+	    			sortBy="#{material.statusConsolidado}" filterMatchMode="contains" style="width:200px">
+	    			<h:outputText value="#{material.statusConsolidado}"/>
+	    		</p:column>
+	    		
+	    		<p:column style="width: 100px; text-align: center">
+	    			<p:button outcome="/materiais/CadastroMaterial" icon="ui-icon-pencil" title="Editar">
+	    				<f:param name="material" value="#{material.id}" />
+	    			</p:button>
+
+	    			<p:commandButton icon="ui-icon-trash" process="@this" update="@form" onclick="PF('deleteDialog').show();"
+	    				immediate="true">
+						<f:setPropertyActionListener value="#{material}" target="#{materialBean.material}" />
+					</p:commandButton>
+					
+					<p:commandButton update=":form:materialDetail" oncomplete="PF('materialDialog').show()" icon="ui-icon-search" title="Detalhes"
+						immediate="true">
+                		<f:setPropertyActionListener value="#{material}" target="#{materialBean.materialSelecionado}" />
+            		</p:commandButton>
+	    		</p:column>
+	    	</p:dataTable>
+			
+			<ui:include src="/dialogos/DetalhesMaterial.xhtml" />
+ 
+   			<p:dialog header="Material selecionado" widgetVar="multiMaterialDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="200">
+        		<p:outputPanel id="multiMaterialDetail" style="text-align:center;">
+            		<ui:repeat value="#{materialBean.materiaisSelecionados}" var="material">
+                		<h:outputText value="#{material.id} - #{material.produto.descricao}" style="display:block"/>
+            		</ui:repeat>
+        		</p:outputPanel>
+    		</p:dialog>
+		
+		</h:form>
+		
+		<p:confirmDialog header="Excluir Material" message="Tem certeza que deseja excluir o registro selecionado?"
+			widgetVar="deleteDialog">
+			<p:commandButton value="Confirmar" icon="ui-icon-check" action="#{materialBean.excluir}"
+				update=":form:dataTableId :form:msgs" oncomplete="PF('deleteDialog').hide();" />
+			<p:commandButton value="Cancelar" icon="ui-icon-cancel" onclick="PF('deleteDialog').hide();" />
+		</p:confirmDialog>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+	<p:dialog header="#{bundle.materialDetail}" widgetVar="materialDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+   		<p:outputPanel id="materialDetail" style="text-align:center;">
+       		<p:panelGrid  columns="2" rendered="#{not empty materialBean.materialSelecionado}" columnClasses="label,value">
+                
+           		<h:outputText value="#{bundle.product}:" />
+           		<h:outputText value="#{materialBean.materialSelecionado.produto.descricao}" />
+
+          		<h:outputText value="#{bundle.qtdDesejavel}:" />
+           		<h:outputText value="#{materialBean.materialSelecionado.quantidadeDesejavel}" />
+ 
+           		<h:outputText value="#{bundle.qtdRecebida}" />
+           		<h:outputText value="#{materialBean.materialSelecionado.quantidadeRecebida}" />
+           		
+           		<h:outputText value="#{bundle.qtdNecessariaRC}" />
+           		<h:outputText value="#{materialBean.materialSelecionado.quantidadeNecessariaRC}" />
+           		
+           		<h:outputText value="#{bundle.statusSAP}" />
+           		<h:outputText value="#{materialBean.materialSelecionado.produto.statusSAP}" />
+           		
+				<h:outputText value="#{bundle.codigoSAP}" />
+           		<h:outputText value="#{materialBean.materialSelecionado.produto.codigoSAP}" />
+           		
+         		<h:outputText value="#{bundle.numeroRC}" />
+           		<h:outputText value="#{materialBean.materialSelecionado.numeroRC}" />
+				
+				<h:outputText value="#{bundle.comprador}" />
+           		<h:outputText value="#{materialBean.materialSelecionado.comprador}" />
+ 
+           		<h:outputText value="#{bundle.statusConsolidado}:" />
+           		<h:outputText value="#{materialBean.materialSelecionado.statusConsolidado}" />
+            		
+       		</p:panelGrid>
+            
+            <br />
+            
+       		<p:commandButton value="#{bundle.close}" icon="ui-icon-close"
+				onclick="PF('updateDialogId').hide()" immediate="true" />
+   		</p:outputPanel>
+	</p:dialog>
+
+</h:body>
+</html>
