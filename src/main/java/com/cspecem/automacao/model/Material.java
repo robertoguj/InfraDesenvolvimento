@@ -23,7 +23,7 @@ public class Material implements Serializable {
 	private Produto produto;
 	private String criticidade;
 	private Integer quantidadeDesejavel;
-	private Integer quantidadeRecebida;
+	private Integer quantidadeRecebida = 0;
 	private Integer quantidadeNecessariaRC;
 	private String numeroRC;
 	private String comprador;
@@ -52,7 +52,7 @@ public class Material implements Serializable {
 	}
 
 	@Column(nullable=false, length=60)
-	@NotNull(message="Criticidade do material deve ser informada")
+	@NotNull(message="Criticidade do material deve ser informada.")
 	public String getCriticidade() {
 		return criticidade;
 	}
@@ -61,7 +61,8 @@ public class Material implements Serializable {
 		this.criticidade = criticidade;
 	}
 
-	@Column(name="qtd_desejavel", length=5)
+	@Column(name="qtd_desejavel", nullable=false, length=5)
+	@NotNull(message="Quantidade desejável deve ser informada.")
 	public Integer getQuantidadeDesejavel() {
 		return quantidadeDesejavel;
 	}
@@ -116,10 +117,11 @@ public class Material implements Serializable {
 
 	@Column(name="status_consolidado", length=40)
 	public String getStatusConsolidado() {
+		
 		if (quantidadeDesejavel <= quantidadeRecebida ) {
-			setStatusConsolidado("Atendida");
+			this.statusConsolidado = "Atendida";
 		} else {
-			setStatusConsolidado("Pendente");
+			this.statusConsolidado = "Pendente";
 		}
 		return statusConsolidado;
 	}

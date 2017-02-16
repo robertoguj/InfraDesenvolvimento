@@ -44,10 +44,11 @@
 				style="width:100%; margin-top:10px" columnClasses="rotulo, campo">
 				
 				<p:outputLabel value="#{bundle.product}" for="produto" />
-				<p:selectOneMenu id="produto" value="#{equipamentoBean.equipamento.produto}" style="width:250px;" required="true">
+				<p:selectOneMenu id="produto" value="#{equipamentoBean.equipamento.produto}" style="width:800px;"
+					required="true" requiredMessage="Equipamento deve ser selecionado.">
 					<f:selectItem itemValue="#{null}" itemLabel="Selecione o produto" />
 					<f:selectItems value="#{equipamentoBean.produtosLista}" var="produto"
-						itemLabel="#{produto.modelo}" itemValue="#{produto}" />
+						itemLabel="#{produto.descricao}" itemValue="#{produto}" />
 				</p:selectOneMenu>
 			
 				<p:outputLabel value="#{bundle.partNumber}" for="numeroSerie" />
@@ -58,27 +59,28 @@
 			<p:panelGrid columns="2" style="width:100%; margin-top:10px" columnClasses="rotulo, campo">
 				
 				<p:outputLabel value="#{bundle.location}" for="localInstalacao" />
-				<p:selectOneMenu id="localInstalacao" value="#{equipamentoBean.equipamento.localInstalacao}" style="width:535px;" required="true">
+				<p:selectOneMenu id="localInstalacao" value="#{equipamentoBean.equipamento.localInstalacao}"
+					style="width:250px;" required="true">
 					<f:selectItem itemValue="#{null}" itemLabel="Selecione o local" />
-					<f:selectItems value="#{equipamentoBean.locaisLista}" var="local"
-						itemLabel="#{local.nome}" itemValue="#{local}" />
+					<f:selectItems value="#{equipamentoBean.locaisLista}" var="localInstalacao"
+						itemLabel="#{localInstalacao.local}" itemValue="#{localInstalacao}" />
 				</p:selectOneMenu>
 
 			</p:panelGrid>
 				
-			<p:panelGrid columns="4" style="width:60%; margin-top:10px" columnClasses="labelColumn, imputColumn, labelColumn, imputColumn">
+			<p:panelGrid columns="4" style="width:100%; margin-top:10px" columnClasses="labelColumn, imputColumn, labelColumn, imputColumn">
 				
 				<p:outputLabel value="#{bundle.tag}" for="tag" />
 				<p:inputText id="tag" style="width:180px;" value="#{equipamentoBean.equipamento.tag}" />				
 
 				<p:outputLabel value="#{bundle.rack}" for="rack" />
-				<p:inputText id="rack" style="width:150px;" value="#{equipamentoBean.equipamento.rack}" />
+				<p:inputText id="rack" style="width:200px;" value="#{equipamentoBean.equipamento.rack}" />
 					
 				<p:outputLabel value="#{bundle.date}" for="dataGarantia" />
 				<p:calendar id="dataGarantia" value="#{equipamentoBean.equipamento.dataGarantia}" pattern="dd/MM/yyyy" mask="true" style="width:100px;" />
 				
 				<p:outputLabel value="#{bundle.statusGarantia}" for="statusGarantia" />
-				<p:selectOneMenu id="statusGarantia" value="#{equipamentoBean.equipamento.statusGarantia}" style="width:160px;">
+				<p:selectOneMenu id="statusGarantia" value="#{equipamentoBean.equipamento.statusGarantia}" style="width:208px;">
 					<f:selectItem itemValue="#{null}" itemLabel="Selecione o status" />
 					<f:selectItems value="#{equipamentoBean.statusGarantia}" />
 				</p:selectOneMenu>
@@ -99,22 +101,22 @@
 	    		<p:column headerText="Categoria" style="width: 100px">
 	    			<h:outputText value="#{equipamento.produto.categoria}" />
 	    		</p:column>
-	    		<p:column headerText="#{bundle.model}">
-	    			<h:outputText value="#{equipamento.produto.modelo}" />
+	    		<p:column headerText="#{bundle.manufacturer}">
+	    			<h:outputText value="#{equipamento.produto.fabricante}" style="width:100px" />
 	    		</p:column>
-	    		<p:column headerText="#{bundle.partNumber}" style="width: 150px">
+	    		<p:column headerText="#{bundle.model}">
+	    			<h:outputText value="#{equipamento.produto.modelo}" style="width:200px" />
+	    		</p:column>
+	    		<p:column headerText="#{bundle.partNumber}" style="width:120px">
 	    			<h:outputText value="#{equipamento.numeroSerie}" />
 	    		</p:column>
-	    		<p:column headerText="#{bundle.location}" style="text-align: center; width: 200px">
-	    			<h:outputText value="#{equipamento.localInstalacao.nome}" />
+	    		<p:column headerText="#{bundle.area}" style="text-align: center; width:100px">
+	    			<h:outputText value="#{equipamento.localInstalacao.area}" />
 	    		</p:column>
-	    		<p:column headerText="#{bundle.tag}" style="text-align: center; width: 100px">
-	    			<h:outputText value="#{equipamento.tag}"/>
+	    		<p:column headerText="#{bundle.location}" style="text-align: center; width:200px">
+	    			<h:outputText value="#{equipamento.localInstalacao.local}" />
 	    		</p:column>
-	    		<p:column headerText="#{bundle.rack}" style="text-align: center; width: 100px">
-	    			<h:outputText value="#{equipamento.rack}"/>
-	    		</p:column>
-	    		<p:column headerText="#{bundle.date}" style="text-align: center; width: 95px">
+	    		<p:column headerText="#{bundle.date}" style="text-align: center; width:95px">
 	    			<h:outputText value="#{equipamento.dataGarantia}">
 	    				<f:convertDateTime locale="pt_BR" dateStyle="long" timeZone="GMT-3" pattern="dd/MM/yyyy" />
 	    			</h:outputText>

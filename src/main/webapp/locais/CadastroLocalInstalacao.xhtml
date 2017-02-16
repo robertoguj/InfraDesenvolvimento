@@ -10,7 +10,7 @@
 
 	<ui:define name="corpo">
 		<f:metadata>
-			<o:viewParam name="local" value="#{localInstalacaoBean.local}" />
+			<o:viewParam name="localInstalacao" value="#{localInstalacaoBean.localInstalacao}" />
 			<f:event listener="#{localInstalacaoBean.inicializar}" type="preRenderView" />
 		</f:metadata>
 
@@ -24,12 +24,12 @@
 			
 			<p:toolbar style="margin-top: 20px">
 				<p:toolbarGroup>
-					<c:if test="#{!empty localInstalacaoBean.local.nome}">
+					<c:if test="#{!empty localInstalacaoBean.localInstalacao.local}">
 						<p:commandButton value="Atualizar" id="botaoAtualizar"
 							action="#{localInstalacaoBean.atualizar}" update="@form" />
 						<p:button value="Cancelar" outcome="/locais/CadastroLocalInstalacao" />
 					</c:if>
-					<c:if test="#{empty localInstalacaoBean.local.nome}">
+					<c:if test="#{empty localInstalacaoBean.localInstalacao.local}">
 						<p:commandButton value="Salvar" id="botaoSalvar"
 							action="#{localInstalacaoBean.salvar}" update="@form" />
 						<p:button value="Cancelar" outcome="/Home" />
@@ -42,19 +42,19 @@
 			
 			<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px; margin-bottom: 20px;" columnClasses="rotulo, campo">
 				<p:outputLabel value="#{bundle.area}" />
-				<p:selectOneMenu id="area" value="#{localInstalacaoBean.local.area}" style="width:210px;" required="true">
+				<p:selectOneMenu id="area" value="#{localInstalacaoBean.localInstalacao.area}" style="width:210px;">
 					<f:selectItem itemValue="#{null}" itemLabel="Selecione a área" />
 					<f:selectItems value="#{localInstalacaoBean.areas}" />
 				</p:selectOneMenu>
 
-				<p:outputLabel value="#{bundle.name}" />
-				<p:inputText id="nome" size="60" maxlength="80" required="true"	value="#{localInstalacaoBean.local.nome}" />
+				<p:outputLabel value="#{bundle.local}" />
+				<p:inputText id="nome" size="60" maxlength="60" required="true"	value="#{localInstalacaoBean.localInstalacao.local}" />
 			</p:panelGrid>
 
-			<p:dataTable id="lista" value="#{localInstalacaoBean.locaisLista}" var="local"
+			<p:dataTable id="lista" value="#{localInstalacaoBean.locaisLista}" var="localInstalacao"
 				emptyMessage="#{bundle.noRecords}" paginator="true" rows="10" widgetVar="locaisTable"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" selection="#{localInstalacaoBean.locaisSelecionados}" rowKey="#{local.id}">
+				rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" selection="#{localInstalacaoBean.locaisSelecionados}" rowKey="#{localInstalacao.id}">
         		
         		<f:facet name="header">
             	<p:outputPanel>
@@ -65,32 +65,25 @@
         		
         		<p:ajax event="rowSelect" update="@form" oncomplete="PF('carDialog').show()" />
  
-				<p:column headerText="#{bundle.id}" filterBy="#{local.id}" sortBy="#{local.id}" filterMatchMode="contains" 
-					style="text-align: center; width: 100px">
-					<h:outputText value="#{local.id}" />
-				</p:column>
-				<p:column headerText="#{bundle.area}" filterBy="#{local.area}" sortBy="#{local.area}" filterMatchMode="contains"
+				<p:column headerText="#{bundle.area}" filterBy="#{localInstalacao.area}" sortBy="#{localInstalacao.area}" filterMatchMode="contains"
 					style="text-align: center; width: 200px">
-					<h:outputText value="#{local.area}" />
+					<h:outputText value="#{localInstalacao.area}" />
 				</p:column>
-				<p:column headerText="#{bundle.name}" filterBy="#{local.nome}" sortBy="#{local.nome}" filterMatchMode="contains">
-					<h:outputText value="#{local.nome}" />
+				<p:column headerText="#{bundle.local}" filterBy="#{localInstalacao.local}" sortBy="#{localInstalacao.local}" filterMatchMode="contains">
+					<h:outputText value="#{localInstalacao.local}" />
 				</p:column>
 				<p:column style="width: 100px; text-align: center">
 					<p:button outcome="/locais/CadastroLocalInstalacao" icon="ui-icon-pencil" title="Editar">
-	    				<f:param name="local" value="#{local.id}" />
+	    				<f:param name="localInstalacao" value="#{localInstalacao.id}" />
 	    			</p:button>
 
 					<p:commandButton icon="ui-icon-trash" process="@this" update="" onclick="PF('deleteDialog').show();"
 						immediate="true">
-						<f:setPropertyActionListener value="#{local}" target="#{localInstalacaoBean.local}" />
+						<f:setPropertyActionListener value="#{localInstalacao}" target="#{localInstalacaoBean.localInstalacao}" />
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
 		</h:form>
-
-
-
 
 		<p:confirmDialog header="Excluir Área" message="Tem certeza que deseja excluir o registro selecionado?"
 			widgetVar="deleteDialog">

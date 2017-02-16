@@ -22,8 +22,11 @@
            		<h:outputText value="#{bundle.partNumber}:" />
            		<h:outputText value="#{equipamentoBean.equipamentoSelecionado.numeroSerie}" />
                 		
+           		<h:outputText value="#{bundle.area}:" />
+           		<h:outputText value="#{equipamentoBean.equipamentoSelecionado.localInstalacao.area}" />
+           		
            		<h:outputText value="#{bundle.location}:" />
-           		<h:outputText value="#{equipamentoBean.equipamentoSelecionado.localInstalacao}" />
+           		<h:outputText value="#{equipamentoBean.equipamentoSelecionado.localInstalacao.local}" />
                 		
            		<h:outputText value="#{bundle.tag}:" />
            		<h:outputText value="#{equipamentoBean.equipamentoSelecionado.tag}" />
@@ -39,8 +42,8 @@
                 <h:outputText value="#{bundle.statusGarantia}:" />
                 <h:outputText value="#{equipamentoBean.equipamentoSelecionado.statusGarantia}" />
  
-                <h:outputText value="#{bundle.detailedDescription}:" />
-                <h:outputText value="#{equipamentoBean.equipamentoSelecionado.produto.descricaoDetalhada}" />
+                <h:outputText value="#{bundle.description}:" />
+                <h:outputText value="#{equipamentoBean.equipamentoSelecionado.produto.descricao}" />
           </p:panelGrid>
           
           <p:commandButton value="#{bundle.close}" icon="ui-icon-close"

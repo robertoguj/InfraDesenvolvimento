@@ -26,10 +26,12 @@
     			
     			<h:panelGrid columns="2" styleClass="grid-login">
     				<p:outputLabel value="Email" />
-    				<p:inputText size="30" id="j_username" value="#{loginBean.email}" required="true" requiredMessage="Email deve ser informado." />
+    				<p:inputText size="30" id="j_username" value="#{loginBean.email}" style="width:205px;"
+    					required="true" requiredMessage="Email deve ser informado." />
     				
-    				<p:outputLabel value="Senha" required="true" requiredMessage="Senha deve ser informada." />
-    				<p:password size="30" id="j_password" />
+    				<p:outputLabel value="Senha" />
+    				<p:password size="30" id="j_password" style="width:205px;"
+    					required="true" requiredMessage="Senha deve ser informada." />
     				
     				<h:panelGroup/>
     				<p:commandButton value="Login" action="#{loginBean.login}" ajax="false" />

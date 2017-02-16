@@ -21,7 +21,7 @@ public class LocalInstalacaoBean implements Serializable {
 
 	@Inject
 	private LocaisInstalacao locais;
-	private LocalInstalacao local;
+	private LocalInstalacao localInstalacao;
 	private LocalInstalacao localSelecionado;
 	private List<SelectItem> areas;
 	private List<LocalInstalacao> locaisLista;
@@ -41,7 +41,7 @@ public class LocalInstalacaoBean implements Serializable {
 	
 	public void excluir() {
 		try {
-			locais.deletar(this.local.getId());
+			locais.deletar(this.localInstalacao.getId());
 			FacesUtil.addInfoMessage("Removido com sucesso.");
 			
 		} catch (Exception e) {
@@ -51,7 +51,7 @@ public class LocalInstalacaoBean implements Serializable {
 	
 	public void salvar() {
 		try {
-			this.locais.salvar(this.local);
+			this.locais.salvar(this.localInstalacao);
 			limpar();
 			FacesUtil.addInfoMessage("Salvo com sucesso.");
 		} catch (Exception e) {
@@ -61,7 +61,7 @@ public class LocalInstalacaoBean implements Serializable {
 	
 	public void atualizar() {
 		try {
-			this.locais.atualizar(this.local);
+			this.locais.atualizar(this.localInstalacao);
 			limpar();
 			FacesUtil.addInfoMessage("Atualizado com sucesso.");
 		} catch (Exception e) {
@@ -70,33 +70,38 @@ public class LocalInstalacaoBean implements Serializable {
 	}
 	
 	private void limpar() {
-		this.local = new LocalInstalacao();
+		this.localInstalacao = new LocalInstalacao();
 	}
 	
 	public boolean isEditando() {
-		return this.local.getId() != null;
+		return this.localInstalacao.getId() != null;
 	}
 
 	public List<SelectItem> getAreas() {
 		if (this.areas == null) {
 			this.areas = new ArrayList<SelectItem>();
-			this.areas.add(new SelectItem("BF","Blast Furnace"));
-			this.areas.add(new SelectItem("Coke","Coke Making Plant"));
-			this.areas.add(new SelectItem("EC","Energy Center"));
-			this.areas.add(new SelectItem("LAB","Laboratório Central"));
-			this.areas.add(new SelectItem("RM","Raw Material"));
-			this.areas.add(new SelectItem("Sinter","Sinterização"));
-			this.areas.add(new SelectItem("SMP","Steel Making"));
+			this.areas.add(new SelectItem("Alto Forno","Blast Furnace"));
+			this.areas.add(new SelectItem("Laboratório Central","Central Laboratory"));
+			this.areas.add(new SelectItem("Coqueria","Coke Making"));
+			this.areas.add(new SelectItem("Lingotamento Contínuo","Continuous Casting"));
+			this.areas.add(new SelectItem("Energy Center","Energy Center"));
+			this.areas.add(new SelectItem("Power Plant","Power Plant"));
+			this.areas.add(new SelectItem("Tratamento de Água","Raw Water Treatment"));
+			this.areas.add(new SelectItem("Pátio de Matéria Prima","Raw Material"));
+			this.areas.add(new SelectItem("Sinterização","Sinter Plant"));
+			this.areas.add(new SelectItem("Aciaria","Steel Making"));
+			this.areas.add(new SelectItem("Centro de Treinamento","Training Center"));
+			this.areas.add(new SelectItem("Distribuição e Utilidades","Utility Distribution"));
 		}
 		return areas;
 	}
 
-	public LocalInstalacao getLocal() {
-		return local;
+	public LocalInstalacao getLocalInstalacao() {
+		return localInstalacao;
 	}
 
-	public void setLocal(LocalInstalacao local) {
-		this.local = local;
+	public void setLocalInstalacao(LocalInstalacao localInstalacao) {
+		this.localInstalacao = localInstalacao;
 	}
 	
 	public List<LocalInstalacao> getLocaisLista() {
