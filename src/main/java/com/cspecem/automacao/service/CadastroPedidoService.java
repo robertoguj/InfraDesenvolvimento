@@ -5,7 +5,7 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
-import com.cspecem.automacao.model.PedidoCompra;
+import com.cspecem.automacao.model.Pedido;
 import com.cspecem.automacao.model.StatusPedido;
 import com.cspecem.automacao.repository.Pedidos;
 import com.cspecem.automacao.util.jpa.Transactional;
@@ -18,10 +18,11 @@ public class CadastroPedidoService implements Serializable {
 	private Pedidos pedidos;
 	
 	@Transactional
-	public PedidoCompra salvar(PedidoCompra pedido) throws NegocioException {
+	public Pedido salvar(Pedido pedido) throws NegocioException {
 		if (pedido.isNovo()) {
 			pedido.setDataCriacao(new Date());
-			pedido.setStatus(StatusPedido.ORCAMENTO);
+			pedido.setStatus(StatusPedido.ANALISE);
+			//pedido.setStatus(StatusPedido.ORCAMENTO);
 		}
 		
 		pedido.recalcularValorTotal();

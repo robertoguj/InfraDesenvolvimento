@@ -26,6 +26,11 @@
 					listener="#{cadastroPedidoBean.carregarProdutoLinhaEditavel}"/>
 			</p:autoComplete>
 		</p:column>
+		<p:column headerText="Valor unitário" style="text-align: right; width: 120px">
+			<h:outputText value="#{item.valorUnitario}">
+				<f:convertNumber type="currency"/>
+			</h:outputText>
+		</p:column>
 		<p:column headerText="Quantidade" style="text-align: center; width: 100px">
 			<p:inputText size="8" value="#{item.quantidade}" disabled="#{cadastroPedidoBean.pedido.naoAlteravel}">
 				<p:ajax event="change" process="@this"

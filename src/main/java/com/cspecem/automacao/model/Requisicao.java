@@ -25,19 +25,19 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 //@Entity
-//@Table(name = "pedido_venda")
-public class PedidoVenda implements Serializable {
+//@Table(name = "requisicao")
+public class Requisicao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Date dataCriacao;
-	private String numeroRequisicaoSAP;
 	private String observacao;
 	private Date dataEntrega;
 	private BigDecimal valorFrete = BigDecimal.ZERO;
 	private BigDecimal valorDesconto = BigDecimal.ZERO;
 	private BigDecimal valorTotal = BigDecimal.ZERO;
-	private StatusPedido status = StatusPedido.ORCAMENTO;
+	//private StatusPedido status = StatusPedido.ORCAMENTO;
+	private StatusPedido status = StatusPedido.ANALISE;
 	private FormaPagamento formaPagamento;
 	private Usuario vendedor;
 	private Cliente cliente;
@@ -56,22 +56,13 @@ public class PedidoVenda implements Serializable {
 
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "data_criacao", nullable = false)
+	@Column(name="data_criacao", nullable=false)
 	public Date getDataCriacao() {
 		return dataCriacao;
 	}
 
 	public void setDataCriacao(Date dataCriacao) {
 		this.dataCriacao = dataCriacao;
-	}
-	
-	@Column(name="numero_requisicao")
-	public String getNumeroRequisicaoSAP() {
-		return numeroRequisicaoSAP;
-	}
-
-	public void setNumeroRequisicaoSAP(String numeroRequisicaoSAP) {
-		this.numeroRequisicaoSAP = numeroRequisicaoSAP;
 	}
 
 	@Column(columnDefinition = "text")
@@ -85,7 +76,7 @@ public class PedidoVenda implements Serializable {
 
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@Column(name = "data_entrega", nullable = false)
+	@Column(name="data_entrega", nullable=false)
 	public Date getDataEntrega() {
 		return dataEntrega;
 	}
@@ -95,7 +86,7 @@ public class PedidoVenda implements Serializable {
 	}
 
 	@NotNull
-	@Column(name = "valor_frete", nullable = false, precision = 10, scale = 2)
+	@Column(name="valor_frete", nullable=false, precision=10, scale=2)
 	public BigDecimal getValorFrete() {
 		return valorFrete;
 	}
@@ -105,7 +96,7 @@ public class PedidoVenda implements Serializable {
 	}
 
 	@NotNull
-	@Column(name = "valor_desconto", nullable = false, precision = 10, scale = 2)
+	@Column(name="valor_desconto", nullable=false, precision= 10, scale=2)
 	public BigDecimal getValorDesconto() {
 		return valorDesconto;
 	}
@@ -115,7 +106,7 @@ public class PedidoVenda implements Serializable {
 	}
 
 	@NotNull
-	@Column(name = "valor_total", nullable = false, precision = 10, scale = 2)
+	@Column(name="valor_total", nullable=false, precision=10, scale=2)
 	public BigDecimal getValorTotal() {
 		return valorTotal;
 	}
@@ -126,7 +117,7 @@ public class PedidoVenda implements Serializable {
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false, length = 20)
+	@Column(nullable=false, length=20)
 	public StatusPedido getStatus() {
 		return status;
 	}
@@ -137,7 +128,7 @@ public class PedidoVenda implements Serializable {
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(name = "forma_pagamento", nullable = false, length = 20)
+	@Column(name="forma_pagamento", nullable=false, length=20)
 	public FormaPagamento getFormaPagamento() {
 		return formaPagamento;
 	}
@@ -148,7 +139,7 @@ public class PedidoVenda implements Serializable {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "vendedor_id", nullable = false)
+	@JoinColumn(name="vendedor_id", nullable=false)
 	public Usuario getVendedor() {
 		return vendedor;
 	}
@@ -159,7 +150,7 @@ public class PedidoVenda implements Serializable {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "cliente_id", nullable = false)
+	@JoinColumn(name="cliente_id", nullable=false)
 	public Cliente getCliente() {
 		return cliente;
 	}
@@ -177,7 +168,7 @@ public class PedidoVenda implements Serializable {
 		this.enderecoEntrega = enderecoEntrega;
 	}
 
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="pedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	public List<ItemPedido> getItens() {
 		return itens;
 	}
@@ -207,7 +198,6 @@ public class PedidoVenda implements Serializable {
 		result = prime * result + ((formaPagamento == null) ? 0 : formaPagamento.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((itens == null) ? 0 : itens.hashCode());
-		result = prime * result + ((numeroRequisicaoSAP == null) ? 0 : numeroRequisicaoSAP.hashCode());
 		result = prime * result + ((observacao == null) ? 0 : observacao.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((valorDesconto == null) ? 0 : valorDesconto.hashCode());
@@ -225,7 +215,7 @@ public class PedidoVenda implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PedidoVenda other = (PedidoVenda) obj;
+		Requisicao other = (Requisicao) obj;
 		if (cliente == null) {
 			if (other.cliente != null)
 				return false;
@@ -257,11 +247,6 @@ public class PedidoVenda implements Serializable {
 			if (other.itens != null)
 				return false;
 		} else if (!itens.equals(other.itens))
-			return false;
-		if (numeroRequisicaoSAP == null) {
-			if (other.numeroRequisicaoSAP != null)
-				return false;
-		} else if (!numeroRequisicaoSAP.equals(other.numeroRequisicaoSAP))
 			return false;
 		if (observacao == null) {
 			if (other.observacao != null)
@@ -326,7 +311,8 @@ public class PedidoVenda implements Serializable {
 
 	@Transient
 	public boolean isOrcamento() {
-		return StatusPedido.ORCAMENTO.equals(this.getStatus());
+		//return StatusPedido.ORCAMENTO.equals(this.getStatus());
+		return StatusPedido.ANALISE.equals(this.getStatus());
 	}
 
 	public void removerItemVazio() {

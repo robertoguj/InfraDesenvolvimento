@@ -9,7 +9,7 @@ public class ProdutoFilter implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String sku;
-	private String nome;
+	private String descricao;
 
 	@SKU
 	public String getSku() {
@@ -20,12 +20,12 @@ public class ProdutoFilter implements Serializable {
 		this.sku = sku == null ? null : sku.toUpperCase();
 	}
 
-	public String getNome() {
-		return nome;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 }

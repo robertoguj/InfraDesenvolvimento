@@ -41,6 +41,11 @@
 			</p:toolbar>
 			
 			<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px; margin-bottom: 20px;" columnClasses="rotulo, campo">
+				<c:if test="#{!empty localInstalacaoBean.localInstalacao.local}">
+					<p:outputLabel value="#{bundle.codigo}" />
+					<p:inputText id="id" disabled="true" value="#{localInstalacaoBean.localInstalacao.id}"  style="width:40px;" />
+				</c:if>
+				
 				<p:outputLabel value="#{bundle.area}" />
 				<p:selectOneMenu id="area" value="#{localInstalacaoBean.localInstalacao.area}" style="width:210px;">
 					<f:selectItem itemValue="#{null}" itemLabel="Selecione a área" />
@@ -52,7 +57,7 @@
 			</p:panelGrid>
 
 			<p:dataTable id="lista" value="#{localInstalacaoBean.locaisLista}" var="localInstalacao"
-				emptyMessage="#{bundle.noRecords}" paginator="true" rows="10" widgetVar="locaisTable"
+				emptyMessage="#{bundle.noRecords}" paginator="true" rows="5" widgetVar="locaisTable"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" selection="#{localInstalacaoBean.locaisSelecionados}" rowKey="#{localInstalacao.id}">
         		

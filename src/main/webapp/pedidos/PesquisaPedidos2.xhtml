@@ -64,11 +64,11 @@
 	    				sortBy="#{pedido.id}">
 	    			<h:outputText value="#{pedido.id}"/>
 	    		</p:column>
-	    		<p:column headerText="Solicitante" sortBy="#{pedido.cliente.nome}">
-	    			<h:outputText value="#{pedido.solicitante.local}"/>
+	    		<p:column headerText="Cliente" sortBy="#{pedido.cliente.nome}">
+	    			<h:outputText value="#{pedido.cliente.nome}"/>
 	    		</p:column>
-	    		<p:column headerText="Requisitante">
-	    			<h:outputText value="#{pedido.requisitante.nome}"/>
+	    		<p:column headerText="Vendedor">
+	    			<h:outputText value="#{pedido.vendedor.nome}"/>
 	    		</p:column>
 	    		<p:column headerText="Data de criação" style="text-align: center; width: 140px">
 	    			<h:outputText value="#{pedido.dataCriacao}">

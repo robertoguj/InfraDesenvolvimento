@@ -9,7 +9,7 @@ import javax.inject.Named;
 
 import org.apache.velocity.tools.generic.NumberTool;
 
-import com.cspecem.automacao.model.PedidoCompra;
+import com.cspecem.automacao.model.Pedido;
 import com.cspecem.automacao.util.jsf.FacesUtil;
 import com.cspecem.automacao.util.mail.Mailer;
 
@@ -24,7 +24,7 @@ public class EnvioPedidoEmailBean implements Serializable {
 	
 	@Inject
 	@PedidoEdicao
-	private PedidoCompra pedido;
+	private Pedido pedido;
 	
 	public void enviarPedido() {
 		/*

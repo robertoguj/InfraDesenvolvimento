@@ -7,7 +7,7 @@ import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.cspecem.automacao.model.PedidoCompra;
+import com.cspecem.automacao.model.Pedido;
 import com.cspecem.automacao.service.CancelamentoPedidoService;
 import com.cspecem.automacao.service.NegocioException;
 import com.cspecem.automacao.util.jsf.FacesUtil;
@@ -26,7 +26,7 @@ public class CancelamentoPedidoBean implements Serializable {
 	
 	@Inject
 	@PedidoEdicao
-	private PedidoCompra pedido;
+	private Pedido pedido;
 	/*
 	public void cancelarPedido() {
 		try {

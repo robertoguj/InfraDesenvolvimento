@@ -13,15 +13,15 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "item_pedido")
+@Table(name="item_pedido")
 public class ItemPedido implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
-	private Integer quantidade = 1;
-	private BigDecimal valorUnitario = BigDecimal.ZERO;
+	private Integer quantidade=1;
+	//private BigDecimal valorUnitario=BigDecimal.ZERO;
 	private Produto produto;
-	private PedidoCompra pedido;
+	private Pedido pedido;
 
 	@Id
 	@GeneratedValue
@@ -33,7 +33,7 @@ public class ItemPedido implements Serializable {
 		this.id = id;
 	}
 
-	@Column(nullable = false, length = 3)
+	@Column(nullable=false, length=3)
 	public Integer getQuantidade() {
 		return quantidade;
 	}
@@ -41,8 +41,8 @@ public class ItemPedido implements Serializable {
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
-
-	@Column(name = "valor_unitario", nullable = false, precision = 10, scale = 2)
+/*
+	@Column(name="valor_unitario", nullable=false, precision=10, scale=2)
 	public BigDecimal getValorUnitario() {
 		return valorUnitario;
 	}
@@ -50,9 +50,9 @@ public class ItemPedido implements Serializable {
 	public void setValorUnitario(BigDecimal valorUnitario) {
 		this.valorUnitario = valorUnitario;
 	}
-
+*/
 	@ManyToOne
-	@JoinColumn(name = "produto_id", nullable = false)
+	@JoinColumn(name="produto_id", nullable=false)
 	public Produto getProduto() {
 		return produto;
 	}
@@ -62,12 +62,12 @@ public class ItemPedido implements Serializable {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "pedido_id", nullable = false)
-	public PedidoCompra getPedido() {
+	@JoinColumn(name="pedido_id", nullable=false)
+	public Pedido getPedido() {
 		return pedido;
 	}
 
-	public void setPedido(PedidoCompra pedido) {
+	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
 
@@ -76,6 +76,9 @@ public class ItemPedido implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((pedido == null) ? 0 : pedido.hashCode());
+		result = prime * result + ((produto == null) ? 0 : produto.hashCode());
+		result = prime * result + ((quantidade == null) ? 0 : quantidade.hashCode());
 		return result;
 	}
 
@@ -93,12 +96,27 @@ public class ItemPedido implements Serializable {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (pedido == null) {
+			if (other.pedido != null)
+				return false;
+		} else if (!pedido.equals(other.pedido))
+			return false;
+		if (produto == null) {
+			if (other.produto != null)
+				return false;
+		} else if (!produto.equals(other.produto))
+			return false;
+		if (quantidade == null) {
+			if (other.quantidade != null)
+				return false;
+		} else if (!quantidade.equals(other.quantidade))
+			return false;
 		return true;
 	}
 
 	@Transient
 	public BigDecimal getValorTotal() {
-		return this.getValorUnitario().multiply(new BigDecimal(this.getQuantidade()));
+		return this.produto.getValorEstimado().multiply(new BigDecimal(this.getQuantidade()));
 	}
 	
 	@Transient

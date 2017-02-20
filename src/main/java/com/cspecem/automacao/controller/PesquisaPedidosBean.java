@@ -17,7 +17,7 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-import com.cspecem.automacao.model.PedidoCompra;
+import com.cspecem.automacao.model.Pedido;
 import com.cspecem.automacao.model.StatusPedido;
 import com.cspecem.automacao.repository.Pedidos;
 import com.cspecem.automacao.repository.filter.PedidoFilter;
@@ -32,17 +32,17 @@ public class PesquisaPedidosBean implements Serializable {
 	private Pedidos pedidos;
 	
 	private PedidoFilter filtro;
-	private LazyDataModel<PedidoCompra> model;
+	private LazyDataModel<Pedido> model;
 	
 	public PesquisaPedidosBean() {
 		filtro = new PedidoFilter();
 		
-		model = new LazyDataModel<PedidoCompra>() {
+		model = new LazyDataModel<Pedido>() {
 
 			private static final long serialVersionUID = 1L;
 			
 			@Override
-			public List<PedidoCompra> load(int first, int pageSize, String sortField, SortOrder sortOrder, 
+			public List<Pedido> load(int first, int pageSize, String sortField, SortOrder sortOrder, 
 					Map<String, Object> filters) {
 				
 				filtro.setPrimeiroRegistro(first);
@@ -86,7 +86,7 @@ public class PesquisaPedidosBean implements Serializable {
 		return filtro;
 	}
 
-	public LazyDataModel<PedidoCompra> getModel() {
+	public LazyDataModel<Pedido> getModel() {
 		return model;
 	}
 	

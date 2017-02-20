@@ -112,14 +112,8 @@
 	    			style="width:120px">
 	    			<h:outputText value="#{produto.fabricante}"/>
 	    		</p:column>
-	    		<p:column headerText="#{bundle.model}" filterBy="#{produto.modelo}" sortBy="#{produto.modelo}" filterMatchMode="contains" style="width:130px">
-	    			<h:outputText value="#{produto.modelo}" />
-	    		</p:column>
 	    		<p:column headerText="#{bundle.description}" filterBy="#{produto.descricao}" sortBy="#{produto.descricao}" filterMatchMode="contains">
 	    			<h:outputText value="#{produto.descricao}" />
-	    		</p:column>
-	    		<p:column headerText="#{bundle.qtdEstoque}" style="width:80px">
-	    			<h:outputText value="#{produto.quantidadeEstoque}"/>
 	    		</p:column>
 	    		<p:column style="width: 100px; text-align: center">
 	    			<p:button outcome="/produtos/CadastroProduto" icon="ui-icon-pencil" title="Editar">

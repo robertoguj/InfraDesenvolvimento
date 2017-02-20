@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -25,23 +24,20 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "pedido_compra")
-public class PedidoCompra implements Serializable {
+@Table(name="pedido")
+public class Pedido implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Date dataCriacao;
-	private String numeroRequisicaoSAP;
 	private String observacao;
 	private Date dataEntrega;
 	private BigDecimal valorFrete = BigDecimal.ZERO;
 	private BigDecimal valorDesconto = BigDecimal.ZERO;
 	private BigDecimal valorTotal = BigDecimal.ZERO;
-	private StatusPedido status = StatusPedido.ORCAMENTO;
-	private FormaPagamento formaPagamento;
-	private String comprador;
-	private Fornecedor fornecedor;
-	private EnderecoEntrega enderecoEntrega;
+	private StatusPedido status = StatusPedido.ANALISE;
+	private Usuario requisitante;
+	private LocalInstalacao solicitante;
 	private List<ItemPedido> itens = new ArrayList<>();
 
 	@Id
@@ -56,7 +52,7 @@ public class PedidoCompra implements Serializable {
 
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "data_criacao", nullable = false)
+	@Column(name="data_criacao", nullable=false)
 	public Date getDataCriacao() {
 		return dataCriacao;
 	}
@@ -64,17 +60,8 @@ public class PedidoCompra implements Serializable {
 	public void setDataCriacao(Date dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
-	
-	@Column(name="numero_requisicao")
-	public String getNumeroRequisicaoSAP() {
-		return numeroRequisicaoSAP;
-	}
 
-	public void setNumeroRequisicaoSAP(String numeroRequisicaoSAP) {
-		this.numeroRequisicaoSAP = numeroRequisicaoSAP;
-	}
-
-	@Column(columnDefinition = "text")
+	@Column(columnDefinition="text")
 	public String getObservacao() {
 		return observacao;
 	}
@@ -82,10 +69,31 @@ public class PedidoCompra implements Serializable {
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
+	
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name="requisitante", nullable=false)
+	public Usuario getRequisitante() {
+		return requisitante;
+	}
+
+	public void setRequisitante(Usuario requisitante) {
+		this.requisitante = requisitante;
+	}
+
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="area_solicitante")
+	public LocalInstalacao getSolicitante() {
+		return solicitante;
+	}
+
+	public void setSolicitante(LocalInstalacao solicitante) {
+		this.solicitante = solicitante;
+	}
 
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@Column(name = "data_entrega", nullable = false)
+	@Column(name="data_entrega", nullable=false)
 	public Date getDataEntrega() {
 		return dataEntrega;
 	}
@@ -95,7 +103,7 @@ public class PedidoCompra implements Serializable {
 	}
 
 	@NotNull
-	@Column(name = "valor_frete", nullable = false, precision = 10, scale = 2)
+	@Column(name="valor_frete", nullable= false, precision=10, scale=2)
 	public BigDecimal getValorFrete() {
 		return valorFrete;
 	}
@@ -105,7 +113,7 @@ public class PedidoCompra implements Serializable {
 	}
 
 	@NotNull
-	@Column(name = "valor_desconto", nullable = false, precision = 10, scale = 2)
+	@Column(name="valor_desconto", nullable=false, precision=10, scale=2)
 	public BigDecimal getValorDesconto() {
 		return valorDesconto;
 	}
@@ -115,7 +123,7 @@ public class PedidoCompra implements Serializable {
 	}
 
 	@NotNull
-	@Column(name = "valor_total", nullable = false, precision = 10, scale = 2)
+	@Column(name="valor_total", nullable=false, precision=10, scale=2)
 	public BigDecimal getValorTotal() {
 		return valorTotal;
 	}
@@ -126,7 +134,7 @@ public class PedidoCompra implements Serializable {
 
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false, length = 20)
+	@Column(nullable=false, length=20)
 	public StatusPedido getStatus() {
 		return status;
 	}
@@ -135,46 +143,7 @@ public class PedidoCompra implements Serializable {
 		this.status = status;
 	}
 
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	@Column(name = "forma_pagamento", nullable = false, length = 20)
-	public FormaPagamento getFormaPagamento() {
-		return formaPagamento;
-	}
-
-	public void setFormaPagamento(FormaPagamento formaPagamento) {
-		this.formaPagamento = formaPagamento;
-	}
-
-	public String getComprador() {
-		return comprador;
-	}
-
-	public void setComprador(String comprador) {
-		this.comprador = comprador;
-	}
-
-	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "fornecedor_id", nullable = false)
-	public Fornecedor getFornecedor() {
-		return fornecedor;
-	}
-
-	public void setFornecedor(Fornecedor fornecedor) {
-		this.fornecedor = fornecedor;
-	}
-
-	@Embedded
-	public EnderecoEntrega getEnderecoEntrega() {
-		return enderecoEntrega;
-	}
-
-	public void setEnderecoEntrega(EnderecoEntrega enderecoEntrega) {
-		this.enderecoEntrega = enderecoEntrega;
-	}
-
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="pedido", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	public List<ItemPedido> getItens() {
 		return itens;
 	}
@@ -197,20 +166,17 @@ public class PedidoCompra implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((fornecedor == null) ? 0 : fornecedor.hashCode());
 		result = prime * result + ((dataCriacao == null) ? 0 : dataCriacao.hashCode());
 		result = prime * result + ((dataEntrega == null) ? 0 : dataEntrega.hashCode());
-		result = prime * result + ((enderecoEntrega == null) ? 0 : enderecoEntrega.hashCode());
-		result = prime * result + ((formaPagamento == null) ? 0 : formaPagamento.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((itens == null) ? 0 : itens.hashCode());
-		result = prime * result + ((numeroRequisicaoSAP == null) ? 0 : numeroRequisicaoSAP.hashCode());
 		result = prime * result + ((observacao == null) ? 0 : observacao.hashCode());
+		result = prime * result + ((requisitante == null) ? 0 : requisitante.hashCode());
+		result = prime * result + ((solicitante == null) ? 0 : solicitante.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((valorDesconto == null) ? 0 : valorDesconto.hashCode());
 		result = prime * result + ((valorFrete == null) ? 0 : valorFrete.hashCode());
 		result = prime * result + ((valorTotal == null) ? 0 : valorTotal.hashCode());
-		result = prime * result + ((comprador == null) ? 0 : comprador.hashCode());
 		return result;
 	}
 
@@ -222,12 +188,7 @@ public class PedidoCompra implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PedidoCompra other = (PedidoCompra) obj;
-		if (fornecedor == null) {
-			if (other.fornecedor != null)
-				return false;
-		} else if (!fornecedor.equals(other.fornecedor))
-			return false;
+		Pedido other = (Pedido) obj;
 		if (dataCriacao == null) {
 			if (other.dataCriacao != null)
 				return false;
@@ -237,13 +198,6 @@ public class PedidoCompra implements Serializable {
 			if (other.dataEntrega != null)
 				return false;
 		} else if (!dataEntrega.equals(other.dataEntrega))
-			return false;
-		if (enderecoEntrega == null) {
-			if (other.enderecoEntrega != null)
-				return false;
-		} else if (!enderecoEntrega.equals(other.enderecoEntrega))
-			return false;
-		if (formaPagamento != other.formaPagamento)
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -255,15 +209,20 @@ public class PedidoCompra implements Serializable {
 				return false;
 		} else if (!itens.equals(other.itens))
 			return false;
-		if (numeroRequisicaoSAP == null) {
-			if (other.numeroRequisicaoSAP != null)
-				return false;
-		} else if (!numeroRequisicaoSAP.equals(other.numeroRequisicaoSAP))
-			return false;
 		if (observacao == null) {
 			if (other.observacao != null)
 				return false;
 		} else if (!observacao.equals(other.observacao))
+			return false;
+		if (requisitante == null) {
+			if (other.requisitante != null)
+				return false;
+		} else if (!requisitante.equals(other.requisitante))
+			return false;
+		if (solicitante == null) {
+			if (other.solicitante != null)
+				return false;
+		} else if (!solicitante.equals(other.solicitante))
 			return false;
 		if (status != other.status)
 			return false;
@@ -281,11 +240,6 @@ public class PedidoCompra implements Serializable {
 			if (other.valorTotal != null)
 				return false;
 		} else if (!valorTotal.equals(other.valorTotal))
-			return false;
-		if (comprador == null) {
-			if (other.comprador != null)
-				return false;
-		} else if (!comprador.equals(other.comprador))
 			return false;
 		return true;
 	}
@@ -323,7 +277,7 @@ public class PedidoCompra implements Serializable {
 
 	@Transient
 	public boolean isOrcamento() {
-		return StatusPedido.ORCAMENTO.equals(this.getStatus());
+		return StatusPedido.ANALISE.equals(this.getStatus());
 	}
 
 	public void removerItemVazio() {

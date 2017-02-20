@@ -32,7 +32,7 @@ public class Produto implements Serializable {
 	private String fabricante;
 	private String modelo;
 	private String descricao;
-	private BigDecimal valorEstimado;
+	private BigDecimal valorEstimado=BigDecimal.ZERO;
 	private String codigoSAP;
 	private Integer quantidadeEstoque;
 

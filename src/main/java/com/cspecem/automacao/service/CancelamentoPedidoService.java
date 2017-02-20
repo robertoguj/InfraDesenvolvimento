@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 
-import com.cspecem.automacao.model.PedidoCompra;
+import com.cspecem.automacao.model.Pedido;
 import com.cspecem.automacao.model.StatusPedido;
 import com.cspecem.automacao.repository.Pedidos;
 import com.cspecem.automacao.util.jpa.Transactional;

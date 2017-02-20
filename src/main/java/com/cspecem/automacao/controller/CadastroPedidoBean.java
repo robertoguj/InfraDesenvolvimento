@@ -14,10 +14,9 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.primefaces.event.SelectEvent;
 
 import com.cspecem.automacao.model.Cliente;
-import com.cspecem.automacao.model.EnderecoEntrega;
 import com.cspecem.automacao.model.FormaPagamento;
 import com.cspecem.automacao.model.ItemPedido;
-import com.cspecem.automacao.model.PedidoCompra;
+import com.cspecem.automacao.model.Pedido;
 import com.cspecem.automacao.model.Produto;
 import com.cspecem.automacao.model.Usuario;
 import com.cspecem.automacao.repository.Clientes;
@@ -30,7 +29,7 @@ import com.cspecem.automacao.validation.SKU;
 
 @Named
 @ViewScoped
-public class CadastroPedidoBean implements Serializable {
+public class CadastroPedidoBean extends AbstractController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -50,7 +49,7 @@ public class CadastroPedidoBean implements Serializable {
 	
 	@Produces
 	@PedidoEdicao
-	private PedidoCompra pedido;
+	private Pedido pedido;
 	
 	private List<Usuario> vendedores;
 	
@@ -67,6 +66,7 @@ public class CadastroPedidoBean implements Serializable {
 			
 			this.recalcularPedido();
 		}
+		getLocaisLista();
 	}
 	
 	public void clienteSelecionado(SelectEvent event) {
@@ -74,8 +74,8 @@ public class CadastroPedidoBean implements Serializable {
 	}
 	
 	private void limpar() {
-		pedido = new PedidoCompra();
-		pedido.setEnderecoEntrega(new EnderecoEntrega());
+		pedido = new Pedido();
+		//pedido.setEnderecoEntrega(new EnderecoEntrega());
 	}
 	
 	public void pedidoAlterado(@Observes PedidoAlteradoEvent event) {
@@ -101,7 +101,7 @@ public class CadastroPedidoBean implements Serializable {
 			this.pedido.recalcularValorTotal();
 		}
 	}
-	/*
+
 	public void carregarProdutoPorSku() {
 		if (StringUtils.isNotEmpty(this.sku)) {
 			this.produtoLinhaEditavel = this.produtos.porSku(this.sku);
@@ -117,7 +117,7 @@ public class CadastroPedidoBean implements Serializable {
 				FacesUtil.addErrorMessage("Já existe um item no pedido com o produto informado.");
 			} else {
 				item.setProduto(this.produtoLinhaEditavel);
-				item.setValorUnitario(this.produtoLinhaEditavel.getValorUnitario());
+				//item.setValorUnitario(this.produtoLinhaEditavel.getValorUnitario());
 				
 				this.pedido.adicionarItemVazio();
 				this.produtoLinhaEditavel = null;
@@ -127,7 +127,7 @@ public class CadastroPedidoBean implements Serializable {
 			}
 		}
 	}
-	*/
+
 	private boolean existeItemComProduto(Produto produto) {
 		boolean existeItem = false;
 		
@@ -165,11 +165,11 @@ public class CadastroPedidoBean implements Serializable {
 		return this.clientes.porNome(nome);
 	}
 
-	public PedidoCompra getPedido() {
+	public Pedido getPedido() {
 		return pedido;
 	}
 	
-	public void setPedido(PedidoCompra pedido) {
+	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
 

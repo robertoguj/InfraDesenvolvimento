@@ -11,16 +11,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.cspecem.automacao.model.Equipamento;
-import com.cspecem.automacao.model.LocalInstalacao;
 import com.cspecem.automacao.model.Produto;
 import com.cspecem.automacao.repository.Equipamentos;
-import com.cspecem.automacao.repository.LocaisInstalacao;
 import com.cspecem.automacao.repository.Produtos;
 import com.cspecem.automacao.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
-public class EquipamentoBean implements Serializable {
+public class EquipamentoBean extends AbstractController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -35,10 +33,6 @@ public class EquipamentoBean implements Serializable {
 	@Inject
 	private Produtos produtos;
 	private List<Produto> produtosLista;
-	
-	@Inject
-	private LocaisInstalacao locais;
-	private List<LocalInstalacao> locaisLista;
 	
 	public EquipamentoBean() {
 		limpar();
@@ -125,13 +119,6 @@ public class EquipamentoBean implements Serializable {
 		return equipamentosLista;
 	}
 
-	public List<LocalInstalacao> getLocaisLista() {
-		if (this.locaisLista == null) {
-			this.locaisLista = locais.listar("id");
-		}
-		return locaisLista;
-	}
-	
 	public Equipamento getEquipamentoSelecionado() {
 		return equipamentoSelecionado;
 	}

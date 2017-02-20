@@ -2,7 +2,8 @@ package com.cspecem.automacao.model;
 
 public enum StatusPedido {
 
-	ORCAMENTO("Orçamento"), 
+	//ORCAMENTO("Orçamento"),
+	ANALISE("Em análise"),
 	EMITIDO("Emitido"), 
 	CANCELADO("Cancelado");
 	

@@ -73,7 +73,7 @@ public abstract class DaoGenerico<T, ID extends Serializable> implements Generic
 	public List<T> listar(String value) {
 		StringBuffer queryS = new StringBuffer("SELECT obj FROM " + classePersistence.getSimpleName() + " obj ");
 		if (value != null) {
-			queryS.append("order by " + value);
+			queryS.append("order by " + value + " asc");
 		}
 
 		Query query = em.createQuery(queryS.toString());
