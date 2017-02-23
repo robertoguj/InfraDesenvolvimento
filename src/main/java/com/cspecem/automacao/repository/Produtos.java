@@ -32,7 +32,6 @@ public class Produtos extends DaoGenerico<Produto, Long> implements ProdutoDAO, 
 	}
 	
 	@SuppressWarnings("unchecked")
-	@Override
 	public List<Produto> filtrados(ProdutoFilter filtro) {
 		Session session = em.unwrap(Session.class);
 		Criteria criteria = session.createCriteria(Produto.class);

@@ -34,8 +34,13 @@
     					required="true" requiredMessage="Senha deve ser informada." />
     				
     				<h:panelGroup/>
-    				<p:commandButton value="Login" action="#{loginBean.login}" ajax="false" />
+					
+					<h:panelGrid columns="2">
+    					<p:commandButton icon="ui-icon-check" action="#{loginBean.login}" ajax="false" />
+    					<p:button icon="ui-icon-cancel" outcome="/Login" />
+    				</h:panelGrid>    				
     			</h:panelGrid>
+    			
     		</h:form>
     	</div>
     </h:body>

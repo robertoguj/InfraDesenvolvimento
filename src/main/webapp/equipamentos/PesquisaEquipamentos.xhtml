@@ -5,84 +5,84 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
 
-    <ui:define name="titulo">Pesquisa de produtos</ui:define>
+    <ui:define name="titulo">Pesquisa de equipamentos</ui:define>
     
     <ui:define name="corpo">
     	<h:form id="frmPesquisa">
-	    	<h1>Pesquisa de produtos</h1>
+	    	<h3>Pesquisa de equipamentos</h3>
 	    	
 	    	<p:messages autoUpdate="true" closable="true" />
 	    	
 	    	<p:toolbar style="margin-top: 20px">
 	    		<p:toolbarGroup>
-	    			<p:commandButton value="Pesquisar" action="#{pesquisaProdutosBean.pesquisar}"
+	    			<p:commandButton value="Pesquisar" action="#{pesquisaEquipamentoBean.pesquisar}"
 	    				update="@form" />
 	    		</p:toolbarGroup>
 	    		<p:toolbarGroup align="right">
-	    			<p:button value="Novo" outcome="/produtos/CadastroProduto" />
+	    			<p:button value="Novo" outcome="/equipamentos/CadastroEquipamento" />
 	    		</p:toolbarGroup>
 	    	</p:toolbar>
 	    	
-	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
-	    			columnClasses="rotulo, campo">
-	    		<p:outputLabel value="SKU" for="sku"/>
-	    		<p:inputText id="sku" size="20" value="#{pesquisaProdutosBean.filtro.sku}" />
+	    	<p:panelGrid columns="2" id="painel" style="width:100%; margin-top:20px" columnClasses="rotulo, campo">
+	    		<p:outputLabel value="#{bundle.codigo}" for="codigo"/>
+	    		<p:inputText id="codigo" size="8" value="#{pesquisaEquipamentoBean.filtro.codigo}" style="width:60px;" />
 	    		
-	    		<p:outputLabel value="Descrição" for="descricao"/>
-	    		<p:inputText id="descricao" size="60" value="#{pesquisaProdutosBean.filtro.descricao}" />
+	    		<p:outputLabel value="#{bundle.partNumber}" for="numeroSerie"/>
+	    		<p:inputText id="numeroSerie" size="20" value="#{pesquisaEquipamentoBean.filtro.numeroSerie}" />
 	    	</p:panelGrid>
 	    	
-	    	<p:dataTable id="produtosTable" value="#{pesquisaProdutosBean.produtosFiltrados}" var="produto"
-	    		style="margin-top: 20px" emptyMessage="Nenhum produto encontrado." rows="20"
+	    	<p:dataTable id="equipamentoTable" value="#{pesquisaEquipamentoBean.equipamentosFiltrados}" var="equipamento"
+	    		style="margin-top: 20px" emptyMessage="Nenhum equipamento encontrado." rows="20"
 	    		paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
-	    		<p:column headerText="#{bundle.codigo}" style="text-align: center; width: 100px">
-	    			<h:outputText value="#{produto.sku}" />
+	    		<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+
+	    		<p:column headerText="#{bundle.partNumber}" style="width:120px">
+	    			<h:outputText value="#{equipamento.numeroSerie}" />
 	    		</p:column>
-	    		<p:column headerText="#{bundle.description}">
-	    			<h:outputText value="#{produto.descricao}" />
+	    		<p:column headerText="#{bundle.model}">
+	    			<h:outputText value="#{equipamento.produto.modelo}" style="width:200px" />
 	    		</p:column>
-	    		<p:column headerText="Categoria" style="width: 250px">
-	    			<h:outputText value="#{produto.categoria}"/>
+				<p:column headerText="#{bundle.manufacturer}">
+	    			<h:outputText value="#{equipamento.produto.fabricante}" style="width:100px" />
+	    		</p:column>	    		
+	    		<p:column headerText="#{bundle.area}" style="text-align: center; width:100px">
+	    			<h:outputText value="#{equipamento.localInstalacao.area}" />
 	    		</p:column>
-	    		<p:column headerText="Valor estimado" style="text-align: right; width: 120px">
-	    			<h:outputText value="#{produto.valorEstimado}">
-	    				<f:convertNumber type="currency"/>
-	    			</h:outputText>
+	    		<p:column headerText="#{bundle.location}" style="text-align: center; width:200px">
+	    			<h:outputText value="#{equipamento.localInstalacao.local}" />
 	    		</p:column>
-	    		<p:column headerText="Estoque" style="text-align: center; width: 100px">
-	    			<h:outputText value="#{produto.quantidadeEstoque}" />
-	    		</p:column>
+	    		
 	    		<p:column style="width: 100px; text-align: center">
-	    			<p:button outcome="/produtos/CadastroProduto" icon="ui-icon-pencil" title="Editar">
-	    				<f:param name="produto" value="#{produto.id}" />
+	    			<p:button outcome="/equipamentos/CadastroEquipamento" icon="ui-icon-pencil" title="Editar">
+	    				<f:param name="equipamento" value="#{equipamento.id}" />
 	    			</p:button>
 	    			<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
 	    					process="@this" update=":frmPesquisa:confirmacaoExclusaoDialog">
-	    				<f:setPropertyActionListener target="#{pesquisaProdutosBean.produtoSelecionado}" 
-	    					value="#{produto}" />
+	    				<f:setPropertyActionListener target="#{pesquisaEquipamentoBean.equipamentoSelecionado}" 
+	    					value="#{equipamento}" />
 	    			</p:commandButton>
-	    			<p:commandButton update=":frmPesquisa:produtoDetail" oncomplete="PF('produtoDialog').show()" icon="ui-icon-search" title="Detalhes"
+	    			<p:commandButton update=":frmPesquisa:equipamentoDetail" oncomplete="PF('equipamentoDialog').show()" icon="ui-icon-search" title="Detalhes"
 						immediate="true">
-                		<f:setPropertyActionListener value="#{produto}" target="#{produtoBean.produtoSelecionado}" />
+                		<f:setPropertyActionListener value="#{equipamento}" target="#{pesquisaEquipamentoBean.equipamentoSelecionado}" />
             		</p:commandButton>
 	    		</p:column>
 	    	</p:dataTable>
 	    	
-	    	<p:confirmDialog header="Exclusão de produto" 
-	    		message="Tem certeza que deseja excluir o produto #{pesquisaProdutosBean.produtoSelecionado.sku}?"
+	    	<p:confirmDialog header="Exclusão de equipamento" 
+	    		message="Tem certeza que deseja excluir o equipamento #{pesquisaEquipamentoBean.equipamentoSelecionado.numeroSerie}?"
 	    		widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
 	    		<p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;" />
 	    		<p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
-	    			action="#{pesquisaProdutosBean.excluir}" process="@this"
-	    			update=":frmPesquisa:produtosTable" id="yesButton" />
+	    			action="#{pesquisaEquipamentoBean.excluir}" process="@this"
+	    			update=":frmPesquisa:equipamentoTable" id="yesButton" />
 	    	</p:confirmDialog>
 	    	
-	    	<ui:include src="/dialogos/DetalhesProduto.xhtml" />
+	    	<ui:include src="/dialogos/DetalhesEquipamento.xhtml" />
  
-   			<p:dialog header="Produto selecionado" widgetVar="multiProdutoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="200">
-        		<p:outputPanel id="multiProdutoDetail" style="text-align:center;">
-            		<ui:repeat value="#{produtoBean.produtosSelecionados}" var="produto">
-                		<h:outputText value="#{produto.id} - #{produto.nome}" style="display:block"/>
+   			<p:dialog header="Equipamento selecionado" widgetVar="multiEquipamentoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="200">
+        		<p:outputPanel id="multiEquipamentoDetail" style="text-align:center;">
+            		<ui:repeat value="#{pesquisaEquipamentoBean.equipamentosSelecionados}" var="equipamento">
+                		<h:outputText value="#{equipamento.id} - #{equipamento.produto.descricao}" style="display:block"/>
             		</ui:repeat>
         		</p:outputPanel>
     		</p:dialog>

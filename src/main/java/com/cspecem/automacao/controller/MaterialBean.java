@@ -11,14 +11,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.cspecem.automacao.model.Material;
-import com.cspecem.automacao.model.Produto;
 import com.cspecem.automacao.repository.Materiais;
-import com.cspecem.automacao.repository.Produtos;
 import com.cspecem.automacao.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
-public class MaterialBean implements Serializable {
+public class MaterialBean extends AbstractController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -30,16 +28,15 @@ public class MaterialBean implements Serializable {
 	private Material materialSelecionado;
 	private List<Material> materiaisSelecionados;
 	
-	@Inject
-	private Produtos produtos;
-	private List<Produto> produtosLista;
-	
 	public MaterialBean() {
 		limpar();
 	}
 	
 	@PostConstruct
 	public void inicializar() {
+		if (FacesUtil.isNotPostback()) {
+			getProdutosLista();
+		}
 		System.out.println("inicializacao");
 	}
 	
@@ -99,13 +96,6 @@ public class MaterialBean implements Serializable {
 
 	public void setMaterial(Material material) {
 		this.material = material;
-	}
-	
-	public List<Produto> getProdutosLista() {
-		if (this.produtosLista == null) {
-			this.produtosLista = produtos.listar("id");
-		}
-		return produtosLista;
 	}
 	
 	public List<Material> getMateriaisLista() {

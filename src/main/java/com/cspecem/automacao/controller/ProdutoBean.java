@@ -104,6 +104,7 @@ public class ProdutoBean implements Serializable {
 			this.categorias.add(new SelectItem("Acessórios", "Acessórios"));
 			this.categorias.add(new SelectItem("Áudio e vídeo", "Áudio e vídeo"));
 			this.categorias.add(new SelectItem("Eletro eletrônico", "Eletro eletrônico"));
+			this.categorias.add(new SelectItem("Impressora", "Impressora"));
 			this.categorias.add(new SelectItem("Hardware", "Hardware"));
 			this.categorias.add(new SelectItem("Periféricos", "Periféricos"));
 			this.categorias.add(new SelectItem("Redes", "Redes"));

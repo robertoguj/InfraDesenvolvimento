@@ -18,7 +18,7 @@ public class ProdutoService implements Serializable {
 		Produto produtoExistente = produtos.porSku(produto.getSku());
 		
 		if (produtoExistente != null && !produtoExistente.equals(produto)) {
-			throw new NegocioException("Já existe um produto com o SKU informado.");
+			throw new NegocioException("Já existe um produto com o código informado.");
 		}
 		
 		return produtos.salvar(produto);

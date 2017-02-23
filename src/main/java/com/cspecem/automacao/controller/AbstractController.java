@@ -7,9 +7,15 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 
 import com.cspecem.automacao.model.LocalInstalacao;
+import com.cspecem.automacao.model.Produto;
 import com.cspecem.automacao.repository.LocaisInstalacao;
+import com.cspecem.automacao.repository.Produtos;
 
 public abstract class AbstractController {
+	
+	@Inject
+	private Produtos produtos;
+	private List<Produto> produtosLista;
 	
 	@Inject
 	private LocaisInstalacao locais;
@@ -25,6 +31,13 @@ public abstract class AbstractController {
 		return locaisLista;
 	}
 	
+	public List<Produto> getProdutosLista() {
+		if (this.produtosLista == null) {
+			this.produtosLista = produtos.listar("id");
+		}
+		
+		return produtosLista;
+	}
 	
 
 }

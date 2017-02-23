@@ -11,9 +11,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.cspecem.automacao.model.Equipamento;
-import com.cspecem.automacao.model.Produto;
 import com.cspecem.automacao.repository.Equipamentos;
-import com.cspecem.automacao.repository.Produtos;
+import com.cspecem.automacao.repository.filter.EquipamentoFilter;
 import com.cspecem.automacao.util.jsf.FacesUtil;
 
 @Named
@@ -30,9 +29,8 @@ public class EquipamentoBean extends AbstractController implements Serializable 
 	private List<Equipamento> equipamentosLista;
 	private List<Equipamento> equipamentosSelecionados;
 	
-	@Inject
-	private Produtos produtos;
-	private List<Produto> produtosLista;
+	private EquipamentoFilter filtro;
+	private List<Equipamento> equipamentosFiltrados;
 	
 	public EquipamentoBean() {
 		limpar();
@@ -46,8 +44,12 @@ public class EquipamentoBean extends AbstractController implements Serializable 
 		}
 	}
 	
+	public void pesquisar() {
+		equipamentosFiltrados = equipamentos.filtrados(filtro);
+	}
+	
 	public void limpar() {
-		this.equipamento = new Equipamento();
+		equipamento = new Equipamento();
 	}
 	
 	public void salvar() {
@@ -103,14 +105,6 @@ public class EquipamentoBean extends AbstractController implements Serializable 
 		this.equipamento = equipamento;
 	}
 
-	public List<Produto> getProdutosLista() {
-		if (this.produtosLista == null) {
-			this.produtosLista = produtos.listar("id");
-		}
-		
-		return produtosLista;
-	}
-
 	public List<Equipamento> getEquipamentosLista() {
 		if (this.equipamentosLista == null) {
 			this.equipamentosLista = equipamentos.listar("id");
@@ -125,6 +119,14 @@ public class EquipamentoBean extends AbstractController implements Serializable 
 	
 	public List<Equipamento> getEquipamentosSelecionados() {
 		return equipamentosSelecionados;
+	}
+	
+	public List<Equipamento> getEquipamentosFiltrados() {
+		return equipamentosFiltrados;
+	}
+
+	public EquipamentoFilter getFiltro() {
+		return filtro;
 	}
 
 	public void setEquipamentoSelecionado(Equipamento equipamentoSelecionado) {
