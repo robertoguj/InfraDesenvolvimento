@@ -1,11 +1,9 @@
 package com.cspecem.automacao.controller;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,14 +14,13 @@ import com.cspecem.automacao.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
-public class MaterialBean extends AbstractController implements Serializable {
+public class MaterialBean extends ExtensaoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
 	private Materiais materiais;
 	private Material material;
-	private List<SelectItem> statusCadastroSAP;
 	private List<Material> materiaisLista;
 	private Material materialSelecionado;
 	private List<Material> materiaisSelecionados;
@@ -80,16 +77,6 @@ public class MaterialBean extends AbstractController implements Serializable {
 		return this.material.getId() != null;
 	}
 	
-	public List<SelectItem> getStatusCadastroSAP() {
-		if (this.statusCadastroSAP == null) {
-			this.statusCadastroSAP = new ArrayList<SelectItem>();
-			this.statusCadastroSAP.add(new SelectItem("Pendente","Pendente"));
-			this.statusCadastroSAP.add(new SelectItem("Cadastrado","Cadastrado"));
-			this.statusCadastroSAP.add(new SelectItem("Não cadastrado","Não cadastrado"));
-		}
-		return statusCadastroSAP;
-	}
-
 	public Material getMaterial() {
 		return material;
 	}

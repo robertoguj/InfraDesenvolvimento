@@ -6,8 +6,6 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,10 +15,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.cspecem.automacao.validation.SKU;
+//import com.cspecem.automacao.validation.SKU;
 
 @Entity
 @Table(name="equipamento")
@@ -33,10 +32,10 @@ public class Equipamento implements Serializable {
 	private String numeroSerie;
 	private LocalInstalacao localInstalacao;
 	private String tag;
-	private String rack;
-	private StatusGarantia statusGarantia;
+	private String statusGarantia;
 	private Date dataGarantia;
-
+	private Date dataAtual = new Date(System.currentTimeMillis());
+	
 	@Id
 	@GeneratedValue
 	@Column(name="equipamento_id")
@@ -58,9 +57,9 @@ public class Equipamento implements Serializable {
 		this.produto = produto;
 	}
 
-	@NotBlank(message = "Por favor, informe o número de série")
-	@SKU(message = "Por favor, informe um número de série no formato XX9999")
-	@Column(name="numero_serie", nullable = false, length = 20, unique = true)
+	@NotBlank(message="Número de série do equipamento deve ser informado.")
+	//@SKU(message="Por favor, informe um número de série no formato XX9999")
+	@Column(name="numero_serie", nullable=false, length = 20, unique=true)
 	public String getNumeroSerie() {
 		return numeroSerie;
 	}
@@ -69,7 +68,7 @@ public class Equipamento implements Serializable {
 		this.numeroSerie = numeroSerie;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="local_id")
 	public LocalInstalacao getLocalInstalacao() {
 		return localInstalacao;
@@ -79,6 +78,7 @@ public class Equipamento implements Serializable {
 		this.localInstalacao = localInstalacao;
 	}
 
+	@Column(length=35)
 	public String getTag() {
 		return tag;
 	}
@@ -87,21 +87,27 @@ public class Equipamento implements Serializable {
 		this.tag = tag;
 	}
 
-	public String getRack() {
-		return rack;
+	@Transient
+	public Date getDataAtual() {
+		return dataAtual;
 	}
 
-	public void setRack(String rack) {
-		this.rack = rack;
+	public void setDataAtual(Date dataAtual) {
+		this.dataAtual = dataAtual;
 	}
 
-	@Enumerated(EnumType.STRING)
-	@Column(name="status_garantia")
-	public StatusGarantia getStatusGarantia() {
+	@Transient
+	public String getStatusGarantia() {
+
+		if(this.dataGarantia.compareTo(dataAtual) < 0) {
+			this.statusGarantia = "Expirada";
+		} else {
+			this.statusGarantia = "Ativa";
+		}
 		return statusGarantia;
 	}
 
-	public void setStatusGarantia(StatusGarantia statusGarantia) {
+	public void setStatusGarantia(String statusGarantia) {
 		this.statusGarantia = statusGarantia;
 	}
 
@@ -119,12 +125,12 @@ public class Equipamento implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((dataAtual == null) ? 0 : dataAtual.hashCode());
 		result = prime * result + ((dataGarantia == null) ? 0 : dataGarantia.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((localInstalacao == null) ? 0 : localInstalacao.hashCode());
 		result = prime * result + ((numeroSerie == null) ? 0 : numeroSerie.hashCode());
 		result = prime * result + ((produto == null) ? 0 : produto.hashCode());
-		result = prime * result + ((rack == null) ? 0 : rack.hashCode());
 		result = prime * result + ((statusGarantia == null) ? 0 : statusGarantia.hashCode());
 		result = prime * result + ((tag == null) ? 0 : tag.hashCode());
 		return result;
@@ -139,6 +145,11 @@ public class Equipamento implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Equipamento other = (Equipamento) obj;
+		if (dataAtual == null) {
+			if (other.dataAtual != null)
+				return false;
+		} else if (!dataAtual.equals(other.dataAtual))
+			return false;
 		if (dataGarantia == null) {
 			if (other.dataGarantia != null)
 				return false;
@@ -164,12 +175,10 @@ public class Equipamento implements Serializable {
 				return false;
 		} else if (!produto.equals(other.produto))
 			return false;
-		if (rack == null) {
-			if (other.rack != null)
+		if (statusGarantia == null) {
+			if (other.statusGarantia != null)
 				return false;
-		} else if (!rack.equals(other.rack))
-			return false;
-		if (statusGarantia != other.statusGarantia)
+		} else if (!statusGarantia.equals(other.statusGarantia))
 			return false;
 		if (tag == null) {
 			if (other.tag != null)

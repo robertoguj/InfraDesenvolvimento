@@ -109,6 +109,7 @@ public class ProdutoBean implements Serializable {
 			this.categorias.add(new SelectItem("Periféricos", "Periféricos"));
 			this.categorias.add(new SelectItem("Redes", "Redes"));
 			this.categorias.add(new SelectItem("Servidor", "Servidor"));
+			this.categorias.add(new SelectItem("Software", "Software"));
 			this.categorias.add(new SelectItem("Storage", "Storage"));
 			this.categorias.add(new SelectItem("Suprimentos", "Suprimentos"));
 			this.categorias.add(new SelectItem("Switch", "Switch"));
@@ -125,11 +126,13 @@ public class ProdutoBean implements Serializable {
 			this.fabricantes.add(new SelectItem("Allied Telesis", "Allied Telesis"));
 			this.fabricantes.add(new SelectItem("Cisco", "Cisco"));
 			this.fabricantes.add(new SelectItem("Dell", "Dell"));
+			this.fabricantes.add(new SelectItem("Furukawa", "Furukawa"));
 			this.fabricantes.add(new SelectItem("Hirschmann", "Hirschmann"));
 			this.fabricantes.add(new SelectItem("HP", "HP"));
 			this.fabricantes.add(new SelectItem("Yokogawa", "Yokogawa"));
 			this.fabricantes.add(new SelectItem("iEi", "iEi"));
 			this.fabricantes.add(new SelectItem("Ibyte", "Ibyte"));
+			this.fabricantes.add(new SelectItem("Intel", "Intel"));
 			this.fabricantes.add(new SelectItem("Microsoft", "Microsoft"));
 			this.fabricantes.add(new SelectItem("Oracle", "Oracle"));
 			this.fabricantes.add(new SelectItem("Ruggedcom", "Ruggedcom"));

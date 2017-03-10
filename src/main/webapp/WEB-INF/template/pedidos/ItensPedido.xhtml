@@ -11,7 +11,7 @@
 			<p:inputText size="8" value="#{cadastroPedidoBean.sku}" label="SKU" id="sku"
 				rendered="#{not item.produtoAssociado}">
 				<p:ajax event="change" process="@this" 
-					update="tabelaItens :frmCadastro:totalPedido :frmCadastro:subtotal" 
+					update="tabelaItens" 
 					listener="#{cadastroPedidoBean.carregarProdutoPorSku}" />
 			</p:inputText>
 		</p:column>
@@ -22,14 +22,14 @@
 				completeMethod="#{cadastroPedidoBean.completarProduto}"
 				var="produto" itemLabel="#{produto.nome}" itemValue="#{produto}" 
 				forceSelection="true" rendered="#{not item.produtoAssociado}">
-				<p:ajax event="itemSelect" update="tabelaItens :frmCadastro:totalPedido :frmCadastro:subtotal" 
+				<p:ajax event="itemSelect" update="tabelaItens" 
 					listener="#{cadastroPedidoBean.carregarProdutoLinhaEditavel}"/>
 			</p:autoComplete>
 		</p:column>
 		<p:column headerText="Quantidade" style="text-align: center; width: 100px">
 			<p:inputText size="8" value="#{item.quantidade}" disabled="#{cadastroPedidoBean.pedido.naoAlteravel}">
 				<p:ajax event="change" process="@this"
-					update="tabelaItens :frmCadastro:totalPedido :frmCadastro:subtotal"
+					update="tabelaItens"
 					listener="#{cadastroPedidoBean.atualizarQuantidade(item, linha)}" />
 			</p:inputText>
 		</p:column>
@@ -41,29 +41,8 @@
 			<h:graphicImage library="images" name="alerta.png" id="semEstoque"
 				style="vertical-align: bottom; margin-left: 5px" 
 				rendered="#{item.estoqueInsuficiente}" />
-				
-			<p:tooltip for="semEstoque" value="Estoque insuficiente"
-				rendered="#{item.estoqueInsuficiente}" />
 		</p:column>
 		
-		<p:column headerText="Valor total" style="text-align: right; width: 100px">
-			<h:outputText value="#{item.valorTotal}">
-				<f:convertNumber type="currency"/>
-			</h:outputText>
-		</p:column>
-		
-		<p:columnGroup type="footer">
-			<p:row>
-				<p:column colspan="5" footerText="Subtotal" style="text-align: right" />
-				<p:column style="text-align: right">
-					<f:facet name="footer">
-						<h:outputText value="#{cadastroPedidoBean.pedido.valorSubtotal}">
-							<f:convertNumber type="currency"/>
-						</h:outputText>
-					</f:facet>
-				</p:column>
-			</p:row>
-		</p:columnGroup>
 	</p:dataTable>
   	
 </ui:composition>

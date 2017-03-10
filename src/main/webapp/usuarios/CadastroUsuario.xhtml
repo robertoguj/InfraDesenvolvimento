@@ -36,35 +36,35 @@
 			
 			<p:panelGrid columns="2" style="width: 100%; margin-top:10px;" columnClasses="rotulo, campo">
 				<p:outputLabel value="#{bundle.registration}" for="matricula" />
-				<p:inputText id="matricula" size="6" maxlength="6" required="true" value="#{usuarioBean.usuario.matricula}" style="width: 100px" />
+				<p:inputText id="matricula" size="6" maxlength="6" required="true" value="#{usuarioBean.usuario.matricula}" style="width: 100px" tabindex="1" />
 			</p:panelGrid>
 			
 			<p:panelGrid columns="4" id="painel" style="width: 100%; margin-top:10px;" columnClasses="labelColumn, imputColumn, labelColumn, imputColumn">
 				
 				<p:outputLabel value="#{bundle.name}" for="nome" />
-				<p:inputText id="nome" size="80" maxlength="80" required="true" value="#{usuarioBean.usuario.nome}" style="width: 400px" />
+				<p:inputText id="nome" size="80" maxlength="80" required="true" value="#{usuarioBean.usuario.nome}" style="width: 400px" tabindex="2" />
 				
 				<p:outputLabel value="#{bundle.password}" for="senha" />
-				<p:password id="senha" size="20" maxlength="20" required="true" value="#{usuarioBean.usuario.senha}" style="width: 200px" />
+				<p:password id="senha" size="20" maxlength="20" required="true" value="#{usuarioBean.usuario.senha}" style="width: 200px" tabindex="4" />
 				
 				<p:outputLabel value="#{bundle.email}" for="email" />
-				<p:inputText id="email" size="60" maxlength="60" required="true" value="#{usuarioBean.usuario.email}" style="width: 400px" />
+				<p:inputText id="email" size="60" maxlength="60" required="true" value="#{usuarioBean.usuario.email}" style="width: 400px" tabindex="3" />
 				
 				<p:outputLabel value="#{bundle.confirmPassword}" for="confirmarSenha" />
-				<p:password id="confirmarSenha" size="20" maxlength="20" required="true" value="#{usuarioBean.confirmarSenha}" style="width: 200px" />
+				<p:password id="confirmarSenha" size="20" maxlength="20" required="true" value="#{usuarioBean.confirmarSenha}" style="width: 200px" tabindex="5" />
 
 			</p:panelGrid>
 			
 			<p:panelGrid columns="2" style="width: 100%; margin-top:10px; margin-bottom:10px;" columnClasses="rotulo, campo">
 				<p:outputLabel value="#{bundle.perfil}" for="perfil" />
-				<p:selectManyMenu id="perfil" value="#{usuarioBean.usuario.grupos}" style="width: 200px" required="true"
-					converter="entityConverter">
+				<p:selectManyMenu id="perfil" value="#{usuarioBean.usuario.grupos}" style="width:200px;" required="true"
+					converter="entityConverter" tabindex="6">
 					<f:selectItems value="#{usuarioBean.selectGrupos}" />
     			</p:selectManyMenu>
 			</p:panelGrid>
 			
 			<p:dataTable id="dataTableId" value="#{usuarioBean.usuariosLista}" var="usuario"
-				emptyMessage="#{bundle.noRecords}" paginator="true" rows="10"
+				emptyMessage="#{bundle.noRecords}" paginator="true" rows="5"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" selection="#{usuarioBean.usuariosSelecionados}" rowKey="#{usuario.id}">
 				<f:facet name="header">
@@ -72,25 +72,29 @@
         		</f:facet>
         		
         		<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+				<p:column headerText="#{bundle.codigo}"
+					style="text-align:center; width:100px;">
+					<h:outputText value="#{usuario.id}" />
+				</p:column>
 				<p:column headerText="#{bundle.name}"
-					style="text-align: center; width: 200px">
+					style="text-align:center; width:200px;">
 					<h:outputText value="#{usuario.nome}" />
 				</p:column>
-				<p:column headerText="#{bundle.registration}" style="text-align: center; width: 50px">
+				<p:column headerText="#{bundle.registration}" style="text-align:center; width:50px">
 					<h:outputText value="#{usuario.matricula}" />
 				</p:column>
 				
 				<p:column headerText="#{bundle.email}"
-					style="text-align: center; width: 200px">
+					style="text-align:center; width:200px;">
 					<h:outputText value="#{usuario.email}" />
 				</p:column>
-				<p:column headerText="#{bundle.register}" style="text-align: center; width: 100px">
+				<p:column headerText="#{bundle.register}" style="text-align:center; width:100px;">
 					<h:outputText value="#{usuario.cadastro}">
 						<f:convertDateTime locale="pt_BR" dateStyle="long" timeZone="GMT-3" pattern="dd/MM/yyyy" />
 					</h:outputText>
 				</p:column>
 				<p:column headerText="#{bundle.status}"
-					style="text-align: center; width: 50px">
+					style="text-align:center; width:50px;">
 					<h:outputText value="#{usuario.ativo}" />
 				</p:column>
 				<p:column style="width: 100px; text-align: center">

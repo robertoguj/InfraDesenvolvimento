@@ -45,48 +45,36 @@
 				
 				<p:outputLabel value="#{bundle.product}" for="produto" />
 				<p:selectOneMenu id="produto" value="#{equipamentoBean.equipamento.produto}" style="width:800px;"
-					required="true" requiredMessage="Equipamento deve ser selecionado.">
+					required="true" requiredMessage="Favor selecionar o produto referente ao equipamento a ser cadastrado.">
 					<f:selectItem itemValue="#{null}" itemLabel="Selecione o produto" />
 					<f:selectItems value="#{equipamentoBean.produtosLista}" var="produto"
 						itemLabel="#{produto.descricao}" itemValue="#{produto}" />
 				</p:selectOneMenu>
 			
-				<p:outputLabel value="#{bundle.partNumber}" for="numeroSerie" />
-				<p:inputText id="numeroSerie" size="20" maxlength="20" style="width:242px;"
-					value="#{equipamentoBean.equipamento.numeroSerie}" required="true" />
-			</p:panelGrid>
-				
-			<p:panelGrid columns="2" style="width:100%; margin-top:10px" columnClasses="rotulo, campo">
-				
 				<p:outputLabel value="#{bundle.location}" for="localInstalacao" />
 				<p:selectOneMenu id="localInstalacao" value="#{equipamentoBean.equipamento.localInstalacao}"
-					style="width:250px;" required="true">
+					style="width:300px;" required="true" requiredMessage="Local de instalação deve ser informado.">
 					<f:selectItem itemValue="#{null}" itemLabel="Selecione o local" />
 					<f:selectItems value="#{equipamentoBean.locaisLista}" var="localInstalacao"
 						itemLabel="#{localInstalacao.local}" itemValue="#{localInstalacao}" />
 				</p:selectOneMenu>
-
 			</p:panelGrid>
 				
-			<p:panelGrid columns="4" style="width:100%; margin-top:10px" columnClasses="labelColumn, imputColumn, labelColumn, imputColumn">
+			<p:panelGrid columns="6" style="width:100%; margin-top:10px" columnClasses="rotulo, campo">
+				
+				<p:outputLabel value="#{bundle.partNumber}*" for="numeroSerie" />
+				<p:inputText id="numeroSerie" size="20" maxlength="20" style="width:292px;"
+					value="#{equipamentoBean.equipamento.numeroSerie}" />
 				
 				<p:outputLabel value="#{bundle.tag}" for="tag" />
 				<p:inputText id="tag" style="width:180px;" value="#{equipamentoBean.equipamento.tag}" />				
 
-				<p:outputLabel value="#{bundle.rack}" for="rack" />
-				<p:inputText id="rack" style="width:200px;" value="#{equipamentoBean.equipamento.rack}" />
-					
 				<p:outputLabel value="#{bundle.date}" for="dataGarantia" />
-				<p:calendar id="dataGarantia" value="#{equipamentoBean.equipamento.dataGarantia}" pattern="dd/MM/yyyy" mask="true" style="width:100px;" />
-				
-				<p:outputLabel value="#{bundle.statusGarantia}" for="statusGarantia" />
-				<p:selectOneMenu id="statusGarantia" value="#{equipamentoBean.equipamento.statusGarantia}" style="width:208px;">
-					<f:selectItem itemValue="#{null}" itemLabel="Selecione o status" />
-					<f:selectItems value="#{equipamentoBean.statusGarantia}" />
-				</p:selectOneMenu>
-				
+				<p:calendar id="dataGarantia" value="#{equipamentoBean.equipamento.dataGarantia}" pattern="dd/MM/yyyy" mask="true" style="width:100px;"
+					required="true" requiredMessage="Favor informar a data de garantia do equipamento." />
+
 			</p:panelGrid>
-			
+				
 			<br />
 			
 	    	<p:dataTable id="dataTableId" value="#{equipamentoBean.equipamentosLista}" var="equipamento"

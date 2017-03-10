@@ -20,7 +20,7 @@ import org.primefaces.validate.bean.ClientConstraint;
 public @interface SKU {
 
 	@OverridesAttribute(constraint = Pattern.class, name = "message")
-	String message() default "{com.algaworks.constraints.SKU.message}";
+	String message() default "{com.cspecem.automacao.constraints.SKU.messages}";
 	
 	Class<?>[] groups() default {};
 	

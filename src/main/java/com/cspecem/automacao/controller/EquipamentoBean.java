@@ -1,11 +1,9 @@
 package com.cspecem.automacao.controller;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -17,7 +15,7 @@ import com.cspecem.automacao.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
-public class EquipamentoBean extends AbstractController implements Serializable {
+public class EquipamentoBean extends ExtensaoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -25,7 +23,6 @@ public class EquipamentoBean extends AbstractController implements Serializable 
 	private Equipamentos equipamentos;
 	private Equipamento equipamento;
 	private Equipamento equipamentoSelecionado;
-	private List<SelectItem> statusGarantia;
 	private List<Equipamento> equipamentosLista;
 	private List<Equipamento> equipamentosSelecionados;
 	
@@ -82,15 +79,6 @@ public class EquipamentoBean extends AbstractController implements Serializable 
 		} catch (Exception e) {
 			FacesUtil.addErrorMessage("Erro ao tentar remover " + e.getMessage());
 		}
-	}
-	
-	public List<SelectItem> getStatusGarantia() {
-		if (this.statusGarantia == null) {
-			this.statusGarantia = new ArrayList<SelectItem>();
-			this.statusGarantia.add(new SelectItem("ATIVA","Ativa"));
-			this.statusGarantia.add(new SelectItem("EXPIRADA","Expirada"));
-		}
-		return statusGarantia;
 	}
 	
 	public boolean isEditando() {

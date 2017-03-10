@@ -35,13 +35,13 @@
 		<intercept-url pattern="/Home.xhtml" access="isAuthenticated()" />
 		<intercept-url pattern="/AcessoNegado.xhtml" access="isAuthenticated()" />
 		<intercept-url pattern="/dialogos/**" access="isAuthenticated()" />
-		<intercept-url pattern="/pedidos/**" access="hasAnyRole('ADMINISTRADOR')" />
-		<intercept-url pattern="/locais/**" access="hasAnyRole('TECNICO','ADMINISTRADOR')" />
-		<intercept-url pattern="/produtos/**" access="hasAnyRole('TECNICO','ADMINISTRADOR')" />
-		<intercept-url pattern="/equipamentos/**" access="hasAnyRole('ANALISTA','TECNICO','ADMINISTRADOR')" />
-		<intercept-url pattern="/materiais/**" access="hasAnyRole('ANALISTA','TECNICO','ADMINISTRADOR')" />
-		<intercept-url pattern="/relatorios/**" access="hasAnyRole('ADMINISTRADOR')" />
-		<intercept-url pattern="/usuarios/**" access="hasAnyRole('ADMINISTRADOR')" />
+		<intercept-url pattern="/pedidos/**" access="hasAnyRole('ADMINISTRADOR','COORDENADOR')" />
+		<intercept-url pattern="/locais/**" access="hasAnyRole('TECNICO','ADMINISTRADOR','COORDENADOR')" />
+		<intercept-url pattern="/produtos/**" access="hasAnyRole('TECNICO','ADMINISTRADOR','COORDENADOR')" />
+		<intercept-url pattern="/equipamentos/**" access="hasAnyRole('ANALISTA','TECNICO','ADMINISTRADOR','COORDENADOR')" />
+		<intercept-url pattern="/materiais/**" access="hasAnyRole('ANALISTA','TECNICO','ADMINISTRADOR','COORDENADOR')" />
+		<intercept-url pattern="/relatorios/**" access="hasAnyRole('ADMINISTRADOR','COORDENADOR')" />
+		<intercept-url pattern="/usuarios/**" access="hasAnyRole('ADMINISTRADOR','COORDENADOR')" />
 		<intercept-url pattern="/**" access="denyAll" />
 		
 		<form-login login-page="/Login.xhtml" authentication-failure-url="/Login.xhtml?invalid=true" 

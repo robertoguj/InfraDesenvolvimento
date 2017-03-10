@@ -25,8 +25,7 @@ public class Material implements Serializable {
 	private Integer quantidadeDesejavel;
 	private Integer quantidadeRecebida = 0;
 	private Integer quantidadeNecessariaRC;
-	private String numeroRC;
-	private String comprador;
+	private String codigoSAP;
 	private String statusSAP;
 	private String statusConsolidado;
 
@@ -80,8 +79,13 @@ public class Material implements Serializable {
 		this.quantidadeRecebida = quantidadeRecebida;
 	}
 	
-	@Column(name="status_sap", length=20)
+	@Transient
 	public String getStatusSAP() {
+		if (this.codigoSAP != null) {
+			this.statusSAP = "Cadastrado";
+		} else {
+			this.statusSAP = "Pendente";
+		}
 		return statusSAP;
 	}
 
@@ -97,25 +101,16 @@ public class Material implements Serializable {
 		return quantidadeNecessariaRC;
 	}
 
-	@Column(name="numero_rc", length=10)
-	public String getNumeroRC() {
-		return numeroRC;
+	@Column(name="codigo_sap", length=10)
+	public String getCodigoSAP() {
+		return codigoSAP;
 	}
 
-	public void setNumeroRC(String numeroRC) {
-		this.numeroRC = numeroRC;
+	public void setCodigoSAP(String codigoSAP) {
+		this.codigoSAP = codigoSAP;
 	}
 
-	@Column(length=30)
-	public String getComprador() {
-		return comprador;
-	}
-
-	public void setComprador(String comprador) {
-		this.comprador = comprador;
-	}
-
-	@Column(name="status_consolidado", length=40)
+	@Transient
 	public String getStatusConsolidado() {
 		
 		if (quantidadeDesejavel <= quantidadeRecebida ) {
@@ -134,10 +129,9 @@ public class Material implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((comprador == null) ? 0 : comprador.hashCode());
+		result = prime * result + ((codigoSAP == null) ? 0 : codigoSAP.hashCode());
 		result = prime * result + ((criticidade == null) ? 0 : criticidade.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((numeroRC == null) ? 0 : numeroRC.hashCode());
 		result = prime * result + ((produto == null) ? 0 : produto.hashCode());
 		result = prime * result + ((quantidadeDesejavel == null) ? 0 : quantidadeDesejavel.hashCode());
 		result = prime * result + ((quantidadeNecessariaRC == null) ? 0 : quantidadeNecessariaRC.hashCode());
@@ -156,10 +150,10 @@ public class Material implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Material other = (Material) obj;
-		if (comprador == null) {
-			if (other.comprador != null)
+		if (codigoSAP == null) {
+			if (other.codigoSAP != null)
 				return false;
-		} else if (!comprador.equals(other.comprador))
+		} else if (!codigoSAP.equals(other.codigoSAP))
 			return false;
 		if (criticidade == null) {
 			if (other.criticidade != null)
@@ -170,11 +164,6 @@ public class Material implements Serializable {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (numeroRC == null) {
-			if (other.numeroRC != null)
-				return false;
-		} else if (!numeroRC.equals(other.numeroRC))
 			return false;
 		if (produto == null) {
 			if (other.produto != null)

@@ -29,7 +29,7 @@ import com.cspecem.automacao.validation.SKU;
 
 @Named
 @ViewScoped
-public class CadastroPedidoBean extends AbstractController implements Serializable {
+public class CadastroPedidoBean extends ExtensaoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

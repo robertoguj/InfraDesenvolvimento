@@ -33,7 +33,6 @@ public class Produto implements Serializable {
 	private String modelo;
 	private String descricao;
 	private BigDecimal valorEstimado=BigDecimal.ZERO;
-	private String codigoSAP;
 	private Integer quantidadeEstoque;
 
 	@Id
@@ -58,7 +57,7 @@ public class Produto implements Serializable {
 	}
 
 	//@SKU(message = "Por favor, informe um SKU no formato XX9999")
-	@NotBlank(message = "Por favor, informe o código do produto.")
+	@NotBlank(message = "Favor informar o código do produto.")
 	@Column(nullable = false, length=20)
 	public String getSku() {
 		return sku;
@@ -107,15 +106,6 @@ public class Produto implements Serializable {
 		this.descricao = descricao;
 	}
 	
-	@Column(name="codigo_sap", length=10)
-	public String getCodigoSAP() {
-		return codigoSAP;
-	}
-
-	public void setCodigoSAP(String codigoSAP) {
-		this.codigoSAP = codigoSAP;
-	}
-	
 	@Min(0) @Max(value=9999, message="tem um valor muito alto")
 	@Column(name="qtd_estoque", length=5)
 	public Integer getQuantidadeEstoque() {
@@ -131,7 +121,6 @@ public class Produto implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((categoria == null) ? 0 : categoria.hashCode());
-		result = prime * result + ((codigoSAP == null) ? 0 : codigoSAP.hashCode());
 		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
 		result = prime * result + ((fabricante == null) ? 0 : fabricante.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -155,11 +144,6 @@ public class Produto implements Serializable {
 			if (other.categoria != null)
 				return false;
 		} else if (!categoria.equals(other.categoria))
-			return false;
-		if (codigoSAP == null) {
-			if (other.codigoSAP != null)
-				return false;
-		} else if (!codigoSAP.equals(other.codigoSAP))
 			return false;
 		if (descricao == null) {
 			if (other.descricao != null)
