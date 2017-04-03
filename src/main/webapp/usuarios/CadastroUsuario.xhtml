@@ -93,11 +93,11 @@
 						<f:convertDateTime locale="pt_BR" dateStyle="long" timeZone="GMT-3" pattern="dd/MM/yyyy" />
 					</h:outputText>
 				</p:column>
-				<p:column headerText="#{bundle.status}"
+				<p:column headerText="#{bundle.status}" rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}"
 					style="text-align:center; width:50px;">
 					<h:outputText value="#{usuario.ativo}" />
 				</p:column>
-				<p:column style="width: 100px; text-align: center">
+				<p:column style="width: 100px; text-align: center" rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}">
 					<p:button outcome="/usuarios/CadastroUsuario" icon="ui-icon-pencil" title="Editar usuário">
 	    				<f:param name="usuario" value="#{usuario.id}" />
 	    			</p:button>

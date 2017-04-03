@@ -4,19 +4,19 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
 
-	<p:panelGrid columns="2" style="width:100%; margin-top:10px" columnClasses="rotulo, campo">
+	<p:panelGrid columns="2" style="width:100%; margin-top:10px;" columnClasses="rotulo, campo">
 				
 		<p:outputLabel value="#{bundle.location}" for="localInstalacao" />
 		<p:selectOneMenu id="localInstalacao" value="#{cadastroPedidoBean.pedido.solicitante}"
 			style="width:500px;" required="true">
-			<f:selectItem itemValue="#{null}" itemLabel="Selecione a área solicitante" />
+			<f:selectItem itemValue="#{null}" itemLabel="--Selecione a área solicitante" />
 			<f:selectItems value="#{cadastroPedidoBean.locaisLista}" var="localInstalacao"
 				itemLabel="#{localInstalacao.local}" itemValue="#{localInstalacao}" />
 		</p:selectOneMenu>
 
 	</p:panelGrid>
 	
-	<p:panelGrid columns="4" style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo, rotulo, campo">
+	<p:panelGrid columns="4" style="width: 100%; margin-top:5px;" columnClasses="rotulo, campo, rotulo, campo">
 		<p:outputLabel value="Número" rendered="#{cadastroPedidoBean.pedido.existente}" />
 		<h:outputText value="#{cadastroPedidoBean.pedido.id}" rendered="#{cadastroPedidoBean.pedido.existente}" />
 		

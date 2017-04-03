@@ -146,7 +146,7 @@ public class ProdutoBean implements Serializable {
 	
 	public List<Produto> getProdutosLista() {
 		if (this.produtosLista == null) {
-			this.produtosLista = produtos.listar("id");
+			this.produtosLista = produtos.listar("descricao");
 		}
 		return this.produtosLista;
 	}

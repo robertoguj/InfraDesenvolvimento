@@ -46,15 +46,15 @@
 				<p:outputLabel value="#{bundle.product}" for="produto" />
 				<p:selectOneMenu id="produto" value="#{equipamentoBean.equipamento.produto}" style="width:800px;"
 					required="true" requiredMessage="Favor selecionar o produto referente ao equipamento a ser cadastrado.">
-					<f:selectItem itemValue="#{null}" itemLabel="Selecione o produto" />
+					<f:selectItem itemValue="#{null}" itemLabel="--Selecione o produto" />
 					<f:selectItems value="#{equipamentoBean.produtosLista}" var="produto"
 						itemLabel="#{produto.descricao}" itemValue="#{produto}" />
 				</p:selectOneMenu>
 			
 				<p:outputLabel value="#{bundle.location}" for="localInstalacao" />
 				<p:selectOneMenu id="localInstalacao" value="#{equipamentoBean.equipamento.localInstalacao}"
-					style="width:300px;" required="true" requiredMessage="Local de instalação deve ser informado.">
-					<f:selectItem itemValue="#{null}" itemLabel="Selecione o local" />
+					style="width:250px;" required="true" requiredMessage="Local de instalação deve ser informado.">
+					<f:selectItem itemValue="#{null}" itemLabel="--Selecione o local" />
 					<f:selectItems value="#{equipamentoBean.locaisLista}" var="localInstalacao"
 						itemLabel="#{localInstalacao.local}" itemValue="#{localInstalacao}" />
 				</p:selectOneMenu>
@@ -63,11 +63,11 @@
 			<p:panelGrid columns="6" style="width:100%; margin-top:10px" columnClasses="rotulo, campo">
 				
 				<p:outputLabel value="#{bundle.partNumber}*" for="numeroSerie" />
-				<p:inputText id="numeroSerie" size="20" maxlength="20" style="width:292px;"
+				<p:inputText id="numeroSerie" size="20" maxlength="20" style="width:242px;"
 					value="#{equipamentoBean.equipamento.numeroSerie}" />
 				
 				<p:outputLabel value="#{bundle.tag}" for="tag" />
-				<p:inputText id="tag" style="width:180px;" value="#{equipamentoBean.equipamento.tag}" />				
+				<p:inputText id="tag" style="width:150px;" value="#{equipamentoBean.equipamento.tag}" />				
 
 				<p:outputLabel value="#{bundle.date}" for="dataGarantia" />
 				<p:calendar id="dataGarantia" value="#{equipamentoBean.equipamento.dataGarantia}" pattern="dd/MM/yyyy" mask="true" style="width:100px;"

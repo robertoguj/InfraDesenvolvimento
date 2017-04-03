@@ -21,14 +21,14 @@ public abstract class ExtensaoBean {
 	
 	public List<LocalInstalacao> getLocaisLista() {
 		if (this.locaisLista == null) {
-			this.locaisLista = locais.listar("id");
+			this.locaisLista = locais.listar("local");
 		}
 		return locaisLista;
 	}
 	
 	public List<Produto> getProdutosLista() {
 		if (this.produtosLista == null) {
-			this.produtosLista = produtos.listar("id");
+			this.produtosLista = produtos.listar("descricao");
 		}
 		
 		return produtosLista;

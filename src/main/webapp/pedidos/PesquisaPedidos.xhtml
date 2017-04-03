@@ -84,7 +84,7 @@
 	    		<p:column headerText="Status" style="width: 100px">
 	    			<h:outputText value="#{pedido.status.descricao}"/>
 	    		</p:column>
-	    		<p:column style="text-align: center; width: 50px" exportable="false">
+	    		<p:column style="text-align: center; width: 50px" exportable="false" rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}">
 	    			<p:button icon="ui-icon-pencil" title="Editar" outcome="/pedidos/CadastroPedido">
 	    				<f:param name="pedido" value="#{pedido.id}" />
 	    			</p:button>

@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+//import com.cspecem.automacao.repository.Usuarios;
 import com.cspecem.automacao.util.jsf.FacesUtil;
 
 @Named
@@ -28,13 +29,24 @@ public class LoginBean implements Serializable {
 	
 	@Inject
 	private HttpServletResponse response;
-	
+	/*
+	@Inject
+	private Usuarios usuarios;
+	*/
+	private String senha;
 	private String email;
 
 	public void preRender() {
-		if ("true".equals(request.getParameter("invalid"))) {
-			FacesUtil.addErrorMessage("Usuário ou senha inválido!");
+		
+		if ("true".equals(request.getParameter("invalid"))) /*&& (!usuarios.porEmail(email).equals(email)))*/ {
+			//FacesUtil.addErrorMessage("Email não cadastrado.");
+			FacesUtil.addErrorMessage("Usuário e senha incorretos.");
 		}
+		/*
+		else if ("true".equals(request.getParameter("invalid")) && (!senha.equals())) {
+			FacesUtil.addErrorMessage("Senha incorreta.");
+		}*/
+		
 	}
 	
 	public void login() throws ServletException, IOException {
@@ -51,5 +63,15 @@ public class LoginBean implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
+	
 	
 }

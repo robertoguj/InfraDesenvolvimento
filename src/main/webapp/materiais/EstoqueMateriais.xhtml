@@ -46,7 +46,7 @@
 				<p:outputLabel value="#{bundle.product}" for="produto" />
 				<p:selectOneMenu id="produto" value="#{materialBean.material.produto}" style="width:600px;"
 					required="true" requiredMessage="Produto deve ser selecionado." >
-					<f:selectItem itemValue="#{null}" itemLabel="Selecione o produto" />
+					<f:selectItem itemValue="#{null}" itemLabel="--Selecione o produto" />
 					<f:selectItems value="#{materialBean.produtosLista}" var="produto"
 						itemLabel="#{produto.descricao}" itemValue="#{produto}" />
 				</p:selectOneMenu>

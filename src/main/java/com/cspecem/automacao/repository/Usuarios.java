@@ -11,19 +11,28 @@ import com.cspecem.automacao.util.jsf.FacesUtil;
 public class Usuarios extends DaoGenerico<Usuario, Long> implements UsuarioDAO, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Override
 	public Usuario porEmail(String email) {
 		Usuario usuario = null;
-		
 		try {
 			usuario = this.em.createQuery("from Usuario where lower(email) = :email", Usuario.class)
-				.setParameter("email", email.toLowerCase()).getSingleResult();
+					.setParameter("email", email.toLowerCase()).getSingleResult();
 		} catch (NoResultException e) {
 			FacesUtil.addErrorMessage("Nenhum usuário encontrado com o e-mail " + email + " informado.");
 		}
-		
 		return usuario;
 	}
-	
+
+	public Usuario porSenha(String senha) {
+		Usuario usuario = null;
+		try {
+			usuario = this.em.createQuery("from Usuario where lower(senha) = :senha", Usuario.class)
+					.setParameter("senha", senha.toLowerCase()).getSingleResult();
+		} catch (NoResultException e) {
+			FacesUtil.addErrorMessage("Nenhum usuário encontrado com a senha " + senha + " informada.");
+		}
+		return usuario;
+	}
+
 }

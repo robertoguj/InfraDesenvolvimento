@@ -106,7 +106,7 @@ public class LocalInstalacaoBean implements Serializable {
 	
 	public List<LocalInstalacao> getLocaisLista() {
 		if(this.locaisLista == null) {
-			this.locaisLista = locais.listar("id");
+			this.locaisLista = locais.listar("area");
 		}
 		return this.locaisLista;
 	}

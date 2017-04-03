@@ -5,7 +5,7 @@
     xmlns:p="http://primefaces.org/ui">
 
 	<p:dataTable value="#{cadastroPedidoBean.pedido.itens}" var="item" rowIndexVar="linha" id="tabelaItens">
-		<p:column headerText="SKU" style="text-align: center; width: 100px">
+		<p:column headerText="SKU" style="text-align: center; width:100px;">
 			<h:outputText value="#{item.produto.sku}" rendered="#{item.produtoAssociado}"/>
 			
 			<p:inputText size="8" value="#{cadastroPedidoBean.sku}" label="SKU" id="sku"

@@ -48,7 +48,7 @@
 				
 				<p:outputLabel value="#{bundle.area}" />
 				<p:selectOneMenu id="area" value="#{localInstalacaoBean.localInstalacao.area}" style="width:210px;">
-					<f:selectItem itemValue="#{null}" itemLabel="Selecione a área" />
+					<f:selectItem itemValue="#{null}" itemLabel="--Selecione a área" />
 					<f:selectItems value="#{localInstalacaoBean.areas}" />
 				</p:selectOneMenu>
 
@@ -57,10 +57,25 @@
 			</p:panelGrid>
 
 			<p:dataTable id="lista" value="#{localInstalacaoBean.locaisLista}" var="localInstalacao"
-				emptyMessage="#{bundle.noRecords}" paginator="true" rows="5" widgetVar="locaisTable"
-				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" selection="#{localInstalacaoBean.locaisSelecionados}" rowKey="#{localInstalacao.id}">
+				emptyMessage="#{bundle.noRecords}" paginator="true" rows="10" widgetVar="locaisTable"
+				paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,30,50" paginatorPosition="bottom" selection="#{localInstalacaoBean.locaisSelecionados}" rowKey="#{localInstalacao.id}">
         		
+        		<f:facet name="{Exporters}">
+					<h:commandLink immediate="true">
+						<p:graphicImage value="resources/imagens/excel.png" width="24" />
+						<p:dataExporter type="xls" target="lista" fileName="LocaisInstalacao" />
+					</h:commandLink>
+					<h:commandLink immediate="true">
+						<p:graphicImage value="resources/imagens/pdf.png" width="24" />
+						<p:dataExporter type="pdf" target="lista" fileName="LocaisInstalacao" />
+					</h:commandLink>
+					<h:commandLink immediate="true">
+						<p:graphicImage value="resources/imagens/pdf.png" width="24" />
+						<p:dataExporter type="xml" target="lista" fileName="LocaisInstalacao" />
+					</h:commandLink>
+				</f:facet>
+					
         		<f:facet name="header">
             	<p:outputPanel>
                 	<h:outputText value="Pesquisar todos os campos: " />
@@ -75,18 +90,11 @@
 					<h:outputText value="#{localInstalacao.area}" />
 				</p:column>
 				<p:column headerText="#{bundle.local}" filterBy="#{localInstalacao.local}" sortBy="#{localInstalacao.local}" filterMatchMode="contains">
-					<h:outputText value="#{localInstalacao.local}" />
+					<h:link onclick="/locais/CadastroLocalInstalacao" value="#{localInstalacao.local}">
+						<f:param name="localInstalacao" value="#{localInstalacao.id}" />
+					</h:link>
 				</p:column>
-				<p:column style="width: 100px; text-align: center">
-					<p:button outcome="/locais/CadastroLocalInstalacao" icon="ui-icon-pencil" title="Editar">
-	    				<f:param name="localInstalacao" value="#{localInstalacao.id}" />
-	    			</p:button>
-
-					<p:commandButton icon="ui-icon-trash" process="@this" update="" onclick="PF('deleteDialog').show();"
-						immediate="true">
-						<f:setPropertyActionListener value="#{localInstalacao}" target="#{localInstalacaoBean.localInstalacao}" />
-					</p:commandButton>
-				</p:column>
+				
 			</p:dataTable>
 		</h:form>
 
