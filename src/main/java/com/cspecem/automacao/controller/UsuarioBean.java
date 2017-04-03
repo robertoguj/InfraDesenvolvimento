@@ -16,7 +16,7 @@ import com.cspecem.automacao.model.Grupo;
 import com.cspecem.automacao.model.Usuario;
 import com.cspecem.automacao.repository.Grupos;
 import com.cspecem.automacao.repository.Usuarios;
-import com.cspecem.automacao.service.UsuarioService;
+//import com.cspecem.automacao.service.UsuarioService;
 import com.cspecem.automacao.util.jsf.FacesUtil;
 
 @Named
@@ -40,8 +40,8 @@ public class UsuarioBean implements Serializable {
 	private List<Grupo> selectedGrupos;
 	private List<SelectItem> selectGrupos;
 	
-	@Inject
-	private UsuarioService usuarioService;
+//	@Inject
+//	private UsuarioService usuarioService;
 
 	public UsuarioBean() {
 		limpar();
@@ -75,7 +75,7 @@ public class UsuarioBean implements Serializable {
 			Date dataAtual = new Date(System.currentTimeMillis());
 			this.usuario.setCadastro(dataAtual);
 
-			this.usuarioService.salvarUsuario(usuario);
+			this.usuarios.salvar(usuario);
 			FacesUtil.addInfoMessage("Usuário salvo com sucesso!");
 
 		} catch (Exception e) {
