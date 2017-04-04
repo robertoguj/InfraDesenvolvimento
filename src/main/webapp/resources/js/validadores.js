@@ -21,7 +21,7 @@ PrimeFaces.validator.NotNull = {
 	}
 };
 
-PrimeFaces.converter['com.algaworks.Categoria'] = {
+PrimeFaces.converter['com.cspecem.automacao.model.Categoria'] = {
 	
 	convert : function(element, value) {
 		if (value === null || value === '') {

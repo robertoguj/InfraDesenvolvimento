@@ -16,7 +16,7 @@ import com.cspecem.automacao.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
-public class LocalInstalacaoBean implements Serializable {
+public class LocalInstalacaoBean extends ExtensaoBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Inject
@@ -24,7 +24,7 @@ public class LocalInstalacaoBean implements Serializable {
 	private LocalInstalacao localInstalacao;
 	private LocalInstalacao localSelecionado;
 	private List<SelectItem> areas;
-	private List<LocalInstalacao> locaisLista;
+
 	private List<LocalInstalacao> locaisSelecionados;
 
 	public LocalInstalacaoBean() {
@@ -104,13 +104,6 @@ public class LocalInstalacaoBean implements Serializable {
 		this.localInstalacao = localInstalacao;
 	}
 	
-	public List<LocalInstalacao> getLocaisLista() {
-		if(this.locaisLista == null) {
-			this.locaisLista = locais.listar("area");
-		}
-		return this.locaisLista;
-	}
-
 	public LocalInstalacao getLocalSelecionado() {
 		return localSelecionado;
 	}
