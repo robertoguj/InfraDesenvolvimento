@@ -13,7 +13,7 @@
 	    	
 	    	<p:messages autoUpdate="true" closable="true" />
 	    	
-	    	<p:toolbar style="margin-top: 20px">
+	    	<p:toolbar style="margin-top:10px;">
 	    		<p:toolbarGroup>
 	    			<p:commandButton value="Pesquisar" action="#{pesquisaEquipamentoBean.pesquisar}"
 	    				update="@form" />
@@ -23,7 +23,7 @@
 	    		</p:toolbarGroup>
 	    	</p:toolbar>
 	    	
-	    	<p:panelGrid columns="2" id="painel" style="width:100%; margin-top:20px" columnClasses="rotulo, campo">
+	    	<p:panelGrid columns="2" id="painel" style="width:100%; margin-top:10px;" columnClasses="rotulo, campo">
 	    		<p:outputLabel value="#{bundle.codigo}" for="codigo"/>
 	    		<p:inputText id="codigo" size="8" value="#{pesquisaEquipamentoBean.filtro.codigo}" style="width:60px;" />
 	    		
@@ -32,7 +32,7 @@
 	    	</p:panelGrid>
 	    	
 	    	<p:dataTable id="equipamentoTable" value="#{pesquisaEquipamentoBean.equipamentosFiltrados}" var="equipamento"
-	    		style="margin-top: 20px" emptyMessage="Nenhum equipamento encontrado." rows="20"
+	    		style="margin-top:10px;" emptyMessage="Nenhum equipamento encontrado." rows="20"
 	    		paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 	    		<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
 
@@ -51,8 +51,7 @@
 	    		<p:column headerText="#{bundle.location}" style="text-align: center; width:200px">
 	    			<h:outputText value="#{equipamento.localInstalacao.local}" />
 	    		</p:column>
-	    		
-	    		<p:column style="width: 100px; text-align: center">
+	    		<p:column style="width: 100px; text-align:center">
 	    			<p:button outcome="/equipamentos/CadastroEquipamento" icon="ui-icon-pencil" title="Editar">
 	    				<f:param name="equipamento" value="#{equipamento.id}" />
 	    			</p:button>

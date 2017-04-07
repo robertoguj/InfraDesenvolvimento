@@ -23,7 +23,19 @@
 
 			<p:messages autoUpdate="true" closable="true" id="msgs" />
 
-			<p:toolbar style="margin-top:20px">
+			<p:toolbar style="margin-top:10px;">
+				<p:toolbarGroup>
+					<c:if test="#{!empty produtoBean.produto.sku}">
+						<p:commandButton value="Atualizar" id="botaoAtualizar"
+							action="#{produtoBean.atualizar}" update="@form" validateClient="false" />
+						<p:button value="Cancelar" outcome="/produtos/ListaProdutos" />
+					</c:if>
+					<c:if test="#{empty produtoBean.produto.sku}">
+						<p:commandButton value="Salvar" id="botaoSalvar"
+							action="#{produtoBean.salvar}" update="@form" validateClient="false" />
+						<p:button type="reset" value="Limpar" />
+					</c:if>
+				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
 					<p:button value="Consultar" outcome="/produtos/ListaProdutos" />
 					<p:button value="Pesquisar" outcome="/produtos/PesquisaProdutos" />
@@ -56,21 +68,7 @@
 				<p:inputTextarea id="descricao" size="250" maxlength="250" style="width:500px; height:100px;"
 					value="#{produtoBean.produto.descricao}" required="true" requiredMessage="Favor informar a descrição do produto." />
 			</p:panelGrid>
-			
-			<p:toolbar style="margin-top:10px; background-color:000;">
-				<p:toolbarGroup>
-					<c:if test="#{!empty produtoBean.produto.sku}">
-						<p:commandButton value="Atualizar" id="botaoAtualizar"
-							action="#{produtoBean.atualizar}" update="@form" validateClient="false" />
-						<p:button value="Cancelar" outcome="/produtos/ListaProdutos" />
-					</c:if>
-					<c:if test="#{empty produtoBean.produto.sku}">
-						<p:commandButton value="Salvar" id="botaoSalvar"
-							action="#{produtoBean.salvar}" update="@form" validateClient="false" />
-						<p:button type="reset" value="Limpar" />
-					</c:if>
-				</p:toolbarGroup>
-			</p:toolbar>
+
 		</h:form>
 		
 	</ui:define>

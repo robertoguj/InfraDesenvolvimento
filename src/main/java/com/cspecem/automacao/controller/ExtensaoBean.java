@@ -86,6 +86,30 @@ public abstract class ExtensaoBean {
 
     }
 	
+	public void preProcessPdfHorizontal(Object document) throws IOException, BadElementException, DocumentException {
+
+		//cria documento pdf
+        Document pdf = (Document) document;        
+
+        //seta as margens da página, precisa estar antes da abertura do documento: pdf.open()
+        pdf.setMargins(20f, 20f, 20f, 20f);
+        pdf.setPageSize(PageSize.A4.rotate());
+        pdf.addTitle("CSP- Companhia Siderúrgica do Pecém");
+        pdf.open();
+        
+        //aqui pega o contexto para formar a url da imagem
+        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        String logo = servletContext.getRealPath("") + File.separator + "resources/images" + File.separator + "logo.png";
+        
+        //cria a imagem alinhando ao centro
+        Image image = Image.getInstance(logo);
+        image.setAlignment(Image.ALIGN_CENTER);
+        
+        //adciona a imgem ao pdf
+        pdf.add(image);
+        
+    }
+	
 	
 	public void onClose(CloseEvent event) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Filtro fechado.", "Closed panel id:'" + event.getComponent().getId() + "'");

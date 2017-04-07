@@ -10,21 +10,19 @@
     <ui:define name="corpo">
     	<h:form id="frmPesquisa">
 	    	<h3>Pesquisa de produtos</h3>
-	    	
+
 	    	<p:messages autoUpdate="true" closable="true" />
 	    	
-	    	<p:toolbar style="margin-top: 20px">
+	    	<p:toolbar style="margin-top:10px;">
 	    		<p:toolbarGroup>
-	    			<p:commandButton value="Pesquisar" action="#{pesquisaProdutosBean.pesquisar}"
-	    				update="@form" />
+	    			<p:commandButton value="Pesquisar" action="#{pesquisaProdutosBean.pesquisar}" update="@form" />
 	    		</p:toolbarGroup>
 	    		<p:toolbarGroup align="right">
 	    			<p:button value="Novo" outcome="/produtos/CadastroProduto" />
 	    		</p:toolbarGroup>
 	    	</p:toolbar>
 	    	
-	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
-	    			columnClasses="rotulo, campo">
+	    	<p:panelGrid columns="2" id="painel" style="width:100%; margin-top:10px;" columnClasses="rotulo, campo">
 	    		<p:outputLabel value="#{bundle.codigo}" for="sku"/>
 	    		<p:inputText id="sku" size="20" value="#{pesquisaProdutosBean.filtro.sku}" />
 	    		
@@ -33,7 +31,7 @@
 	    	</p:panelGrid>
 	    	
 	    	<p:dataTable id="produtosTable" value="#{pesquisaProdutosBean.produtosFiltrados}" var="produto"
-	    		style="margin-top: 20px" emptyMessage="Nenhum produto encontrado." rows="20"
+	    		style="margin-top:10px;" emptyMessage="Nenhum produto encontrado." rows="20"
 	    		paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 	    		<p:column headerText="#{bundle.codigo}" style="text-align:center; width:100px;">
 	    			<h:outputText value="#{produto.sku}" />

@@ -43,16 +43,25 @@
 						outcome="/locais/CadastroLocalInstalacao" />
 				</p:submenu>
 				
-				<p:submenu label="Lançamentos" icon="ui-icon-document">
+				<p:submenu label="Lançamentos">
 					<p:menuitem value="Pedido de material" style="width:155px;"
 						outcome="/pedidos/RequisicaoMaterial" />
 					<p:menuitem value="Estoque de materiais"
 						outcome="/materiais/EstoqueMateriais" />
 				</p:submenu>
 				
-				<p:submenu label="Consulta" icon="ui-icon-document">
+				<p:submenu label="Produtos">
+					<p:menuitem value="Lista de produtos"
+						outcome="/produtos/ListaProdutos" />
 					<p:menuitem value="Pesquisa de produtos"
 						outcome="/produtos/PesquisaProdutos" />
+				</p:submenu>
+				
+				<p:submenu label="Equipamentos">
+					<p:menuitem value="Lista de equipamentos"
+						outcome="/equipamentos/ListaEquipamentos" />
+					<p:menuitem value="Pesquisa de equipamentos"
+						outcome="/equipamentos/PesquisaEquipamentos" rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}" />
 				</p:submenu>
 
 				<p:submenu label="Relatórios" icon="ui-icon-document">

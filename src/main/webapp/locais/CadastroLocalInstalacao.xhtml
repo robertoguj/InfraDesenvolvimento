@@ -35,9 +35,6 @@
 						<p:button value="Cancelar" outcome="/Home" />
 					</c:if>
 				</p:toolbarGroup>
-				<p:toolbarGroup align="right">
-					<p:button value="Pesquisa" outcome="/produtos/PesquisaProdutos" />
-				</p:toolbarGroup>
 			</p:toolbar>
 			
 			<p:panelGrid columns="2" id="painel" style="width:100%; margin-top:10px; margin-bottom:10px;" columnClasses="rotulo, campo">
@@ -63,13 +60,13 @@
 
         		<f:facet name="header">
         			<div style="float:right;">
-						<h:commandButton value="excel" immediate="true" title="Exportar para excel" style="padding:5px;">
+						<h:commandButton value="excel" immediate="true" title="Exportar para excel" styleClass="botoes">
 							<p:dataExporter type="xls" target="lista" fileName="LocaisInstalacao" />
 						</h:commandButton>
-						<h:commandButton value="pdf" immediate="true" title="Exportar para pdf" style="padding:5px;">
+						<h:commandButton value="pdf" immediate="true" title="Exportar para pdf" styleClass="botoes">
 							<p:dataExporter type="pdf" encoding="iso-8859-1" preProcessor="#{produtoBean.preProcessPDF}" target="lista" fileName="LocaisInstalacao" />
 						</h:commandButton>
-						<h:commandButton value="xml" immediate="true" title="Exportar para xml" style="padding:5px;">
+						<h:commandButton value="xml" immediate="true" title="Exportar para xml" styleClass="botoes">
 							<p:dataExporter type="xml" target="lista" fileName="LocaisInstalacao" />
 						</h:commandButton>
 					</div>

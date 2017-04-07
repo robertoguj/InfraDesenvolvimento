@@ -6,7 +6,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
 
-	<ui:define name="titulo">#{equipamentoBean.editando ? 'Edição de equipamento' : 'Novo equipamento'}</ui:define>
+	<ui:define name="titulo">Lista de equipamentos</ui:define>
 
 	<ui:define name="corpo">
 		<f:metadata>
@@ -17,59 +17,88 @@
 		<h:form id="form">
 			<p:focus context="form" />
 			
+			<p:outputPanel deferred="true">
+				<h3>Lista de equipamentos</h3>
+			</p:outputPanel>
+			
 			<p:messages autoUpdate="true" closable="true" id="msgs" />
-
+			
+			<p:toolbar style="margin-top:10px; margin-bottom:10px;">
+				<p:toolbarGroup align="left">
+					<p:button value="Novo" outcome="/equipamentos/CadastroEquipamento" />
+					<p:button value="Pesquisar" outcome="/equipamentos/PesquisaEquipamentos" />
+				</p:toolbarGroup>
+			</p:toolbar>
+			
 	    	<p:dataTable id="dataTableId" value="#{equipamentoBean.equipamentosLista}" var="equipamento"
-				emptyMessage="#{bundle.noRecords}" paginator="true" rows="10"
+				emptyMessage="#{bundle.noRecords}" paginator="true" rows="100"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" selection="#{equipamentoBean.equipamentosSelecionados}" rowKey="#{equipamento.id}">
-				<f:facet name="header">
-            		#{bundle.equipamentos}
-        		</f:facet>
+				rowsPerPageTemplate="100,150,200" paginatorPosition="bottom" selection="#{equipamentoBean.equipamentosSelecionados}" rowKey="#{equipamento.id}">
         		
-				<p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-	    		<p:column headerText="Categoria" style="width: 100px">
+				<f:facet name="header">
+            		<div style="float:right;">
+    	            	<h:commandButton value="excel" title="Exportar para excel" styleClass="botoes">
+							<p:dataExporter type="xls" target="dataTableId" fileName="ListaEquipamentos" />
+						</h:commandButton>
+						<h:commandButton value="pdf" title="Exportar para pdf" styleClass="botoes">
+							<p:dataExporter type="pdf" encoding="iso-8859-1" preProcessor="#{equipamentoBean.preProcessPdfHorizontal}" target="dataTableId" fileName="ListaEquipamentos" />
+						</h:commandButton>
+						<h:commandButton value="xml" title="Exportar para xml" styleClass="botoes">
+							<p:dataExporter type="xml" target="dataTableId" fileName="ListaEquipamentos" />
+						</h:commandButton>
+					</div>
+        		</f:facet>
+        		<f:facet name="header">
+	            	<p:outputPanel>
+    	            	<h:outputText value="Pesquisar todos os campos: " />
+        	       		<p:inputText id="globalFilter" onkeyup="PF('equipamentosTable').filter()" style="width:200px; height:20px;" placeholder="Filtrando dados" />
+            		</p:outputPanel>
+        		</f:facet>
+				<p:column selectionMode="multiple" style="width:16px; text-align:center" exportable="false" />
+	    		<p:column headerText="Categoria" style="width:100px;" filterBy="#{equipamento.produto.categoria}"
+	    			sortBy="#{equipamento.produto.categoria}" filterMatchMode="contains">
 	    			<h:outputText value="#{equipamento.produto.categoria}" />
 	    		</p:column>
-	    		<p:column headerText="#{bundle.model}">
+	    		<p:column headerText="#{bundle.model}" filterBy="#{equipamento.produto.modelo}"
+	    			sortBy="#{equipamento.produto.modelo}" filterMatchMode="contains">
 	    			<h:outputText value="#{equipamento.produto.modelo}" />
 	    		</p:column>
-	    		<p:column headerText="#{bundle.partNumber}" style="width: 150px">
+	    		<p:column headerText="#{bundle.partNumber}" style="width:150px;" filterBy="#{equipamento.numeroSerie}"
+	    			sortBy="#{equipamento.numeroSerie}" filterMatchMode="contains">
 	    			<h:outputText value="#{equipamento.numeroSerie}" />
 	    		</p:column>
-	    		<p:column headerText="#{bundle.location}" style="text-align: center; width: 200px">
+	    		<p:column headerText="#{bundle.location}" style="text-align: center; width:200px;" filterBy="#{equipamento.localInstalacao.local}"
+	    			sortBy="#{equipamento.localInstalacao.local}" filterMatchMode="contains">
 	    			<h:outputText value="#{equipamento.localInstalacao.local}" />
 	    		</p:column>
-	    		<p:column headerText="#{bundle.tag}" style="text-align: center; width: 100px">
+	    		<p:column headerText="#{bundle.tag}" style="text-align: center; width:100px;" filterBy="#{equipamento.tag}"
+	    			sortBy="#{equipamento.tag}" filterMatchMode="contains">
 	    			<h:outputText value="#{equipamento.tag}"/>
 	    		</p:column>
-	    		<p:column headerText="#{bundle.rack}" style="text-align: center; width: 100px">
-	    			<h:outputText value="#{equipamento.rack}"/>
-	    		</p:column>
-	    		<p:column headerText="#{bundle.date}" style="text-align: center; width: 95px">
+	    		<p:column headerText="#{bundle.date}" style="text-align:center; width:95px;">
 	    			<h:outputText value="#{equipamento.dataGarantia}">
 	    				<f:convertDateTime locale="pt_BR" dateStyle="long" timeZone="GMT-3" pattern="dd/MM/yyyy" />
 	    			</h:outputText>
 	    		</p:column>
-	    		<p:column headerText="#{bundle.statusGarantia}" style="text-align: center; width: 120px">
+	    		<p:column headerText="#{bundle.statusGarantia}" style="text-align:center; width:120px;" filterBy="#{equipamento.statusGarantia}"
+	    			sortBy="#{equipamento.statusGarantia}" filterMatchMode="contains">
 	    			<h:outputText value="#{equipamento.statusGarantia}"/>
 	    		</p:column>
-	    		<p:column style="width: 100px; text-align: center">
+	    		<p:column style="width:100px; text-align:center;" exportable="false">
 	    			<p:button outcome="/equipamentos/CadastroEquipamento" icon="ui-icon-pencil" title="Editar" >
 	    				<f:param name="equipamento" value="#{equipamento.id}" />
 	    			</p:button>
-
-	    			<p:commandButton icon="ui-icon-trash" process="@this" update="@form" onclick="PF('deleteDialog').show();" immediate="true">
+	    			<p:commandButton icon="ui-icon-trash" process="@this" update="@form" onclick="PF('deleteDialog').show();" immediate="true"
+	    				rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}">
 						<f:setPropertyActionListener target="#{equipamentoBean.equipamentoSelecionado}" value="#{equipamento}" />
 					</p:commandButton>
-					
 					<p:commandButton update=":form:equipamentoDetail" oncomplete="PF('equipamentoDialog').show()" icon="ui-icon-search" title="Detalhes" immediate="true">
                 		<f:setPropertyActionListener value="#{equipamento}" target="#{equipamentoBean.equipamentoSelecionado}" />
             		</p:commandButton>
 	    		</p:column>
 	    	</p:dataTable>
 			
-			<ui:include src="/dialogos/DetalhesEquipamento.xhtml" />		
+			<ui:include src="/dialogos/DetalhesEquipamento.xhtml" />
  
    			<p:dialog header="Equipamento selecionado" widgetVar="multiEquipamentoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="200">
         		<p:outputPanel id="multiEquipamentoDetail" style="text-align:center;">
@@ -81,7 +110,7 @@
 		
 		</h:form>
 		
-		<p:confirmDialog header="Excluir Área" message="Tem certeza que deseja excluir o registro selecionado?"
+		<p:confirmDialog header="Excluir Equipamento" message="Tem certeza que deseja excluir o registro selecionado?"
 			widgetVar="deleteDialog">
 			<p:commandButton value="Confirmar" icon="ui-icon-check" action="#{equipamentoBean.excluir}"
 				update=":form:dataTableId :form:msgs" oncomplete="PF('deleteDialog').hide();" />
