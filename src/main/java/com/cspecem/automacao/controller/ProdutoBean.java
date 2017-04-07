@@ -18,7 +18,7 @@ import com.cspecem.automacao.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
-public class ProdutoBean implements Serializable {
+public class ProdutoBean extends ExtensaoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	

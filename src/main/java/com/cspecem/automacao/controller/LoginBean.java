@@ -40,7 +40,7 @@ public class LoginBean implements Serializable {
 		
 		if ("true".equals(request.getParameter("invalid"))) /*&& (!usuarios.porEmail(email).equals(email)))*/ {
 			//FacesUtil.addErrorMessage("Email não cadastrado.");
-			FacesUtil.addErrorMessage("Usuário e senha incorretos.");
+			FacesUtil.addErrorMessage("Usuário e/ou senha incorreto(s).");
 		}
 		/*
 		else if ("true".equals(request.getParameter("invalid")) && (!senha.equals())) {

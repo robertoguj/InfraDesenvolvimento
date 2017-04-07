@@ -56,56 +56,33 @@
 				<p:inputText id="nome" size="60" maxlength="60" required="true"	value="#{localInstalacaoBean.localInstalacao.local}" />
 			</p:panelGrid>
 
-
-			<p:panel id="toggleable" header="Filtrar dados" toggleable="true"
-				closable="true" toggleSpeed="500" closeSpeed="500" widgetVar="panel" style="margin-bottom:10px">
-
-				<p:ajax event="close" listener="#{localInstalacaoBean.onClose}" update="msgs" />
-				<p:ajax event="toggle" listener="#{localInstalacaoBean.onToggle}" update="msgs" />
-
-
-				<f:facet name="options">
-					<p:menu>
-						<p:submenu label="Settings">
-							<p:menuitem value="Toggle" url="#" icon="ui-icon-newwin" onclick="PF('panel').toggle()" />
-							<p:menuitem value="Remove" url="#" icon="ui-icon-close" onclick="PF('panel').close()" />
-						</p:submenu>
-					</p:menu>
-				</f:facet>
-			</p:panel>
-
-
 			<p:dataTable id="lista" value="#{localInstalacaoBean.locaisLista}" var="localInstalacao"
-				emptyMessage="#{bundle.noRecords}" paginator="true" rows="10" widgetVar="locaisTable"
+				emptyMessage="#{bundle.noRecords}" paginator="true" rows="30" widgetVar="locaisTable"
 				paginatorTemplate="{Exporters} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="10,30,50" paginatorPosition="bottom" selection="#{localInstalacaoBean.locaisSelecionados}" rowKey="#{localInstalacao.id}">
-        		
-        		<f:facet name="{Exporters}">
-					<h:commandLink immediate="true">
-						<p:graphicImage library="images" value="excel.png" width="24" />
-						<p:dataExporter type="xls" target="lista" fileName="LocaisInstalacao" />
-					</h:commandLink>
-					<h:commandLink immediate="true">
-						<p:graphicImage library="images" value="pdf.png" width="24" />
-						<p:dataExporter type="pdf" encoding="iso-8859-1" preProcessor="#{localInstalacaoBean.preProcessPDF}" target="lista" fileName="LocaisInstalacao" />
-					</h:commandLink>
-					<h:commandLink immediate="true">
-						<p:graphicImage library="images" value="pdf.png" width="24" />
-						<p:dataExporter type="xml" target="lista" fileName="LocaisInstalacao" />
-					</h:commandLink>
-				</f:facet>
-					
+				rowsPerPageTemplate="50,80,100" paginatorPosition="bottom" selection="#{localInstalacaoBean.locaisSelecionados}" rowKey="#{localInstalacao.id}">
+
         		<f:facet name="header">
-            		<p:outputPanel>
-                		<h:outputText value="Pesquisar todos os campos: " />
-                			<p:inputText id="globalFilter" onkeyup="PF('locaisTable').filter()" style="width:150px" placeholder="Inserir palavra-chave" />
+        			<div style="float:right;">
+						<h:commandButton value="excel" immediate="true" title="Exportar para excel" style="padding:5px;">
+							<p:dataExporter type="xls" target="lista" fileName="LocaisInstalacao" />
+						</h:commandButton>
+						<h:commandButton value="pdf" immediate="true" title="Exportar para pdf" style="padding:5px;">
+							<p:dataExporter type="pdf" encoding="iso-8859-1" preProcessor="#{produtoBean.preProcessPDF}" target="lista" fileName="LocaisInstalacao" />
+						</h:commandButton>
+						<h:commandButton value="xml" immediate="true" title="Exportar para xml" style="padding:5px;">
+							<p:dataExporter type="xml" target="lista" fileName="LocaisInstalacao" />
+						</h:commandButton>
+					</div>
+				</f:facet>
+        		<f:facet name="header">
+	            	<p:outputPanel>
+    	            	<h:outputText value="Pesquisar todos os campos: " />
+        	       		<p:inputText id="globalFilter" onkeyup="PF('locaisTable').filter()" style="width:200px; height:20px;" placeholder="Filtrando dados" />
             		</p:outputPanel>
         		</f:facet>
-        		
-        		<p:ajax event="rowSelect" update="@form" oncomplete="PF('carDialog').show()" />
- 
+        		<p:column selectionMode="multiple" style="width:16px; text-align:center;" exportable="false" />
 				<p:column headerText="#{bundle.area}" filterBy="#{localInstalacao.area}" sortBy="#{localInstalacao.area}" filterMatchMode="contains"
-					style="text-align: center; width: 200px">
+					style="text-align: center; width:200px;">
 					<h:outputText value="#{localInstalacao.area}" />
 				</p:column>
 				<p:column headerText="#{bundle.local}" filterBy="#{localInstalacao.local}" sortBy="#{localInstalacao.local}" filterMatchMode="contains">
@@ -113,13 +90,11 @@
 						<f:param name="localInstalacao" value="#{localInstalacao.id}" />
 					</h:link>
 				</p:column>
-				<p:column exportable="false" style="width: 100px; text-align: center">
+				<p:column exportable="false" style="width: 100px; text-align: center" rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}">
 					<p:button outcome="/locais/CadastroLocalInstalacao" icon="ui-icon-pencil" title="Editar">
 	    				<f:param name="localInstalacao" value="#{localInstalacao.id}" />
 	    			</p:button>
-
-					<p:commandButton icon="ui-icon-trash" process="@this" update="" onclick="PF('deleteDialog').show();"
-						immediate="true" rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}">
+					<p:commandButton icon="ui-icon-trash" process="@this" update="" onclick="PF('deleteDialog').show();" immediate="true">
 						<f:setPropertyActionListener value="#{localInstalacao}" target="#{localInstalacaoBean.localInstalacao}" />
 					</p:commandButton>
 				</p:column>

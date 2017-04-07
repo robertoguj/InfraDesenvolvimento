@@ -28,7 +28,7 @@ public class LocalInstalacaoBean extends ExtensaoBean implements Serializable {
 	private List<LocalInstalacao> locaisSelecionados;
 
 	public LocalInstalacaoBean() {
-		limpar();
+		resetar();
 	}
 	
 	@PostConstruct
@@ -52,7 +52,7 @@ public class LocalInstalacaoBean extends ExtensaoBean implements Serializable {
 	public void salvar() {
 		try {
 			this.locais.salvar(this.localInstalacao);
-			limpar();
+			resetar();
 			FacesUtil.addInfoMessage("Salvo com sucesso.");
 		} catch (Exception e) {
 			FacesUtil.addErrorMessage("Erro ao tentar salvar " + e.getMessage());
@@ -62,14 +62,14 @@ public class LocalInstalacaoBean extends ExtensaoBean implements Serializable {
 	public void atualizar() {
 		try {
 			this.locais.atualizar(this.localInstalacao);
-			limpar();
+			resetar();
 			FacesUtil.addInfoMessage("Atualizado com sucesso.");
 		} catch (Exception e) {
 			FacesUtil.addErrorMessage("Erro ao tentar atualizar " + e.getMessage());
 		}
 	}
 	
-	private void limpar() {
+	private void resetar() {
 		this.localInstalacao = new LocalInstalacao();
 	}
 	
@@ -94,6 +94,20 @@ public class LocalInstalacaoBean extends ExtensaoBean implements Serializable {
 			this.areas.add(new SelectItem("Distribuição e Utilidades","Utility Distribution"));
 		}
 		return areas;
+	}
+	
+	public void excluirSelecionados() {
+		try {
+			for (LocalInstalacao loc : locaisLista) {
+				if (loc.getSelecionado()) {
+					locais.deletar(loc.getId());
+				}
+			}
+			resetar();
+			FacesUtil.addInfoMessage("Item(s) removido(s) com sucesso.");
+		} catch (Exception e) {
+			FacesUtil.addErrorMessage("Ocorreu um erro ao tentar remover o(s) item(s) selecionado(s). " + e.getMessage());
+		}
 	}
 
 	public LocalInstalacao getLocalInstalacao() {

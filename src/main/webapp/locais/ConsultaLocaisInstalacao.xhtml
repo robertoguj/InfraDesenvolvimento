@@ -1,0 +1,32 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="titulo"></ui:define>
+
+	<ui:define name="corpo">
+
+		<h:form id="frmConsulta">
+			<p:messages autoUpdate="true" closable="true" id="msgs" />
+			
+			<p:panel id="toggleable" header="Filtrar dados" toggleable="true"
+				closable="true" toggleSpeed="500" closeSpeed="500" widgetVar="panel" style="margin-bottom:10px">
+				<p:ajax event="close" listener="#{localInstalacaoBean.onClose}" update="msgs" />
+				<p:ajax event="toggle" listener="#{localInstalacaoBean.onToggle}" update="msgs" />
+				<f:facet name="options">
+					<p:menu>
+						<p:submenu label="Settings">
+							<p:menuitem value="Toggle" url="#" icon="ui-icon-newwin" onclick="PF('panel').toggle()" />
+							<p:menuitem value="Remove" url="#" icon="ui-icon-close" onclick="PF('panel').close()" />
+						</p:submenu>
+					</p:menu>
+				</f:facet>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

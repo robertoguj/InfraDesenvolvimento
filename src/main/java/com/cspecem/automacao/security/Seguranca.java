@@ -44,13 +44,13 @@ public class Seguranca {
 	}
 	
 	public boolean isEmitirPedidoPermitido() {
-		return externalContext.isUserInRole("ADMINISTRADORES") 
-				|| externalContext.isUserInRole("VENDEDORES");
+		return externalContext.isUserInRole("ADMINISTRADOR") 
+				|| externalContext.isUserInRole("TECNICO");
 	}
 	
 	public boolean isCancelarPedidoPermitido() {
-		return externalContext.isUserInRole("ADMINISTRADORES") 
-				|| externalContext.isUserInRole("VENDEDORES");
+		return externalContext.isUserInRole("ADMINISTRADOR") 
+				|| externalContext.isUserInRole("TECNICO");
 	}
 	
 }

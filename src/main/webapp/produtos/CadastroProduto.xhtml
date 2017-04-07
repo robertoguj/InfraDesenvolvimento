@@ -23,26 +23,18 @@
 
 			<p:messages autoUpdate="true" closable="true" id="msgs" />
 
-			<p:toolbar style="margin-top: 20px">
-				<p:toolbarGroup>
-					<c:if test="#{!empty produtoBean.produto.sku}">
-						<p:commandButton value="Atualizar" id="botaoAtualizar"
-							action="#{produtoBean.atualizar}" update="@form" validateClient="false" />
-						<p:button value="Cancelar" outcome="/produtos/CadastroProduto" />
-					</c:if>
-					<c:if test="#{empty produtoBean.produto.sku}">
-						<p:commandButton value="Salvar" id="botaoSalvar"
-							action="#{produtoBean.salvar}" update="@form" validateClient="false" />
-						<p:button value="Cancelar" outcome="/Home" />
-					</c:if>
-				</p:toolbarGroup>
+			<p:toolbar style="margin-top:20px">
 				<p:toolbarGroup align="right">
-					<p:button value="Pesquisa" outcome="/produtos/PesquisaProdutos" />
+					<p:button value="Consultar" outcome="/produtos/ListaProdutos" />
+					<p:button value="Pesquisar" outcome="/produtos/PesquisaProdutos" />
 				</p:toolbarGroup>
 			</p:toolbar>
 			
-			<p:panelGrid columns="4" style="width:100%; margin-top: 20px"
-				columnClasses="labelColumn, imputColumn, labelColumn, imputColumn, labelColumn, imputColumn">
+			<p:panelGrid columns="2" style="width:100%; margin-top:10px;" columnClasses="rotulo, campo">
+				
+				<p:outputLabel value="#{bundle.sku}*" for="sku" />
+				<p:inputText id="sku" size="20" maxlength="20" style="width:200px;"
+					value="#{produtoBean.produto.sku}" />
 				
 				<p:outputLabel value="#{bundle.category}*" for="categoria" />
 				<p:selectOneMenu id="categoria" value="#{produtoBean.produto.categoria}" style="width:210px;">
@@ -50,23 +42,11 @@
 					<f:selectItems value="#{produtoBean.categorias}" />
 				</p:selectOneMenu>
 				
-				<p:outputLabel value="#{bundle.sku}*" for="sku" />
-				<p:inputText id="sku" size="20" maxlength="20" style="width:150px;"
-					value="#{produtoBean.produto.sku}" />
-				
 				<p:outputLabel value="#{bundle.manufacturer}*" for="fabricante" />
 				<p:selectOneMenu id="fabricante" value="#{produtoBean.produto.fabricante}" style="width:210px;">
 					<f:selectItem itemValue="#{null}" itemLabel="--Selecione o fabricante" />
 					<f:selectItems value="#{produtoBean.fabricantes}" />
 				</p:selectOneMenu>
-				
-				<p:outputLabel value="#{bundle.valorEstimado}" for="valorEstimado" />
-				<p:inputText id="valorEstimado" size="20" maxlength="20" style="width:150px;"
-					value="#{produtoBean.produto.valorEstimado}" />
-			</p:panelGrid>
-			
-			<p:panelGrid columns="2"
-				style="width:100%; margin-top:10px" columnClasses="rotulo, campo">
 				
 				<p:outputLabel value="#{bundle.model}" for="modelo" />
 				<p:inputText id="modelo" style="width:500px;" size="60" maxlength="60"
@@ -77,69 +57,21 @@
 					value="#{produtoBean.produto.descricao}" required="true" requiredMessage="Favor informar a descrição do produto." />
 			</p:panelGrid>
 			
-			<br />
-			
-	    	<p:dataTable id="dataTableId" value="#{produtoBean.produtosLista}" var="produto"
-				emptyMessage="#{bundle.noRecords}" paginator="true" rows="10" widgetVar="produtosTable"
-				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" selection="#{produtoBean.produtosSelecionados}" rowKey="#{produto.id}">
-				
-				<f:facet name="header">
-            	<p:outputPanel>
-                	<h:outputText value="Pesquisar todos os campos: " />
-                		<p:inputText id="globalFilter" onkeyup="PF('produtosTable').filter()" style="width:150px" placeholder="Inserir palavra-chave" />
-            		</p:outputPanel>
-        		</f:facet>
-        		
-				<p:column headerText="#{bundle.sku}" filterBy="#{produto.sku}" sortBy="#{produto.sku}" filterMatchMode="contains"
-					style="text-align: center; width:140px">
-	    			<h:outputText value="#{produto.sku}" />
-	    		</p:column>
-	    		<p:column headerText="#{bundle.category}" filterBy="#{produto.categoria}" sortBy="#{produto.categoria}" filterMatchMode="contains"
-	    			style="width:120px;">
-	    			<h:outputText value="#{produto.categoria}" />
-	    		</p:column>
-	    		<p:column headerText="#{bundle.manufacturer}" filterBy="#{produto.fabricante}" sortBy="#{produto.fabricante}" filterMatchMode="contains"
-	    			style="width:120px">
-	    			<h:outputText value="#{produto.fabricante}"/>
-	    		</p:column>
-	    		<p:column headerText="#{bundle.description}" filterBy="#{produto.descricao}" sortBy="#{produto.descricao}" filterMatchMode="contains">
-	    			<h:outputText value="#{produto.descricao}" />
-	    		</p:column>
-	    		<p:column style="width: 100px; text-align: center">
-	    			<p:button outcome="/produtos/CadastroProduto" icon="ui-icon-pencil" title="Editar">
-	    				<f:param name="produto" value="#{produto.id}" />
-	    			</p:button>
-
-	    			<p:commandButton icon="ui-icon-trash" process="@this" update="@form" onclick="PF('deleteDialog').show();"
-	    				immediate="true" rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}">
-						<f:setPropertyActionListener value="#{produto}" target="#{produtoBean.produto}" />
-					</p:commandButton>
-					
-					<p:commandButton update=":form:produtoDetail" oncomplete="PF('produtoDialog').show()" icon="ui-icon-search" title="Detalhes"
-						immediate="true">
-                		<f:setPropertyActionListener value="#{produto}" target="#{produtoBean.produtoSelecionado}" />
-            		</p:commandButton>
-	    		</p:column>
-	    	</p:dataTable>
-			
-			<ui:include src="/dialogos/DetalhesProduto.xhtml" />
- 
-   			<p:dialog header="Produto selecionado" widgetVar="multiProdutoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="200">
-        		<p:outputPanel id="multiProdutoDetail" style="text-align:center;">
-            		<ui:repeat value="#{produtoBean.produtosSelecionados}" var="produto">
-                		<h:outputText value="#{produto.id} - #{produto.nome}" style="display:block"/>
-            		</ui:repeat>
-        		</p:outputPanel>
-    		</p:dialog>
-		
+			<p:toolbar style="margin-top:10px; background-color:000;">
+				<p:toolbarGroup>
+					<c:if test="#{!empty produtoBean.produto.sku}">
+						<p:commandButton value="Atualizar" id="botaoAtualizar"
+							action="#{produtoBean.atualizar}" update="@form" validateClient="false" />
+						<p:button value="Cancelar" outcome="/produtos/ListaProdutos" />
+					</c:if>
+					<c:if test="#{empty produtoBean.produto.sku}">
+						<p:commandButton value="Salvar" id="botaoSalvar"
+							action="#{produtoBean.salvar}" update="@form" validateClient="false" />
+						<p:button type="reset" value="Limpar" />
+					</c:if>
+				</p:toolbarGroup>
+			</p:toolbar>
 		</h:form>
 		
-		<p:confirmDialog header="Excluir Produto" message="Tem certeza que deseja excluir o registro selecionado?"
-			widgetVar="deleteDialog">
-			<p:commandButton value="Confirmar" icon="ui-icon-check" action="#{produtoBean.excluir}"
-				update=":form:dataTableId :form:msgs" oncomplete="PF('deleteDialog').hide();" />
-			<p:commandButton value="Cancelar" icon="ui-icon-cancel" onclick="PF('deleteDialog').hide();" />
-		</p:confirmDialog>
 	</ui:define>
 </ui:composition>

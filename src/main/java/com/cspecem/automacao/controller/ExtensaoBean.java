@@ -1,5 +1,6 @@
 package com.cspecem.automacao.controller;
 
+//import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -21,20 +22,22 @@ import com.cspecem.automacao.repository.Produtos;
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
+//import com.lowagie.text.Font;
+//import com.lowagie.text.FontFactory;
 import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
+//import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
 
 public abstract class ExtensaoBean {
 	
 	@Inject
-	private Produtos produtos;
-	private List<Produto> produtosLista;
+	protected Produtos produtos;
+	protected List<Produto> produtosLista;
 	
 	@Inject
-	private LocaisInstalacao locais;
-	private List<LocalInstalacao> locaisLista;
+	protected LocaisInstalacao locais;
+	protected List<LocalInstalacao> locaisLista;
 	
 	public List<LocalInstalacao> getLocaisLista() {
 		if (this.locaisLista == null) {
@@ -76,24 +79,21 @@ public abstract class ExtensaoBean {
         //adciona data atual
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Phrase data = new Phrase("Emitido em " + formato.format(new Date()));
-        ((Paragraph) data).setAlignment("rigth");
         pdf.add(data);
         
         //adiciona paragrafo ao pdf, alinhando ao centro
-        /*
-        Paragraph p = new Paragraph("teste parágrafo");
-        p.setAlignment("center");
-        pdf.add(p); */
+        //Paragraph p = new Paragraph("texto parágrafo", FontFactory.getFont(FontFactory.HELVETICA, 22, Font.BOLD, new Color(0, 0, 0))); p.setAlignment("center"); pdf.add(p);
+
     }
 	
 	
 	public void onClose(CloseEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Panel Closed", "Closed panel id:'" + event.getComponent().getId() + "'");
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Filtro fechado.", "Closed panel id:'" + event.getComponent().getId() + "'");
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
      
     public void onToggle(ToggleEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, event.getComponent().getId() + " toggled", "Status:" + event.getVisibility().name());
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, event.getComponent().getId() + " Filtro", "Status:" + event.getVisibility().name());
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 	

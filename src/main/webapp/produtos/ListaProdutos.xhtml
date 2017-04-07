@@ -18,16 +18,36 @@
 			<p:focus context="form" />
 
 			<p:messages autoUpdate="true" closable="true" id="msgs" />
+			
+			<p:toolbar style="margin-top:10px; margin-bottom:10px;">
+				<p:toolbarGroup align="left">
+					<p:button value="Novo" outcome="/produtos/CadastroProduto" />
+					<p:button value="Pesquisar" outcome="/produtos/PesquisaProdutos" />
+				</p:toolbarGroup>
+			</p:toolbar>
 
-	    	<p:dataTable id="dataTableId" value="#{produtoBean.produtosLista}" var="produto"
+	    	<p:dataTable id="listadt" value="#{produtoBean.produtosLista}" var="produto"
 				emptyMessage="#{bundle.noRecords}" paginator="true" rows="100" widgetVar="produtosTable"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="50,100,200" paginatorPosition="bottom" selection="#{produtoBean.produtosSelecionados}" rowKey="#{produto.id}">
 				
-				<f:facet name="header">
-            	<p:outputPanel>
-                	<h:outputText value="Pesquisar todos os campos: " />
-                		<p:inputText id="globalFilter" onkeyup="PF('produtosTable').filter()" style="width:150px" placeholder="Inserir palavra-chave" />
+        		<f:facet name="header">
+            		<div style="float:right;">
+    	            	<h:commandButton value="excel" title="Exportar para excel" style="padding:5px;">
+							<p:dataExporter type="xls" target="listadt" fileName="ListaProdutos" />
+						</h:commandButton>
+						<h:commandButton value="pdf" title="Exportar para pdf" style="padding:5px;">
+							<p:dataExporter type="pdf" encoding="iso-8859-1" preProcessor="#{produtoBean.preProcessPDF}" target="listadt" fileName="ListaProdutos" />
+						</h:commandButton>
+						<h:commandButton value="xml" title="Exportar para xml" style="padding:5px;">
+							<p:dataExporter type="xml" target="listadt" fileName="ListaProdutos" />
+						</h:commandButton>
+					</div>
+        		</f:facet>
+        		<f:facet name="header">
+	            	<p:outputPanel>
+    	            	<h:outputText value="Pesquisar todos os campos: " />
+        	       		<p:inputText id="globalFilter" onkeyup="PF('produtosTable').filter()" style="width:200px; height:20px;" placeholder="Filtrando dados" />
             		</p:outputPanel>
         		</f:facet>
 				<p:column headerText="#{bundle.sku}" filterBy="#{produto.sku}" sortBy="#{produto.sku}" filterMatchMode="contains"
@@ -38,19 +58,21 @@
 	    			style="width:120px;">
 	    			<h:outputText value="#{produto.categoria}" />
 	    		</p:column>
+	    		<p:column headerText="#{bundle.manufacturer}" filterBy="#{produto.fabricante}" sortBy="#{produto.fabricante}" filterMatchMode="contains"
+	    			style="width:120px">
+	    			<h:outputText value="#{produto.fabricante}"/>
+	    		</p:column>
 	    		<p:column headerText="#{bundle.description}" filterBy="#{produto.descricao}" sortBy="#{produto.descricao}" filterMatchMode="contains">
 	    			<h:outputText value="#{produto.descricao}" />
 	    		</p:column>
-	    		<p:column style="width: 100px; text-align: center">
+	    		<p:column exportable="false" style="width: 100px; text-align: center">
 	    			<p:button outcome="/produtos/CadastroProduto" icon="ui-icon-pencil" title="Editar">
 	    				<f:param name="produto" value="#{produto.id}" />
 	    			</p:button>
-
 	    			<p:commandButton icon="ui-icon-trash" process="@this" update="@form" onclick="PF('deleteDialog').show();"
-	    				immediate="true">
+	    				immediate="true" rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}">
 						<f:setPropertyActionListener value="#{produto}" target="#{produtoBean.produto}" />
 					</p:commandButton>
-					
 					<p:commandButton update=":form:produtoDetail" oncomplete="PF('produtoDialog').show()" icon="ui-icon-search" title="Detalhes"
 						immediate="true">
                 		<f:setPropertyActionListener value="#{produto}" target="#{produtoBean.produtoSelecionado}" />
@@ -73,7 +95,7 @@
 		<p:confirmDialog header="Excluir Produto" message="Tem certeza que deseja excluir o registro selecionado?"
 			widgetVar="deleteDialog">
 			<p:commandButton value="Confirmar" icon="ui-icon-check" action="#{produtoBean.excluir}"
-				update=":form:dataTableId :form:msgs" oncomplete="PF('deleteDialog').hide();" />
+				update=":form:listadt :form:msgs" oncomplete="PF('deleteDialog').hide();" />
 			<p:commandButton value="Cancelar" icon="ui-icon-cancel" onclick="PF('deleteDialog').hide();" />
 		</p:confirmDialog>
 	</ui:define>

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -17,6 +18,7 @@ public class LocalInstalacao implements Serializable {
 	private Long id;
 	private String area;
 	private String local;
+	private Boolean selecionado=false;
 
 	@Id
 	@GeneratedValue
@@ -47,6 +49,15 @@ public class LocalInstalacao implements Serializable {
 	public void setLocal(String nome) {
 		this.local = nome;
 	}
+	
+	@Transient
+	public Boolean getSelecionado() {
+		return selecionado;
+	}
+
+	public void setSelecionado(Boolean selecionado) {
+		this.selecionado = selecionado;
+	}
 
 	@Override
 	public int hashCode() {
@@ -55,6 +66,7 @@ public class LocalInstalacao implements Serializable {
 		result = prime * result + ((area == null) ? 0 : area.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((local == null) ? 0 : local.hashCode());
+		result = prime * result + ((selecionado == null) ? 0 : selecionado.hashCode());
 		return result;
 	}
 
@@ -81,6 +93,11 @@ public class LocalInstalacao implements Serializable {
 			if (other.local != null)
 				return false;
 		} else if (!local.equals(other.local))
+			return false;
+		if (selecionado == null) {
+			if (other.selecionado != null)
+				return false;
+		} else if (!selecionado.equals(other.selecionado))
 			return false;
 		return true;
 	}

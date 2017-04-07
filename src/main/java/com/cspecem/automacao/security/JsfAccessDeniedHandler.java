@@ -76,4 +76,5 @@ public class JsfAccessDeniedHandler implements AccessDeniedHandler {
     public void setLoginPath(String loginPath) {
         this.loginPath = loginPath;
     }
+
 }
