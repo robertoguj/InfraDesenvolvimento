@@ -4,9 +4,9 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
 
-	<p:toolbar style="margin-top: 20px">
+	<p:toolbar style="margin-top:10px;">
   		<p:toolbarGroup>
-  			<p:button value="Novo" outcome="/pedidos/RequisicaoMaterial"/>
+  			<p:button value="Novo" outcome="/pedidos/RequisicaoMateriais"/>
   			<p:commandButton value="Salvar" action="#{cadastroPedidoBean.salvar}"
   				update="@form" disabled="#{cadastroPedidoBean.pedido.naoAlteravel}" />
   		</p:toolbarGroup>
@@ -20,10 +20,8 @@
   				disabled="#{cadastroPedidoBean.pedido.naoCancelavel or not seguranca.cancelarPedidoPermitido}" />
   			<p:commandButton value="Enviar por e-mail" action="#{envioPedidoEmailBean.enviarPedido}"
   				process="@this" disabled="#{cadastroPedidoBean.pedido.naoEnviavelPorEmail}" />
-  			
   			<p:separator/>
-  		
-  			<p:button value="Pesquisa" outcome="/pedidos/PesquisaPedidos" />
+  			<p:button value="Pesquisa" outcome="/pedidos/PesquisaPedidos" rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}" />
   		</p:toolbarGroup>
   	</p:toolbar>
   	

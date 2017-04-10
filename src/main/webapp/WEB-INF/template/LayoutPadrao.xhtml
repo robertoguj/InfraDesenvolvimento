@@ -38,16 +38,11 @@
 					<p:menuitem value="Produtos" outcome="/produtos/CadastroProduto" />
 					<p:menuitem value="Equipamentos"
 						outcome="/equipamentos/CadastroEquipamento" />
+					<p:menuitem value="Materiais"
+						outcome="/materiais/CadastroMateriais" />
 					<p:menuitem value="Usuários" outcome="/usuarios/CadastroUsuario" />
 					<p:menuitem value="Locais de instalação"
 						outcome="/locais/CadastroLocalInstalacao" />
-				</p:submenu>
-				
-				<p:submenu label="Lançamentos">
-					<p:menuitem value="Pedido de material" style="width:155px;"
-						outcome="/pedidos/RequisicaoMaterial" />
-					<p:menuitem value="Estoque de materiais"
-						outcome="/materiais/EstoqueMateriais" />
 				</p:submenu>
 				
 				<p:submenu label="Produtos">
@@ -63,8 +58,15 @@
 					<p:menuitem value="Pesquisa de equipamentos"
 						outcome="/equipamentos/PesquisaEquipamentos" rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}" />
 				</p:submenu>
+				
+				<p:submenu label="Materiais">
+					<p:menuitem value="Pedido de materiais" style="width:155px;"
+						outcome="/pedidos/RequisicaoMateriais" />
+					<p:menuitem value="Estoque de materiais"
+						outcome="/materiais/EstoqueMateriais" />
+				</p:submenu>
 
-				<p:submenu label="Relatórios" icon="ui-icon-document">
+				<p:submenu label="Relatórios" icon="ui-icon-document" rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}">
 					<p:menuitem value="Pedidos emitidos"
 						outcome="/relatorios/RelatorioPedidosEmitidos" />
 				</p:submenu>

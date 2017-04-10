@@ -11,11 +11,11 @@
 		<f:event listener="#{cadastroPedidoBean.inicializar}" type="preRenderView" />
 	</f:metadata>
 
-    <ui:define name="titulo">#{cadastroPedidoBean.editando ? "Edição de pedido" : "Novo pedido"}</ui:define>
+    <ui:define name="titulo">#{cadastroPedidoBean.editando ? "Edição de pedido de materiais" : "Pedido de materiais"}</ui:define>
     
     <ui:define name="corpo">
     	<h:form id="frmCadastro">
-	    	<h3>#{cadastroPedidoBean.editando ? "Edição de pedido de material" : "Novo pedido de material"}</h3>
+	    	<h3>#{cadastroPedidoBean.editando ? "Edição de pedido de materiais" : "Pedido de materiais"}</h3>
 	    	
 	    	<p:messages autoUpdate="true" closable="true" />
 	    	

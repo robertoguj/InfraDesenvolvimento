@@ -13,14 +13,14 @@
 	    	
 	    	<p:messages autoUpdate="true" closable="true" />
 	    	
-	    	<p:toolbar style="margin-top: 20px">
+	    	<p:toolbar style="margin-top:10px;">
 	    		<p:toolbarGroup>
-	    			<p:commandButton value="Emitir" action="#{relatorioPedidosEmitidosBean.emitir}"
-	    				ajax="false" />
+	    			<p:commandButton value="Emitir" action="#{relatorioPedidosEmitidosBean.emitir}"	ajax="false" />
+	    			<p:button value="Cancelar" outcome="/Home" />
 	    		</p:toolbarGroup>
 	    	</p:toolbar>
 	    	
-	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
+	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top:10px;"
 	    			columnClasses="rotulo, campo">
 	    		<p:outputLabel value="Data de criação" />
 	    		<h:panelGroup>

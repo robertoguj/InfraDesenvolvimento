@@ -17,64 +17,16 @@
 		<h:form id="form">
 			<p:focus context="form" />
 
-			<p:outputPanel deferred="true">
-				<h3>#{materialBean.editando ? 'Edição de materiais' : 'Incluir material'}</h3>
-			</p:outputPanel>
-
+			<h3>Estoque de materiais</h3>
+			
 			<p:messages autoUpdate="true" closable="true" id="msgs" />
-
-			<p:toolbar>
-				<p:toolbarGroup>
-					<c:if test="#{!empty materialBean.material.criticidade}">
-						<p:commandButton value="Atualizar" id="botaoAtualizar"
-							action="#{materialBean.atualizar}" update="@form" validateClient="false" />
-						<p:button value="Cancelar" outcome="/materiais/EstoqueMateriais" />
-					</c:if>
-					<c:if test="#{empty materialBean.material.criticidade}">
-						<p:commandButton value="Salvar" id="botaoSalvar"
-							action="#{materialBean.salvar}" update="@form" validateClient="false" />
-						<p:button value="Cancelar" outcome="/Home" />
-					</c:if>
-				</p:toolbarGroup>
-				<p:toolbarGroup align="right">
-					<p:button value="Pesquisa" outcome="/produtos/PesquisaProdutos" />
+			
+			<p:toolbar style="margin-top:10px; margin-bottom:10px;">
+				<p:toolbarGroup align="left">
+					<p:button value="Novo" outcome="/materiais/CadastroMateriais" />
+					<p:button value="Pesquisar" outcome="/materiais/PesquisaMateriais" rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}" />
 				</p:toolbarGroup>
 			</p:toolbar>
-			
-			<p:panelGrid columns="2" id="painel" style="width:100%; margin-top:10px;" columnClasses="rotulo, campo">
-				
-				<p:outputLabel value="#{bundle.product}" for="produto" />
-				<p:selectOneMenu id="produto" value="#{materialBean.material.produto}" style="width:600px;"
-					required="true" requiredMessage="Produto deve ser selecionado." >
-					<f:selectItem itemValue="#{null}" itemLabel="--Selecione o produto" />
-					<f:selectItems value="#{materialBean.produtosLista}" var="produto"
-						itemLabel="#{produto.descricao}" itemValue="#{produto}" />
-				</p:selectOneMenu>
-				
-				<p:outputLabel value="#{bundle.codigoSAP}" for="codigoSAP" />
-				<p:inputText id="codigoSAP" size="10" maxlength="10" style="width:200px;"
-					value="#{materialBean.material.codigoSAP}" />
-
-			</p:panelGrid>
-			
-			<p:panelGrid columns="6" style="width:100%; margin-top:10px" columnClasses="labelColumn, imputColumn, labelColumn, imputColumn, labelColumn, imputColumn">
-				<p:outputLabel value="#{bundle.criticidade}" for="criticidade" />
-				<p:selectOneRadio id="criticidade" value="#{materialBean.material.criticidade}" style="width:210px;">
-					<f:selectItem itemValue="Crítico" itemLabel="Crítico" />
-					<f:selectItem itemValue="Indiferente" itemLabel="Indiferente" />
-					<f:selectItem itemValue="Prioritário" itemLabel="Prioritário" />
-				</p:selectOneRadio>				
-				
-				<p:outputLabel value="#{bundle.qtdDesejavel}" for="qtdDesejavel" />
-				<p:inputText id="qtdDesejavel" size="5" maxlength="5" style="width:100px;"
-					value="#{materialBean.material.quantidadeDesejavel}" />
-					
-				<p:outputLabel value="#{bundle.qtdRecebida}" for="qtdRecebida" />
-				<p:inputText id="qtdRecebida" size="5" maxlength="5" style="width:100px;"
-					value="#{materialBean.material.quantidadeRecebida}" />
-			</p:panelGrid>
-			
-			<h3>Lista de materiais do estoque</h3>
 			
 	    	<p:dataTable id="dataTableId" value="#{materialBean.materiaisLista}" var="material"
 				emptyMessage="#{bundle.noRecords}" paginator="true" rows="10" widgetVar="materiaisTable"
@@ -82,19 +34,32 @@
 				rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" selection="#{materialBean.materiaisSelecionados}" rowKey="#{material.id}">
 				
 				<f:facet name="header">
-            	<p:outputPanel>
-                	<h:outputText value="Pesquisar todos os campos: " />
-                		<p:inputText id="globalFilter" onkeyup="PF('materiaisTable').filter()" style="width:150px" placeholder="Inserir palavra-chave" />
+            		<div style="float:right;">
+    	            	<h:commandButton value="excel" title="Exportar para excel" styleClass="botoes">
+							<p:dataExporter type="xls" target="dataTableId" fileName="EstoqueMateriais" />
+						</h:commandButton>
+						<h:commandButton value="pdf" title="Exportar para pdf" styleClass="botoes">
+							<p:dataExporter type="pdf" encoding="iso-8859-1" preProcessor="#{materialBean.preProcessPDF}" target="dataTableId" fileName="EstoqueMateriais" />
+						</h:commandButton>
+						<h:commandButton value="xml" title="Exportar para xml" styleClass="botoes">
+							<p:dataExporter type="xml" target="dataTableId" fileName="EstoqueMateriais" />
+						</h:commandButton>
+					</div>
+        		</f:facet>
+        		<f:facet name="header">
+	            	<p:outputPanel>
+    	            	<h:outputText value="Pesquisar todos os campos: " />
+        	       		<p:inputText id="globalFilter" onkeyup="PF('materiaisTable').filter()" style="width:200px; height:20px;" placeholder="Filtrando dados" />
             		</p:outputPanel>
         		</f:facet>
         		
+				<p:column headerText="#{bundle.codigoSAP}" filterBy="#{material.codigoSAP}"
+	    			sortBy="#{material.codigoSAP}" filterMatchMode="contains" style="width:140px">
+	    			<h:outputText value="#{material.codigoSAP}" />
+	    		</p:column>
 				<p:column headerText="#{bundle.product}" filterBy="#{material.produto.descricao}"
 					sortBy="#{material.produto.descricao}" filterMatchMode="contains">
 	    			<h:outputText value="#{material.produto.descricao}" />
-	    		</p:column>
-	    		<p:column headerText="#{bundle.codigoSAP}" filterBy="#{material.codigoSAP}"
-	    			sortBy="#{material.codigoSAP}" filterMatchMode="contains" style="width:140px">
-	    			<h:outputText value="#{material.codigoSAP}" />
 	    		</p:column>
 	    		<p:column headerText="#{bundle.criticidade}" filterBy="#{material.criticidade}"
 	    			sortBy="#{material.criticidade}" filterMatchMode="contains" style="width:120px">
@@ -113,17 +78,14 @@
 	    			sortBy="#{material.statusConsolidado}" filterMatchMode="contains" style="width:150px">
 	    			<h:outputText value="#{material.statusConsolidado}"/>
 	    		</p:column>
-	    		
-	    		<p:column style="width: 100px; text-align: center">
+	    		<p:column style="width: 100px; text-align:center;" exportable="false">
 	    			<p:button outcome="/materiais/EstoqueMateriais" icon="ui-icon-pencil" title="Editar">
 	    				<f:param name="material" value="#{material.id}" />
 	    			</p:button>
-
 	    			<p:commandButton icon="ui-icon-trash" process="@this" update="@form" onclick="PF('deleteDialog').show();"
-	    				immediate="true">
+	    				immediate="true" rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}">
 						<f:setPropertyActionListener value="#{material}" target="#{materialBean.material}" />
 					</p:commandButton>
-					
 					<p:commandButton update=":form:materialDetail" oncomplete="PF('materialDialog').show()" icon="ui-icon-search" title="Detalhes"
 						immediate="true">
                 		<f:setPropertyActionListener value="#{material}" target="#{materialBean.materialSelecionado}" />
