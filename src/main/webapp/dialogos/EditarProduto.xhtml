@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+	<p:dialog header="#{bundle.product}" id="idDialogUpdate" widgetVar="updateDialogWidget" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+   		<h:form id="idFormDialogUpdate">
+   		
+   			<p:messages autoUpdate="true" closable="true" id="dialogMsg" />
+   			<p:panelGrid id="idPanelUpdate" columns="2" style="width:100%; margin-top:10px;" columnClasses="rotulo, campo">
+				<p:outputLabel value="#{bundle.sku}*" for="sku" />
+				<p:inputText id="sku" size="20" maxlength="20" style="width:200px;"
+					value="#{produtoBean.produto.sku}" />
+				
+				<p:outputLabel value="#{bundle.category}*" for="categoria" />
+				<p:selectOneMenu id="categoria" value="#{produtoBean.produto.categoria}" style="width:210px;">
+					<f:selectItem itemValue="#{null}" itemLabel="--Selecione a categoria" />
+					<f:selectItems value="#{produtoBean.categorias}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="#{bundle.manufacturer}*" for="fabricante" />
+				<p:selectOneMenu id="fabricante" value="#{produtoBean.produto.fabricante}" style="width:210px;">
+					<f:selectItem itemValue="#{null}" itemLabel="--Selecione o fabricante" />
+					<f:selectItems value="#{produtoBean.fabricantes}" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="#{bundle.model}" for="modelo" />
+				<p:inputText id="modelo" style="width:500px;" size="60" maxlength="60"
+					value="#{produtoBean.produto.modelo}" />
+					
+				<p:outputLabel value="#{bundle.description}" for="descricao" />
+				<p:inputTextarea id="descricao" size="250" maxlength="250" style="width:500px; height:100px;"
+					value="#{produtoBean.produto.descricao}" required="true" requiredMessage="Favor informar a descrição do produto." />
+			</p:panelGrid>
+			<br/>
+			<p:commandButton value="Atualizar" icon="ui-icon-check"	action="#{produtoBean.atualizar}" update=":idForm:idDataTable"
+				oncomplete="PF('updateDialogWidget').hide()" />
+			<p:commandButton value="Cancelar" icon="ui-icon-close" onclick="PF('updateDialogWidget').hide()" />
+		
+		</h:form>
+	</p:dialog>
+
+</h:body>
+</html>

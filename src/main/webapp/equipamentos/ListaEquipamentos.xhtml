@@ -59,30 +59,29 @@
 	    			sortBy="#{equipamento.produto.categoria}" filterMatchMode="contains">
 	    			<h:outputText value="#{equipamento.produto.categoria}" />
 	    		</p:column>
-	    		<p:column headerText="#{bundle.model}" filterBy="#{equipamento.produto.modelo}"
+				<p:column headerText="#{bundle.manufacturer}" style="width:90px;" filterBy="#{equipamento.produto.fabricante}"
+	    			sortBy="#{equipamento.produto.fabricante}" filterMatchMode="contains">
+	    			<h:outputText value="#{equipamento.produto.fabricante}" />
+	    		</p:column>
+				<p:column headerText="Cod.Produto" style="width:130px;" filterBy="#{equipamento.produto.sku}"
+	    			sortBy="#{equipamento.produto.sku}" filterMatchMode="contains">
+	    			<h:outputText value="#{equipamento.produto.sku}"/>
+	    		</p:column>
+	    		<p:column headerText="#{bundle.model}" style="width:160px;" filterBy="#{equipamento.produto.modelo}"
 	    			sortBy="#{equipamento.produto.modelo}" filterMatchMode="contains">
 	    			<h:outputText value="#{equipamento.produto.modelo}" />
 	    		</p:column>
-	    		<p:column headerText="#{bundle.partNumber}" style="width:150px;" filterBy="#{equipamento.numeroSerie}"
+	    		<p:column headerText="#{bundle.partNumber}" style="width:110px;" filterBy="#{equipamento.numeroSerie}"
 	    			sortBy="#{equipamento.numeroSerie}" filterMatchMode="contains">
 	    			<h:outputText value="#{equipamento.numeroSerie}" />
 	    		</p:column>
-	    		<p:column headerText="#{bundle.location}" style="text-align: center; width:200px;" filterBy="#{equipamento.localInstalacao.local}"
+	    		<p:column headerText="#{bundle.location}" style="text-align:center;width:160px;" filterBy="#{equipamento.localInstalacao.local}"
 	    			sortBy="#{equipamento.localInstalacao.local}" filterMatchMode="contains">
 	    			<h:outputText value="#{equipamento.localInstalacao.local}" />
 	    		</p:column>
-	    		<p:column headerText="#{bundle.tag}" style="text-align: center; width:100px;" filterBy="#{equipamento.tag}"
+	    		<p:column headerText="#{bundle.tag}" style="text-align:center; width:100px;" filterBy="#{equipamento.tag}"
 	    			sortBy="#{equipamento.tag}" filterMatchMode="contains">
 	    			<h:outputText value="#{equipamento.tag}"/>
-	    		</p:column>
-	    		<p:column headerText="#{bundle.date}" style="text-align:center; width:95px;">
-	    			<h:outputText value="#{equipamento.dataGarantia}">
-	    				<f:convertDateTime locale="pt_BR" dateStyle="long" timeZone="GMT-3" pattern="dd/MM/yyyy" />
-	    			</h:outputText>
-	    		</p:column>
-	    		<p:column headerText="#{bundle.statusGarantia}" style="text-align:center; width:120px;" filterBy="#{equipamento.statusGarantia}"
-	    			sortBy="#{equipamento.statusGarantia}" filterMatchMode="contains">
-	    			<h:outputText value="#{equipamento.statusGarantia}"/>
 	    		</p:column>
 	    		<p:column style="width:100px; text-align:center;" exportable="false">
 	    			<p:button outcome="/equipamentos/CadastroEquipamento" icon="ui-icon-pencil" title="Editar" >

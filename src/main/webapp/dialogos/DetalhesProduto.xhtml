@@ -6,8 +6,9 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:body>
 
-	<p:dialog header="#{bundle.productDetail}" widgetVar="produtoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-   		<p:outputPanel id="produtoDetail" style="text-align:center;">
+	<p:dialog header="#{bundle.productDetail}" id="idDialogDetail" widgetVar="detailDialogWidget" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+   	<h:form id="idFormDialogDetail">
+   		<p:outputPanel id="idPanelDetail" style="text-align:center;">
        		<p:panelGrid  columns="2" rendered="#{not empty produtoBean.produtoSelecionado}" columnClasses="label,value">
                 
            		<h:outputText value="#{bundle.sku}:" />
@@ -34,11 +35,10 @@
            		<h:outputText value="#{produtoBean.produtoSelecionado.quantidadeEstoque}" />
            		
        		</p:panelGrid>
-            
             <br />
-       		<p:commandButton value="#{bundle.close}" icon="ui-icon-close"
-				onclick="PF('updateDialogId').hide()" immediate="true" />
+       		<p:commandButton value="#{bundle.close}" icon="ui-icon-close" onclick="PF('idDialogDetail').hide()" />
    		</p:outputPanel>
+   	</h:form>
 	</p:dialog>
 
 </h:body>

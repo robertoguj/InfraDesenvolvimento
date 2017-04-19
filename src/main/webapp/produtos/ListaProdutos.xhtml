@@ -14,37 +14,36 @@
 			<f:event listener="#{produtoBean.inicializar}" type="preRenderView" />
 		</f:metadata>
 
-		<h:form id="form">
-			<p:focus context="form" />
+		<h:form id="idForm">
+			<p:focus context="idForm" />
 
 			<p:outputPanel deferred="true">
 				<h3>Lista de produtos</h3>
 			</p:outputPanel>
 			
 			<p:messages autoUpdate="true" closable="true" id="msgs" />
-			
-			<p:toolbar style="margin-top:10px; margin-bottom:10px;">
-				<p:toolbarGroup align="left">
-					<p:button value="Novo" outcome="/produtos/CadastroProduto" />
-						<p:button value="Pesquisar" outcome="/produtos/PesquisaProdutos" />
-				</p:toolbarGroup>
+			<p:toolbar>
+				<f:facet name="left">
+					<p:button value="Novo" outcome="/produtos/CadastroProduto" icon="ui-icon-document" />
+					<p:button value="Pesquisar" outcome="/produtos/PesquisaProdutos" icon="ui-icon-search" />
+				</f:facet>
 			</p:toolbar>
 			
-	    	<p:dataTable id="dataTableId" value="#{produtoBean.produtosLista}" var="produto"
-				emptyMessage="#{bundle.noRecords}" paginator="true" rows="50" widgetVar="produtosTable"
+	    	<p:dataTable id="idDataTable" value="#{produtoBean.produtosLista}" var="produto"
+				emptyMessage="#{bundle.noRecords}" paginator="true" rows="100" widgetVar="produtosTable"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="50,100,150" paginatorPosition="bottom" selection="#{produtoBean.produtosSelecionados}" rowKey="#{produto.id}">
 				
         		<f:facet name="header">
             		<div style="float:right;">
     	            	<h:commandButton value="excel" title="Exportar para excel" styleClass="botoes">
-							<p:dataExporter type="xls" target="dataTableId" fileName="ListaProdutos" />
+							<p:dataExporter type="xls" target="idDataTable" fileName="ListaProdutos" />
 						</h:commandButton>
 						<h:commandButton value="pdf" title="Exportar para pdf" styleClass="botoes">
-							<p:dataExporter type="pdf" encoding="iso-8859-1" preProcessor="#{produtoBean.preProcessPdfHorizontal}" target="dataTableId" fileName="ListaProdutos" />
+							<p:dataExporter type="pdf" encoding="iso-8859-1" preProcessor="#{produtoBean.preProcessPdfHorizontal}" target="idDataTable" fileName="ListaProdutos" />
 						</h:commandButton>
 						<h:commandButton value="xml" title="Exportar para xml" styleClass="botoes">
-							<p:dataExporter type="xml" target="dataTableId" fileName="ListaProdutos" />
+							<p:dataExporter type="xml" target="idDataTable" fileName="ListaProdutos" />
 						</h:commandButton>
 					</div>
         		</f:facet>
@@ -55,52 +54,56 @@
             		</p:outputPanel>
         		</f:facet>
 				<p:column headerText="#{bundle.sku}" filterBy="#{produto.sku}" sortBy="#{produto.sku}" filterMatchMode="contains"
-					style="text-align:center; width:140px">
+					style="text-align:center; width:150px">
 	    			<h:outputText value="#{produto.sku}" />
 	    		</p:column>
 	    		<p:column headerText="#{bundle.category}" filterBy="#{produto.categoria}" sortBy="#{produto.categoria}" filterMatchMode="contains"
-	    			style="width:120px;">
+	    			style="width:110px;">
 	    			<h:outputText value="#{produto.categoria}" />
 	    		</p:column>
 	    		<p:column headerText="#{bundle.manufacturer}" filterBy="#{produto.fabricante}" sortBy="#{produto.fabricante}" filterMatchMode="contains"
-	    			style="width:120px">
+	    			style="width:110px">
 	    			<h:outputText value="#{produto.fabricante}"/>
 	    		</p:column>
 	    		<p:column headerText="#{bundle.description}" filterBy="#{produto.descricao}" sortBy="#{produto.descricao}" filterMatchMode="contains">
 	    			<h:outputText value="#{produto.descricao}" />
 	    		</p:column>
-	    		<p:column exportable="false" style="width: 100px; text-align: center">
-	    			<p:button outcome="/produtos/CadastroProduto" icon="ui-icon-pencil" title="Editar">
-	    				<f:param name="produto" value="#{produto.id}" />
-	    			</p:button>
+	    		<p:column exportable="false" style="width:120px; text-align: center">
+	    			<p:commandButton icon="ui-icon-pencil" title="Editar Produto"
+	    				update=":idFormDialogUpdate:idPanelUpdate" oncomplete="PF('updateDialogWidget').show()">
+                		<f:setPropertyActionListener value="#{produto}" target="#{produtoBean.produto}" />
+            		</p:commandButton>
 	    			<p:commandButton icon="ui-icon-trash" process="@this" update="@form" onclick="PF('deleteDialog').show();"
-	    				immediate="true" rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}">
+	    				rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}">
 						<f:setPropertyActionListener value="#{produto}" target="#{produtoBean.produto}" />
 					</p:commandButton>
-					<p:commandButton update=":form:produtoDetail" oncomplete="PF('produtoDialog').show()" icon="ui-icon-search" title="Detalhes"
-						immediate="true">
+					<p:commandButton icon="ui-icon-search" title="Detalhar Produto"
+						update=":idFormDialogDetail:idPanelDetail" oncomplete="PF('detailDialogWidget').show()">
                 		<f:setPropertyActionListener value="#{produto}" target="#{produtoBean.produtoSelecionado}" />
             		</p:commandButton>
 	    		</p:column>
 	    	</p:dataTable>
-			
-			<ui:include src="/dialogos/DetalhesProduto.xhtml" />
- 
-   			<p:dialog header="Produto selecionado" widgetVar="multiProdutoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="200">
-        		<p:outputPanel id="multiProdutoDetail" style="text-align:center;">
-            		<ui:repeat value="#{produtoBean.produtosSelecionados}" var="produto">
-                		<h:outputText value="#{produto.id} - #{produto.nome}" style="display:block"/>
-            		</ui:repeat>
-        		</p:outputPanel>
-    		</p:dialog>
-		
+	    	
 		</h:form>
+		
 		
 		<p:confirmDialog header="Excluir Produto" message="Tem certeza que deseja excluir o registro selecionado?"
 			widgetVar="deleteDialog">
 			<p:commandButton value="Confirmar" icon="ui-icon-check" action="#{produtoBean.excluir}"
-				update=":form:dataTableId :form:msgs" oncomplete="PF('deleteDialog').hide();" />
+				update=":idForm:idDataTable :idForm:msgs" oncomplete="PF('deleteDialog').hide();" />
 			<p:commandButton value="Cancelar" icon="ui-icon-cancel" onclick="PF('deleteDialog').hide();" />
 		</p:confirmDialog>
+		
+		<p:dialog header="Produto selecionado" widgetVar="multiProdutoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="200">
+        	<p:outputPanel id="multiProdutoDetail" style="text-align:center;">
+           		<ui:repeat value="#{produtoBean.produtosSelecionados}" var="produto">
+               		<h:outputText value="#{produto.id} - #{produto.nome}" style="display:block"/>
+           		</ui:repeat>
+        	</p:outputPanel>
+    	</p:dialog>
+    	
+    	<ui:include src="/dialogos/EditarProduto.xhtml" />
+    	<ui:include src="/dialogos/DetalhesProduto.xhtml" />
+		
 	</ui:define>
 </ui:composition>

@@ -39,7 +39,10 @@
                 <h:outputText value="#{bundle.statusGarantia}:" />
                 <h:outputText value="#{equipamentoBean.equipamentoSelecionado.statusGarantia}" />
  
-                <h:outputText value="#{bundle.description}:" />
+                <h:outputText value="#{bundle.id}:" />
+                <h:outputText value="#{equipamentoBean.equipamentoSelecionado.produto.sku}" />
+				
+				<h:outputText value="#{bundle.description}:" />
                 <h:outputText value="#{equipamentoBean.equipamentoSelecionado.produto.descricao}" />
           </p:panelGrid>
           

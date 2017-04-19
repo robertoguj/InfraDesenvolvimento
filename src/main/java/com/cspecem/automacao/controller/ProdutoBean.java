@@ -102,6 +102,7 @@ public class ProdutoBean extends ExtensaoBean implements Serializable {
 		if (this.categorias == null) {
 			this.categorias = new ArrayList<SelectItem>();
 			this.categorias.add(new SelectItem("Acessórios", "Acessórios"));
+			this.categorias.add(new SelectItem("Access point", "Access point"));
 			this.categorias.add(new SelectItem("Áudio e vídeo", "Áudio e vídeo"));
 			this.categorias.add(new SelectItem("Eletro eletrônico", "Eletro eletrônico"));
 			this.categorias.add(new SelectItem("Impressora", "Impressora"));

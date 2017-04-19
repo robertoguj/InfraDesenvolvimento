@@ -34,7 +34,9 @@
 		<h:form>
 
 			<p:menubar>
-				<p:submenu label="Cadastro" icon="ui-icon-pencil">
+				<p:menuitem icon="ui-icon-home" outcome="/Home" />
+			
+				<p:submenu label="Cadastro">
 					<p:menuitem value="Produtos" outcome="/produtos/CadastroProduto" />
 					<p:menuitem value="Equipamentos"
 						outcome="/equipamentos/CadastroEquipamento" />
@@ -66,7 +68,7 @@
 						outcome="/materiais/EstoqueMateriais" />
 				</p:submenu>
 
-				<p:submenu label="Relatórios" icon="ui-icon-document" rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}">
+				<p:submenu label="Relatórios" rendered="#{facesContext.externalContext.isUserInRole('ADMINISTRADOR')}">
 					<p:menuitem value="Pedidos emitidos"
 						outcome="/relatorios/RelatorioPedidosEmitidos" />
 				</p:submenu>
